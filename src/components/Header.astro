@@ -1,29 +1,37 @@
 ---
+import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import { whatsappUrl } from '../config/site';
+import logoActive from '../assets/brand/infinicom-logo-active.svg';
 
 const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICOM.');
 ---
 
-<header class="sticky top-0 z-40 border-b border-white/10 bg-[#29003d]/95 text-white backdrop-blur-md" x-data="{ open: false }">
+<header class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-white/95 text-ink backdrop-blur-md" x-data="{ open: false }">
   <div class="container-shell flex h-[72px] items-center justify-between gap-6">
-    <a href="/" class="font-display text-xl font-bold tracking-[-0.04em]" aria-label="INFINICOM, página inicial">
-      INFINI<span class="text-fuchsia-300">COM</span>
+    <a href="/" class="flex h-14 items-center" aria-label="InfiniCom, página inicial">
+      <Image
+        src={logoActive}
+        alt="InfiniCom"
+        width={76}
+        loading="eager"
+        class="h-[54px] w-auto object-contain"
+      />
     </a>
 
     <nav class="hidden items-center gap-5 text-sm font-medium xl:flex" aria-label="Navegação principal">
-      <a class="transition-colors hover:text-fuchsia-200" href="/#casa">Para sua casa</a>
-      <a class="transition-colors hover:text-fuchsia-200" href="/#empresa">Para sua empresa</a>
-      <a class="transition-colors hover:text-fuchsia-200" href="/#condominios">Condomínios</a>
-      <a class="transition-colors hover:text-fuchsia-200" href="/#conteudos">Conteúdos</a>
-      <a class="transition-colors hover:text-fuchsia-200" href="/#sobre">Sobre</a>
+      <a class="transition-colors hover:text-brand" href="/#casa">Para sua casa</a>
+      <a class="transition-colors hover:text-brand" href="/#empresa">Para sua empresa</a>
+      <a class="transition-colors hover:text-brand" href="/#condominios">Condomínios</a>
+      <a class="transition-colors hover:text-brand" href="/#conteudos">Conteúdos</a>
+      <a class="transition-colors hover:text-brand" href="/#sobre">Sobre</a>
     </nav>
 
     <div class="hidden items-center gap-3 xl:flex">
-      <a class="btn min-h-11 border border-white/25 px-4 text-sm text-white hover:border-white/50" href="/#cobertura">
+      <a class="btn min-h-11 border border-[var(--color-border-strong)] px-4 text-sm text-ink hover:border-brand/45" href="/#cobertura">
         Consultar cobertura
       </a>
-      <a class="btn min-h-11 bg-white px-4 text-sm text-brand-deep hover:bg-fuchsia-50" href={consultorUrl} target="_blank" rel="noreferrer">
+      <a class="btn min-h-11 bg-brand px-4 text-sm text-white hover:bg-brand-strong" href={consultorUrl} target="_blank" rel="noreferrer">
         <Icon name="lucide:message-circle" class="size-4" />
         Falar com consultor
       </a>
@@ -31,7 +39,7 @@ const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICO
 
     <button
       type="button"
-      class="grid size-11 place-items-center rounded-xl border border-white/20 xl:hidden"
+      class="grid size-11 place-items-center rounded-xl border border-[var(--color-border-strong)] text-brand xl:hidden"
       x-on:click="open = !open"
       x-bind:aria-expanded="open"
       aria-controls="mobile-menu"
@@ -42,16 +50,16 @@ const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICO
     </button>
   </div>
 
-  <div id="mobile-menu" class="border-t border-white/10 bg-[#29003d] xl:hidden" x-show="open" x-cloak>
+  <div id="mobile-menu" class="border-t border-[var(--color-border)] bg-white xl:hidden" x-show="open" x-cloak>
     <nav class="container-shell grid gap-1 py-4 text-base" aria-label="Navegação mobile">
-      <a class="rounded-xl px-3 py-3 hover:bg-white/10" href="/#casa" x-on:click="open = false">Para sua casa</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-white/10" href="/#empresa" x-on:click="open = false">Para sua empresa</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-white/10" href="/#condominios" x-on:click="open = false">Condomínios</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-white/10" href="/#conteudos" x-on:click="open = false">Conteúdos</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-white/10" href="/#sobre" x-on:click="open = false">Sobre</a>
-      <div class="mt-3 grid gap-3 border-t border-white/10 pt-4 sm:grid-cols-2">
-        <a class="btn border border-white/25 text-white" href="/#cobertura" x-on:click="open = false">Consultar cobertura</a>
-        <a class="btn bg-white text-brand-deep" href={consultorUrl} target="_blank" rel="noreferrer">Falar com consultor</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#casa" x-on:click="open = false">Para sua casa</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#empresa" x-on:click="open = false">Para sua empresa</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#condominios" x-on:click="open = false">Condomínios</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#conteudos" x-on:click="open = false">Conteúdos</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#sobre" x-on:click="open = false">Sobre</a>
+      <div class="mt-3 grid gap-3 border-t border-[var(--color-border)] pt-4 sm:grid-cols-2">
+        <a class="btn border border-[var(--color-border-strong)] text-ink" href="/#cobertura" x-on:click="open = false">Consultar cobertura</a>
+        <a class="btn bg-brand text-white" href={consultorUrl} target="_blank" rel="noreferrer">Falar com consultor</a>
       </div>
     </nav>
   </div>

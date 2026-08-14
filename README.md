@@ -42,9 +42,10 @@ PUBLIC_WHATSAPP_NUMBER=5531999999999
 
 Os formulários não enviam dados para backend. Eles validam os campos, montam a mensagem e abrem `wa.me`.
 
+O botão flutuante utiliza o link direto de atendimento definido em `src/config/site.ts`.
+
 ## Pendências de lançamento
 
-- Substituir o wordmark tipográfico pelo arquivo oficial da INFINICOM.
 - Adicionar o logo Vivo somente após receber o arquivo autorizado e confirmar as regras de cobranding.
 - Confirmar telefone, e-mail, endereço, horário e número do WhatsApp.
 - Validar textos jurídicos de privacidade e cookies.

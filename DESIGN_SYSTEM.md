@@ -14,6 +14,10 @@ A V1 usa transições curtas e feedback de interação. Não utiliza GSAP, scrol
 
 ## Foundations
 
+### Logo
+
+A versão oficial vetorial `infinicom-logo-active.svg` é usada no header sobre fundo branco. No footer profundo, recebe uma área branca de proteção para preservar o contraste de suas cores oficiais. O artboard foi recortado apenas no espaço transparente, sem modificar traços, cores ou proporção da arte.
+
 ### Cores
 
 - `--color-brand-primary`: ação e identidade INFINICOM

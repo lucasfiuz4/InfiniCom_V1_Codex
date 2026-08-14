@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import { site, whatsappUrl } from '../config/site';
+import logoActive from '../assets/brand/infinicom-logo-active.svg';
 
 const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICOM.');
 ---
@@ -8,7 +10,14 @@ const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICO
 <footer class="bg-[#180024] text-[#f8f3fa]">
   <div class="container-shell grid gap-12 py-16 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
     <div>
-      <a href="/" class="font-display text-2xl font-bold tracking-[-0.04em]">INFINI<span class="text-fuchsia-300">COM</span></a>
+      <a href="/" class="inline-flex rounded-2xl bg-white p-3" aria-label="InfiniCom, página inicial">
+        <Image
+          src={logoActive}
+          alt="InfiniCom"
+          width={112}
+          class="h-auto w-28 object-contain"
+        />
+      </a>
       <p class="mt-5 max-w-sm text-sm leading-6 text-fuchsia-100/70">
         Consultoria comercial especializada em soluções Vivo para pessoas, empresas e empreendimentos em Minas Gerais.
       </p>
