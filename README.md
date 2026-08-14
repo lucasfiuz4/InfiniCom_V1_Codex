@@ -13,6 +13,13 @@ Site institucional e landing pages da INFINICOM no mesmo projeto Astro.
 ## Rotas implementadas
 
 - `/` Home institucional
+- `/para-sua-empresa/` Catálogo consultivo de soluções empresariais
+- `/para-sua-empresa/internet-empresarial/` Página individual de Internet empresarial
+- `/sobre/` Página institucional da INFINICOM
+- `/conteudos/` Blog e central de conteúdos
+- `/conteudos/categoria/[categoria]/` Páginas editoriais por categoria
+- `/conteudos/[slug]/` Artigos individuais com dados estruturados
+- `/contato/` Contato por intenção com encaminhamento para o WhatsApp
 - `/lp/vivo-fibra` Landing page de Vivo Fibra
 - `/privacidade` Estrutura provisória da política
 - `/cookies` Estrutura provisória da política
@@ -50,6 +57,12 @@ PUBLIC_WHATSAPP_NUMBER=5531999999999
 Os formulários não enviam dados para backend. Eles validam os campos, montam a mensagem e abrem `wa.me`.
 
 O botão flutuante utiliza o link direto de atendimento definido em `src/config/site.ts`.
+
+## Conteúdos
+
+Os artigos ficam em `src/content/conteudos` e são validados pelo schema de `src/content.config.ts`.
+
+O projeto gera páginas de artigos, categorias, dados estruturados `BlogPosting` e o feed `/rss.xml` durante o build.
 
 ## Pendências de lançamento
 

@@ -1,0 +1,200 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import businessImage from '../../assets/images/conectividade-empresa.png';
+import { whatsappUrl } from '../../config/site';
+
+const consultorUrl = whatsappUrl('Olá, quero entender quais soluções são adequadas para a minha empresa.');
+
+const challenges = [
+  { label: 'Melhorar a conexão', href: '#internet-empresarial', icon: 'lucide:wifi' },
+  { label: 'Reforçar a continuidade', href: '#link-dedicado', icon: 'lucide:shield-check' },
+  { label: 'Organizar a comunicação', href: '#telefonia', icon: 'lucide:phone-call' },
+  { label: 'Conectar dispositivos', href: '#iot', icon: 'lucide:radio-tower' },
+  { label: 'Avaliar um projeto especial', href: '#solucoes-personalizadas', icon: 'lucide:waypoints' },
+];
+
+const solutions = [
+  {
+    id: 'internet-empresarial',
+    icon: 'lucide:building-2',
+    title: 'Internet empresarial',
+    category: 'Conectividade',
+    description: 'Conexão para apoiar sistemas, atendimento, colaboração e a rotina digital do negócio.',
+    detail: 'A avaliação considera endereço, quantidade de pessoas, dispositivos conectados e aplicações importantes para a operação.',
+    tone: 'bg-brand-deep text-white md:col-span-7',
+    muted: 'text-fuchsia-100/75',
+    border: 'border-white/10',
+  },
+  {
+    id: 'link-dedicado',
+    icon: 'lucide:network',
+    title: 'Link dedicado',
+    category: 'Continuidade',
+    description: 'Uma conversa mais técnica para operações que dependem de conectividade consistente.',
+    detail: 'Faz sentido avaliar quando disponibilidade, estabilidade e suporte à operação têm peso relevante na decisão.',
+    tone: 'bg-white text-ink md:col-span-5',
+    muted: 'text-muted',
+    border: 'border-[var(--color-border)]',
+  },
+  {
+    id: 'telefonia',
+    icon: 'lucide:messages-square',
+    title: 'Telefonia empresarial',
+    category: 'Comunicação',
+    description: 'Linhas e comunicação para equipes, atendimento e diferentes perfis de uso.',
+    detail: 'A orientação parte da quantidade de linhas, do perfil das equipes e da forma como a empresa se comunica.',
+    tone: 'bg-soft text-ink md:col-span-4',
+    muted: 'text-muted',
+    border: 'border-[var(--color-border)]',
+  },
+  {
+    id: 'iot',
+    icon: 'lucide:radio-tower',
+    title: 'IoT',
+    category: 'Dispositivos',
+    description: 'Conectividade para dispositivos e aplicações que fazem parte da operação.',
+    detail: 'O primeiro passo é entender o tipo de dispositivo, o uso esperado e o contexto de conectividade necessário.',
+    tone: 'bg-[#e8dcec] text-ink md:col-span-3',
+    muted: 'text-muted',
+    border: 'border-transparent',
+  },
+  {
+    id: 'solucoes-personalizadas',
+    icon: 'lucide:blocks',
+    title: 'Soluções personalizadas',
+    category: 'Consultoria',
+    description: 'Análise conjunta para necessidades que não se encaixam em uma escolha isolada.',
+    detail: 'A equipe organiza o cenário, identifica prioridades e direciona a conversa para as soluções comerciais aplicáveis.',
+    tone: 'bg-white text-ink md:col-span-5',
+    muted: 'text-muted',
+    border: 'border-[var(--color-border)]',
+  },
+];
+---
+
+<BaseLayout
+  title="Soluções para empresas | INFINICOM"
+  description="Conheça soluções de conectividade, telefonia e tecnologia para empresas com atendimento consultivo da INFINICOM."
+>
+  <section class="relative isolate overflow-hidden bg-[linear-gradient(118deg,#660099_0%,#660099_58%,#461e5f_100%)] text-white">
+    <div class="pointer-events-none absolute -left-40 top-16 size-[30rem] rounded-full bg-fuchsia-300/10 blur-3xl"></div>
+    <div class="container-shell py-10 sm:py-14 lg:py-16">
+      <nav aria-label="Breadcrumb" class="relative z-10 mb-9 text-sm text-fuchsia-100/75">
+        <ol class="flex items-center gap-2">
+          <li><a href="/" class="transition-colors hover:text-white">Início</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li aria-current="page" class="font-medium text-white">Para sua empresa</li>
+        </ol>
+      </nav>
+
+      <div class="relative z-10 grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div class="reveal">
+          <p class="eyebrow text-fuchsia-100">Conectividade para negócios</p>
+          <h1 class="display-title hero-title-balanced mt-5 max-w-[12ch]">Soluções para sua empresa</h1>
+          <p class="mt-6 max-w-[36rem] text-lg leading-7 text-fuchsia-50/85">
+            Conectividade, comunicação e tecnologia com orientação para o cenário real da sua operação.
+          </p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a class="btn btn-light" href="#catalogo">
+              Explorar soluções
+              <Icon name="lucide:arrow-down-right" class="size-4" />
+            </a>
+            <a class="btn border border-white/35 text-white hover:bg-white/10" href={consultorUrl} target="_blank" rel="noreferrer">
+              <Icon name="lucide:message-circle" class="size-5" />
+              Falar com consultor
+            </a>
+          </div>
+        </div>
+
+        <div class="overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-2 reveal reveal-delay">
+          <Image
+            src={businessImage}
+            alt="Profissionais reunidos em um ambiente empresarial conectado"
+            widths={[480, 768, 1100]}
+            sizes="(max-width: 1023px) 100vw, 46vw"
+            format="webp"
+            quality={82}
+            loading="eager"
+            class="aspect-[4/3] w-full rounded-xl object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-[var(--color-border)] bg-white py-12 sm:py-14" aria-labelledby="desafio-title">
+    <div class="container-shell">
+      <h2 id="desafio-title" class="text-2xl font-semibold text-ink sm:text-3xl">Comece pelo desafio da sua operação</h2>
+      <p class="mt-3 max-w-[62ch] leading-7 text-muted">Escolha o cenário mais próximo da sua necessidade para encontrar um ponto de partida.</p>
+
+      <nav class="mt-8 grid overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white sm:grid-cols-2 lg:grid-cols-5" aria-label="Encontrar solução por necessidade">
+        {challenges.map((challenge, index) => (
+          <a
+            href={challenge.href}
+            class:list={[
+              'group flex min-h-28 flex-col justify-between gap-5 p-5 transition-colors hover:bg-soft hover:text-brand',
+              index > 0 && 'border-t border-[var(--color-border)] sm:border-t-0',
+              index % 2 !== 0 && 'sm:border-l sm:border-[var(--color-border)]',
+              index > 1 && 'sm:border-t sm:border-[var(--color-border)] lg:border-t-0',
+              index > 0 && 'lg:border-l lg:border-[var(--color-border)]',
+            ]}
+          >
+            <Icon name={challenge.icon} class="size-5 text-brand" />
+            <span class="flex items-end justify-between gap-3 font-display text-base font-semibold leading-5">
+              {challenge.label}
+              <Icon name="lucide:arrow-down-right" class="size-4 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+            </span>
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <section class="section-space bg-canvas" id="catalogo" aria-labelledby="catalogo-title">
+    <div class="container-shell">
+      <h2 id="catalogo-title" class="section-title max-w-[16ch]">Soluções para diferentes cenários</h2>
+      <p class="mt-5 max-w-[62ch] text-lg leading-7 text-muted">Compare pelo papel que cada solução pode cumprir na sua operação. A disponibilidade e as condições são confirmadas no atendimento.</p>
+
+      <div class="mt-12 grid grid-flow-row-dense gap-5 md:grid-cols-12">
+        {solutions.map((solution) => (
+          <article id={solution.id} class:list={['scroll-mt-28 rounded-2xl border p-7 sm:p-8', solution.tone, solution.border]}>
+            <div class="flex items-start justify-between gap-5">
+              <Icon name={solution.icon} class="size-7" />
+              <span class:list={['text-sm font-medium', solution.muted]}>{solution.category}</span>
+            </div>
+            <h3 class="mt-12 text-2xl font-semibold sm:text-3xl">{solution.title}</h3>
+            <p class:list={['mt-4 max-w-[48ch] leading-7', solution.muted]}>{solution.description}</p>
+            <details class:list={['group mt-7 border-t pt-5', solution.border]}>
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-sm font-semibold [&::-webkit-details-marker]:hidden">
+                Saiba mais
+                <Icon name="lucide:chevron-down" class="size-4 transition-transform group-open:rotate-180" />
+              </summary>
+              <p class:list={['mt-4 max-w-[52ch] text-sm leading-6', solution.muted]}>{solution.detail}</p>
+            </details>
+            {solution.id === 'internet-empresarial' && (
+              <a class="btn btn-light mt-6" href="/para-sua-empresa/internet-empresarial/">
+                Conhecer solução
+                <Icon name="lucide:arrow-up-right" class="size-4" />
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-16 sm:py-20" id="especialista" aria-labelledby="especialista-title">
+    <div class="container-shell grid gap-8 rounded-2xl border border-[var(--color-border)] bg-soft p-7 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
+      <div>
+        <h2 id="especialista-title" class="section-title max-w-[18ch]">Não sabe qual solução escolher?</h2>
+        <p class="mt-4 max-w-[58ch] text-lg leading-7 text-muted">Conte como sua empresa funciona. A equipe ajuda a organizar as necessidades e orientar o próximo passo.</p>
+      </div>
+      <a class="btn btn-primary w-full lg:w-auto" href={consultorUrl} target="_blank" rel="noreferrer">
+        <Icon name="lucide:message-circle" class="size-5" />
+        Falar com consultor
+      </a>
+    </div>
+  </section>
+</BaseLayout>

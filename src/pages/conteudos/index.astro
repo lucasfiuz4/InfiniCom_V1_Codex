@@ -1,0 +1,119 @@
+---
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import ArticleCard from '../../components/ArticleCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { categorySlug, sortContents } from '../../lib/content';
+
+const articles = sortContents(await getCollection('conteudos', ({ data }) => !data.draft));
+const featured = articles.find((entry) => entry.data.featured) ?? articles[0];
+const remaining = articles.filter((entry) => entry.id !== featured?.id);
+const categories = [...new Set(articles.map((entry) => entry.data.category))];
+
+const filterItems = articles.map((entry) => ({
+  category: entry.data.category,
+  search: `${entry.data.title} ${entry.data.summary} ${entry.data.category}`.toLocaleLowerCase('pt-BR'),
+}));
+
+const filterState = `{ query: '', category: 'Todos', items: ${JSON.stringify(filterItems)}, matches(item) { const term = this.query.trim().toLocaleLowerCase('pt-BR'); return (this.category === 'Todos' || item.category === this.category) && (!term || item.search.includes(term)); }, get filteredCount() { return this.items.filter((item) => this.matches(item)).length; } }`;
+const filterExpression = (entry: (typeof articles)[number]) =>
+  `matches(${JSON.stringify({
+    category: entry.data.category,
+    search: `${entry.data.title} ${entry.data.summary} ${entry.data.category}`.toLocaleLowerCase('pt-BR'),
+  })})`;
+---
+
+<BaseLayout
+  title="Conteúdos para empresas | INFINICOM"
+  description="Artigos da INFINICOM sobre conectividade, gestão e decisões de telecomunicações para empresas."
+>
+  <section class="bg-canvas" x-data={filterState}>
+    <div class="container-shell py-12 sm:py-16 lg:py-20">
+      <nav aria-label="Breadcrumb" class="mb-10 text-sm text-muted">
+        <ol class="flex items-center gap-2">
+          <li><a href="/" class="transition-colors hover:text-brand">Início</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li aria-current="page" class="font-medium text-ink">Conteúdos</li>
+        </ol>
+      </nav>
+
+      <div class="max-w-3xl">
+        <p class="eyebrow text-brand">Conteúdos INFINICOM</p>
+        <h1 class="display-title hero-title-balanced mt-5 max-w-[15ch]">Conteúdos para ajudar sua empresa</h1>
+        <p class="mt-6 max-w-[40rem] text-lg leading-7 text-muted">Informação prática para entender conectividade, comparar caminhos e preparar decisões de telecomunicações.</p>
+      </div>
+
+      <div class="mt-10 grid gap-5 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div class="max-w-2xl">
+          <label for="content-search" class="mb-2 block text-sm font-semibold text-ink">Buscar nos conteúdos</label>
+          <div class="relative">
+            <Icon name="lucide:search" class="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-muted" />
+            <input
+              id="content-search"
+              type="search"
+              x-model.debounce.150ms="query"
+              placeholder="Digite um tema ou uma dúvida"
+              class="min-h-14 w-full rounded-xl border border-[var(--color-border-strong)] bg-white py-3 pl-12 pr-4 text-ink placeholder:text-[var(--color-text-muted)] focus:border-brand"
+            />
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-2 text-sm font-semibold text-ink">Filtrar por tema</p>
+          <div class="flex flex-wrap gap-2" role="group" aria-label="Categorias de conteúdo">
+            {['Todos', ...categories].map((category) => (
+              <button
+                type="button"
+                class="min-h-11 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand"
+                x-on:click={`category = ${JSON.stringify(category)}`}
+                x-bind:aria-pressed={`category === ${JSON.stringify(category)}`}
+                x-bind:class={`category === ${JSON.stringify(category)} && 'border-brand bg-brand text-white'`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14" x-ref="articles">
+        {featured && (
+          <div>
+            <h2 class="text-2xl font-semibold text-ink">Artigo em destaque</h2>
+            <div class="mt-6 grid md:grid-cols-2">
+              <ArticleCard entry={featured} featured filterExpression={filterExpression(featured)} />
+            </div>
+          </div>
+        )}
+
+        {remaining.length > 0 && (
+          <div class="mt-16">
+            <h2 class="text-2xl font-semibold text-ink">Mais conteúdos</h2>
+            <div class="mt-7 grid gap-x-7 gap-y-12 md:grid-cols-2">
+              {remaining.map((entry) => <ArticleCard entry={entry} filterExpression={filterExpression(entry)} />)}
+            </div>
+          </div>
+        )}
+
+        <div class="mt-12 rounded-2xl border border-[var(--color-border)] bg-white p-7 text-center" x-show="filteredCount === 0" x-cloak>
+          <Icon name="lucide:file-search" class="mx-auto size-7 text-brand" />
+          <h2 class="mt-5 text-xl font-semibold text-ink">Nenhum conteúdo encontrado</h2>
+          <p class="mt-2 text-muted">Tente outro termo ou selecione uma categoria diferente.</p>
+          <button type="button" class="btn btn-outline mt-6" x-on:click="query = ''; category = 'Todos'">Limpar busca</button>
+        </div>
+      </div>
+
+      <aside class="mt-16 border-t border-[var(--color-border)] pt-8" aria-labelledby="category-pages-title">
+        <h2 id="category-pages-title" class="text-lg font-semibold text-ink">Explorar páginas de categoria</h2>
+        <div class="mt-4 flex flex-wrap gap-3">
+          {categories.map((category) => (
+            <a class="inline-flex min-h-11 items-center gap-2 rounded-xl bg-soft px-4 text-sm font-semibold text-brand hover:bg-[#e8dcec]" href={`/conteudos/categoria/${categorySlug(category)}/`}>
+              {category}
+              <Icon name="lucide:arrow-right" class="size-4" />
+            </a>
+          ))}
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

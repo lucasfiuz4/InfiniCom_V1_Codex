@@ -1,0 +1,66 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { categorySlug, sortContents } from '../../../lib/content';
+
+interface Props {
+  category: string;
+  articles: CollectionEntry<'conteudos'>[];
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection('conteudos', ({ data }) => !data.draft);
+  const categories = [...new Set(entries.map((entry) => entry.data.category))];
+
+  return categories.map((category) => ({
+    params: { categoria: categorySlug(category) },
+    props: {
+      category,
+      articles: sortContents(entries.filter((entry) => entry.data.category === category)),
+    },
+  }));
+}
+
+const { category, articles } = Astro.props;
+const descriptions: Record<string, string> = {
+  Conectividade: 'Orientações para entender cenários de internet, disponibilidade e continuidade da operação.',
+  Gestão: 'Conteúdos para organizar informações, prioridades e decisões de telecomunicações na empresa.',
+};
+---
+
+<BaseLayout
+  title={`${category} | Conteúdos INFINICOM`}
+  description={`${descriptions[category]} Leia os artigos da INFINICOM.`}
+>
+  <section class="section-space bg-canvas">
+    <div class="container-shell">
+      <nav aria-label="Breadcrumb" class="mb-10 text-sm text-muted">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li><a href="/" class="hover:text-brand">Início</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li><a href="/conteudos/" class="hover:text-brand">Conteúdos</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li aria-current="page" class="font-medium text-ink">{category}</li>
+        </ol>
+      </nav>
+
+      <div class="max-w-3xl">
+        <p class="eyebrow text-brand">Categoria</p>
+        <h1 class="display-title hero-title-balanced mt-5">Conteúdos sobre {category.toLocaleLowerCase('pt-BR')}</h1>
+        <p class="mt-6 max-w-[42rem] text-lg leading-7 text-muted">{descriptions[category]}</p>
+      </div>
+
+      <div class="mt-14 grid gap-x-7 gap-y-12 md:grid-cols-2">
+        {articles.map((entry, index) => <ArticleCard entry={entry} featured={index === 0 && articles.length > 2} />)}
+      </div>
+
+      <a href="/conteudos/" class="btn btn-outline mt-14">
+        <Icon name="lucide:arrow-left" class="size-4" />
+        Ver todos os conteúdos
+      </a>
+    </div>
+  </section>
+</BaseLayout>

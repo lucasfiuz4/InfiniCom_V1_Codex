@@ -1,0 +1,78 @@
+---
+import { Icon } from 'astro-icon/components';
+import { site } from '../config/site';
+
+interface Props {
+  solution: string;
+}
+
+const { solution } = Astro.props;
+---
+
+<section
+  class="rounded-2xl border border-[var(--color-border)] bg-white p-5 shadow-[var(--shadow-soft)] sm:p-7 lg:p-8"
+  x-data={`{
+    name: '', company: '', phone: '', email: '', city: '', need: '', consent: false, submitting: false, error: '',
+    submit() {
+      this.error = '';
+      const emailValid = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(this.email);
+      const phoneValid = this.phone.replace(/\\D/g, '').length >= 10;
+      if (!this.name.trim() || !this.company.trim() || !phoneValid || !emailValid || !this.city.trim() || !this.need.trim() || !this.consent) {
+        this.error = 'Revise os campos obrigatórios e confirme o consentimento.';
+        return;
+      }
+      this.submitting = true;
+      const message = 'Olá, quero falar sobre ${solution}. Nome: ' + this.name + '. Empresa: ' + this.company + '. Telefone: ' + this.phone + '. E-mail: ' + this.email + '. Cidade: ' + this.city + '. Necessidade: ' + this.need;
+      window.location.href = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(message);
+    }
+  }`}
+>
+  <h2 class="text-2xl font-semibold">Conte sobre sua empresa</h2>
+  <p class="mt-2 text-sm leading-6 text-muted">Os dados serão usados para preparar sua mensagem e continuar o atendimento no WhatsApp.</p>
+
+  <form class="mt-6 grid gap-5" x-on:submit.prevent="submit" novalidate>
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div class="grid gap-2">
+        <label class="text-sm font-medium" for="business-name">Nome *</label>
+        <input id="business-name" name="name" type="text" autocomplete="name" x-model="name" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Seu nome" required />
+      </div>
+      <div class="grid gap-2">
+        <label class="text-sm font-medium" for="business-company">Empresa *</label>
+        <input id="business-company" name="company" type="text" autocomplete="organization" x-model="company" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Nome da empresa" required />
+      </div>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div class="grid gap-2">
+        <label class="text-sm font-medium" for="business-phone">WhatsApp *</label>
+        <input id="business-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" x-model="phone" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="(31) 99999-9999" required />
+      </div>
+      <div class="grid gap-2">
+        <label class="text-sm font-medium" for="business-email">E-mail corporativo *</label>
+        <input id="business-email" name="email" type="email" autocomplete="email" x-model="email" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="voce@empresa.com.br" required />
+      </div>
+    </div>
+
+    <div class="grid gap-2">
+      <label class="text-sm font-medium" for="business-city">Cidade *</label>
+      <input id="business-city" name="city" type="text" autocomplete="address-level2" x-model="city" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Cidade da operação" required />
+    </div>
+
+    <div class="grid gap-2">
+      <label class="text-sm font-medium" for="business-need">O que sua operação precisa? *</label>
+      <textarea id="business-need" name="need" rows="4" x-model="need" class="rounded-xl border border-[var(--color-border-strong)] bg-white px-4 py-3 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Conte sobre equipe, dispositivos, sistemas e endereço" required></textarea>
+    </div>
+
+    <label class="flex items-start gap-3 text-sm leading-5 text-muted">
+      <input type="checkbox" name="consent" x-model="consent" class="mt-0.5 size-5 rounded border-[var(--color-border-strong)] accent-brand" required />
+      <span>Autorizo o contato da INFINICOM sobre esta solicitação.</span>
+    </label>
+
+    <p class="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert" aria-live="polite" x-show="error" x-text="error" x-cloak></p>
+
+    <button class="btn btn-primary w-full disabled:cursor-wait disabled:opacity-70" type="submit" x-bind:disabled="submitting">
+      <Icon name="lucide:message-circle" class="size-5" />
+      <span x-text="submitting ? 'Abrindo WhatsApp...' : 'Falar com consultor'">Falar com consultor</span>
+    </button>
+  </form>
+</section>

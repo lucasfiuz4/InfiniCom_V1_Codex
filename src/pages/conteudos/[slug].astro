@@ -1,0 +1,194 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import ArticleCard from '../../components/ArticleCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site, whatsappUrl } from '../../config/site';
+import { categorySlug, contentSlug, formatContentDate, readingTime, sortContents } from '../../lib/content';
+
+interface Props {
+  entry: CollectionEntry<'conteudos'>;
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection('conteudos', ({ data }) => !data.draft);
+
+  return entries.map((entry) => ({
+    params: { slug: contentSlug(entry) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const { data } = entry;
+const allArticles = sortContents(await getCollection('conteudos', ({ data }) => !data.draft));
+const relatedArticles = allArticles
+  .filter((article) => article.id !== entry.id && article.data.category === data.category)
+  .slice(0, 2);
+const contactUrl = whatsappUrl(`Olá, li o conteúdo "${data.title}" e quero falar com um consultor.`);
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toString();
+const imageUrl = new URL(data.cover.src, Astro.site ?? site.url).toString();
+const modifiedAt = data.updatedAt ?? data.publishedAt;
+const tableOfContents = headings.filter((heading) => heading.depth === 2);
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: data.title,
+    description: data.description,
+    image: imageUrl,
+    datePublished: data.publishedAt.toISOString(),
+    dateModified: modifiedAt.toISOString(),
+    mainEntityOfPage: canonicalUrl,
+    author: {
+      '@type': 'Organization',
+      name: data.author,
+      url: site.url,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: site.name,
+      url: site.url,
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Conteúdos', item: `${site.url}/conteudos/` },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: data.category,
+        item: `${site.url}/conteudos/categoria/${categorySlug(data.category)}/`,
+      },
+      { '@type': 'ListItem', position: 4, name: data.title, item: canonicalUrl },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={`${data.title} | INFINICOM`}
+  description={data.description}
+  image={imageUrl}
+  type="article"
+  publishedTime={data.publishedAt.toISOString()}
+  modifiedTime={modifiedAt.toISOString()}
+  schema={schema}
+>
+  <article class="bg-canvas">
+    <header class="container-shell py-10 sm:py-14 lg:py-16">
+      <nav aria-label="Breadcrumb" class="mb-10 text-sm text-muted">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li><a href="/" class="hover:text-brand">Início</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li><a href="/conteudos/" class="hover:text-brand">Conteúdos</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li><a href={`/conteudos/categoria/${categorySlug(data.category)}/`} class="hover:text-brand">{data.category}</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li aria-current="page" class="max-w-[28ch] truncate font-medium text-ink">{data.title}</li>
+        </ol>
+      </nav>
+
+      <div class="max-w-4xl">
+        <a class="text-sm font-semibold text-brand hover:text-brand-strong" href={`/conteudos/categoria/${categorySlug(data.category)}/`}>{data.category}</a>
+        <h1 class="mt-5 max-w-[20ch] text-4xl font-semibold leading-[1.08] text-ink sm:text-5xl lg:text-6xl">{data.title}</h1>
+        <p class="mt-6 max-w-[52rem] text-lg leading-8 text-muted sm:text-xl">{data.summary}</p>
+        <div class="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
+          <span class="font-semibold text-ink">{data.author}</span>
+          <span aria-hidden="true">|</span>
+          <time datetime={data.publishedAt.toISOString()}>{formatContentDate(data.publishedAt)}</time>
+          <span aria-hidden="true">|</span>
+          <span>{readingTime(entry.body ?? '')}</span>
+        </div>
+      </div>
+
+      <div class="mt-10 overflow-hidden rounded-2xl bg-soft p-2">
+        <Image
+          src={data.cover}
+          alt={data.coverAlt}
+          widths={[640, 960, 1440]}
+          sizes="(max-width: 1279px) 100vw, 1280px"
+          format="webp"
+          quality={82}
+          loading="eager"
+          class="aspect-[16/8] w-full rounded-xl object-cover"
+        />
+      </div>
+    </header>
+
+    <div class="border-t border-[var(--color-border)] bg-white">
+      <div class="container-shell grid gap-10 py-14 lg:grid-cols-[minmax(0,44rem)_18rem] lg:justify-center lg:gap-20 lg:py-20">
+        <div>
+          <section class="rounded-2xl bg-soft p-7 sm:p-8" aria-labelledby="resumo-title">
+            <h2 id="resumo-title" class="text-xl font-semibold text-ink">Antes de começar</h2>
+            <ul class="mt-5 grid gap-4">
+              {data.keyPoints.map((point) => (
+                <li class="flex gap-3 leading-7 text-muted">
+                  <Icon name="lucide:check" class="mt-1 size-5 shrink-0 text-brand" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <aside class="my-10 rounded-2xl border border-[var(--color-border)] bg-canvas p-7 sm:p-8" aria-labelledby="solution-title">
+            <p class="text-sm font-semibold text-brand">Solução relacionada</p>
+            <h2 id="solution-title" class="mt-3 text-2xl font-semibold text-ink">{data.relatedSolution.title}</h2>
+            <p class="mt-3 max-w-[50ch] leading-7 text-muted">{data.relatedSolution.description}</p>
+            <a class="btn btn-primary mt-6" href={data.relatedSolution.href}>
+              {data.relatedSolution.cta}
+              <Icon name="lucide:arrow-right" class="size-4" />
+            </a>
+          </aside>
+
+          <div class="article-body">
+            <Content />
+          </div>
+        </div>
+
+        <aside class="lg:sticky lg:top-28 lg:self-start" aria-labelledby="article-index-title">
+          <div class="rounded-2xl border border-[var(--color-border)] bg-canvas p-6">
+            <Icon name="lucide:list" class="size-6 text-brand" />
+            <h2 id="article-index-title" class="mt-7 text-xl font-semibold text-ink">Neste artigo</h2>
+            <nav class="mt-4 grid gap-3" aria-label="Seções do artigo">
+              {tableOfContents.map((heading) => (
+                <a class="text-sm leading-5 text-muted hover:text-brand" href={`#${heading.slug}`}>{heading.text}</a>
+              ))}
+            </nav>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  {relatedArticles.length > 0 && (
+    <section class="section-space bg-canvas" aria-labelledby="related-title">
+      <div class="container-shell">
+        <h2 id="related-title" class="section-title">Artigos relacionados</h2>
+        <div class="mt-10 grid gap-x-7 gap-y-12 md:grid-cols-2">
+          {relatedArticles.map((article) => <ArticleCard entry={article} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="bg-soft py-16 sm:py-20">
+    <div class="container-shell grid gap-8 rounded-2xl border border-[var(--color-border)] bg-white p-7 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
+      <div>
+        <h2 class="section-title max-w-[17ch]">Quer orientar sua próxima decisão?</h2>
+        <p class="mt-4 max-w-[56ch] text-lg leading-7 text-muted">Conte o contexto da sua empresa e converse com a equipe INFINICOM.</p>
+      </div>
+      <a class="btn btn-primary w-full lg:w-auto" href={contactUrl} target="_blank" rel="noreferrer">
+        <Icon name="lucide:message-circle" class="size-5" />
+        Falar com consultor
+      </a>
+    </div>
+  </section>
+</BaseLayout>

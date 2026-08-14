@@ -1,0 +1,223 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import heroImage from '../../assets/images/hero-consultoria.png';
+import businessImage from '../../assets/images/conectividade-empresa.png';
+import { whatsappUrl } from '../../config/site';
+
+const consultorUrl = whatsappUrl('Olá, quero conhecer melhor a INFINICOM e falar com um consultor.');
+
+const serviceFlow = [
+  {
+    icon: 'lucide:message-square-text',
+    title: 'Ouvir a necessidade',
+    text: 'A conversa começa pelo contexto, pelo local de uso e pelo que precisa ser resolvido.',
+  },
+  {
+    icon: 'lucide:scan-search',
+    title: 'Organizar o cenário',
+    text: 'A equipe reúne as informações que ajudam a direcionar a análise comercial.',
+  },
+  {
+    icon: 'lucide:route',
+    title: 'Orientar os caminhos',
+    text: 'As opções aplicáveis são apresentadas com explicações claras sobre o próximo passo.',
+  },
+  {
+    icon: 'lucide:handshake',
+    title: 'Acompanhar o contato',
+    text: 'O atendimento continua durante as etapas necessárias para avançar com a contratação.',
+  },
+];
+
+const structure = [
+  ['Atendimento comercial', 'Recebe a solicitação e identifica o contexto inicial.'],
+  ['Consultoria de soluções', 'Relaciona a necessidade às alternativas comerciais aplicáveis.'],
+  ['Acompanhamento', 'Mantém o contato durante o andamento da contratação.'],
+  ['Relacionamento', 'Preserva um canal direto para orientações ligadas ao atendimento.'],
+];
+---
+
+<BaseLayout
+  title="Sobre a INFINICOM | Consultoria em telecomunicações"
+  description="Conheça a INFINICOM, sua atuação como consultoria comercial de soluções Vivo e a forma como a equipe orienta cada atendimento."
+>
+  <section class="relative isolate overflow-hidden bg-canvas">
+    <div class="pointer-events-none absolute -right-48 -top-56 size-[34rem] rounded-full bg-[#dbc5e4]/70 blur-3xl"></div>
+    <div class="container-shell py-10 sm:py-14 lg:py-16">
+      <nav aria-label="Breadcrumb" class="relative mb-9 text-sm text-muted">
+        <ol class="flex items-center gap-2">
+          <li><a href="/" class="transition-colors hover:text-brand">Início</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li aria-current="page" class="font-medium text-ink">Sobre a INFINICOM</li>
+        </ol>
+      </nav>
+
+      <div class="relative grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
+        <div class="reveal">
+          <p class="eyebrow text-brand">Sobre a INFINICOM</p>
+          <h1 class="display-title hero-title-balanced mt-5 max-w-[12ch]">Conheça a INFINICOM</h1>
+          <p class="mt-6 max-w-[34rem] text-lg leading-7 text-muted">
+            Consultoria comercial que orienta a escolha de soluções Vivo para casa, empresa ou empreendimento.
+          </p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a class="btn btn-primary" href="#como-atendemos">
+              Como atendemos
+              <Icon name="lucide:arrow-down-right" class="size-4" />
+            </a>
+          </div>
+        </div>
+
+        <div class="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white p-2 shadow-[var(--shadow-soft)] reveal reveal-delay">
+          <Image
+            src={heroImage}
+            alt="Profissional conversando com uma cliente durante um atendimento"
+            widths={[480, 768, 1100]}
+            sizes="(max-width: 1023px) 100vw, 52vw"
+            format="webp"
+            quality={82}
+            loading="eager"
+            class="aspect-[5/4] w-full rounded-xl object-cover object-center lg:aspect-[16/11]"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" aria-labelledby="quem-somos-title">
+    <div class="container-shell grid gap-10 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-5">
+        <p class="eyebrow text-brand">Quem somos</p>
+        <h2 id="quem-somos-title" class="section-title mt-4">Clareza antes da contratação</h2>
+      </div>
+      <div class="grid gap-8 lg:col-span-7 sm:grid-cols-2">
+        <div class="border-l-2 border-brand pl-5 sm:pt-10">
+          <h3 class="text-xl font-semibold text-ink">O que fazemos</h3>
+          <p class="mt-3 leading-7 text-muted">Entendemos o cenário do cliente e orientamos a conversa sobre conectividade, telefonia e soluções relacionadas.</p>
+        </div>
+        <div class="rounded-2xl bg-soft p-7 sm:p-8">
+          <Icon name="lucide:compass" class="size-7 text-brand" />
+          <h3 class="mt-10 text-2xl font-semibold text-ink">Por que existimos</h3>
+          <p class="mt-3 leading-7 text-muted">Para tornar uma decisão técnica e comercial mais compreensível, próxima e alinhada à necessidade real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-soft" aria-labelledby="vivo-title">
+    <div class="container-shell grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-20">
+      <div class="rounded-2xl bg-brand-deep p-7 text-[#fbf8fc] sm:p-10 lg:sticky lg:top-28">
+        <Icon name="lucide:badge-check" class="size-8 text-fuchsia-200" />
+        <h2 id="vivo-title" class="mt-10 max-w-[14ch] text-3xl font-semibold leading-tight sm:text-4xl">Nossa relação com as soluções Vivo</h2>
+        <p class="mt-5 max-w-[46ch] leading-7 text-fuchsia-100/80">A INFINICOM atua como canal comercial e orienta clientes interessados no portfólio Vivo.</p>
+      </div>
+
+      <div class="grid gap-6 pt-2">
+        <div class="border-b border-[var(--color-border)] pb-6">
+          <h3 class="text-xl font-semibold text-ink">Atendimento pela INFINICOM</h3>
+          <p class="mt-2 leading-7 text-muted">A conversa, a análise inicial e o acompanhamento comercial são conduzidos pela nossa equipe.</p>
+        </div>
+        <div class="border-b border-[var(--color-border)] pb-6">
+          <h3 class="text-xl font-semibold text-ink">Portfólio Vivo</h3>
+          <p class="mt-2 leading-7 text-muted">Apresentamos soluções da operadora conforme o perfil, a necessidade e a disponibilidade aplicável.</p>
+        </div>
+        <div class="border-b border-[var(--color-border)] pb-6">
+          <h3 class="text-xl font-semibold text-ink">Identidades distintas</h3>
+          <p class="mt-2 leading-7 text-muted">A INFINICOM é responsável por este site, que não é o site oficial da Vivo. Marcas de terceiros pertencem aos seus titulares.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-ink">Condições confirmadas no atendimento</h3>
+          <p class="mt-2 leading-7 text-muted">Cobertura, valores, benefícios e regras comerciais precisam ser validados antes da contratação.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" id="como-atendemos" aria-labelledby="atendimento-title">
+    <div class="container-shell">
+      <h2 id="atendimento-title" class="section-title">Como atendemos</h2>
+      <p class="mt-5 max-w-[58ch] text-lg leading-7 text-muted">Um processo consultivo para transformar a necessidade inicial em um próximo passo compreensível.</p>
+
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+        {serviceFlow.map((item, index) => (
+          <article class:list={['relative lg:px-7', index === 0 ? 'lg:pl-0' : 'lg:border-l lg:border-[var(--color-border)]', index === serviceFlow.length - 1 && 'lg:pr-0']}>
+            <Icon name={item.icon} class="size-6 text-brand" />
+            <h3 class="mt-8 text-xl font-semibold text-ink">{item.title}</h3>
+            <p class="mt-3 text-sm leading-6 text-muted">{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-canvas" aria-labelledby="diferenciais-title">
+    <div class="container-shell grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-4">
+        <h2 id="diferenciais-title" class="section-title">Por que confiar</h2>
+        <p class="mt-5 text-lg leading-7 text-muted">O atendimento é organizado para reduzir dúvidas e tornar os critérios da decisão mais visíveis.</p>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2 lg:col-span-8">
+        <article class="min-h-56 rounded-2xl bg-brand-deep p-7 text-[#fbf8fc] sm:col-span-2 sm:grid sm:grid-cols-[auto_1fr] sm:items-end sm:gap-8">
+          <Icon name="lucide:messages-square" class="size-8 text-fuchsia-200" />
+          <div>
+            <h3 class="text-2xl font-semibold">Conversa com contexto</h3>
+            <p class="mt-3 max-w-[52ch] leading-7 text-fuchsia-100/80">A recomendação parte do uso, do endereço e das prioridades apresentadas pelo cliente.</p>
+          </div>
+        </article>
+        <article class="rounded-2xl border border-[var(--color-border)] bg-white p-7">
+          <Icon name="lucide:file-check-2" class="size-7 text-brand" />
+          <h3 class="mt-10 text-xl font-semibold">Informação responsável</h3>
+          <p class="mt-3 leading-7 text-muted">Condições comerciais são confirmadas antes de serem tratadas como disponíveis.</p>
+        </article>
+        <article class="rounded-2xl bg-[#e8dcec] p-7">
+          <Icon name="lucide:waypoints" class="size-7 text-brand" />
+          <h3 class="mt-10 text-xl font-semibold">Orientação próxima</h3>
+          <p class="mt-3 leading-7 text-muted">O cliente sabe com quem falar e qual informação precisa fornecer para avançar.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" aria-labelledby="estrutura-title">
+    <div class="container-shell grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
+      <div class="overflow-hidden rounded-2xl bg-soft p-2">
+        <Image
+          src={businessImage}
+          alt="Profissionais reunidos para analisar necessidades de uma empresa"
+          widths={[480, 768, 1100]}
+          sizes="(max-width: 1023px) 100vw, 54vw"
+          format="webp"
+          quality={80}
+          class="aspect-[16/11] w-full rounded-xl object-cover"
+        />
+      </div>
+
+      <div>
+        <h2 id="estrutura-title" class="section-title">Uma estrutura voltada ao atendimento</h2>
+        <p class="mt-5 max-w-[48ch] text-lg leading-7 text-muted">Cada frente contribui para manter a conversa organizada do primeiro contato ao acompanhamento comercial.</p>
+        <div class="mt-9 grid gap-x-7 gap-y-8 sm:grid-cols-2">
+          {structure.map(([title, text]) => (
+            <div class="border-l-2 border-brand pl-5">
+              <h3 class="font-semibold text-ink">{title}</h3>
+              <p class="mt-2 text-sm leading-6 text-muted">{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-soft py-16 sm:py-20">
+    <div class="container-shell grid gap-8 rounded-2xl border border-[var(--color-border)] bg-white p-7 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
+      <div>
+        <h2 class="section-title max-w-[17ch]">Quer conversar com a INFINICOM?</h2>
+        <p class="mt-4 max-w-[56ch] text-lg leading-7 text-muted">Conte sua necessidade e receba orientação para identificar o caminho mais adequado.</p>
+      </div>
+      <a class="btn btn-primary w-full lg:w-auto" href={consultorUrl} target="_blank" rel="noreferrer">
+        <Icon name="lucide:message-circle" class="size-5" />
+        Falar com consultor
+      </a>
+    </div>
+  </section>
+</BaseLayout>

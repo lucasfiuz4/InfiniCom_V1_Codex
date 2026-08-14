@@ -23,8 +23,8 @@ Domínio canônico confirmado: `https://infinicom.com.br`.
 │   ├── /para-sua-casa/vivo-total/                  [Planejada]
 │   └── /para-sua-casa/portabilidade/               [Planejada]
 │
-├── /para-sua-empresa/                              [Planejada]
-│   ├── /para-sua-empresa/internet-empresarial/     [Planejada]
+├── /para-sua-empresa/                              [Implementada]
+│   ├── /para-sua-empresa/internet-empresarial/     [Implementada]
 │   ├── /para-sua-empresa/link-dedicado/            [Planejada]
 │   ├── /para-sua-empresa/telefonia/                [Planejada]
 │   ├── /para-sua-empresa/iot/                      [Planejada]
@@ -32,12 +32,14 @@ Domínio canônico confirmado: `https://infinicom.com.br`.
 │
 ├── /condominios-e-construtoras/                    [Planejada]
 ├── /consultar-cobertura/                           [Planejada]
-├── /sobre/                                         [Planejada]
+├── /sobre/                                         [Implementada]
 │
-├── /conteudos/                                     [Planejada]
-│   └── /conteudos/[slug]/                          [Planejada]
+├── /conteudos/                                     [Implementada]
+│   ├── /conteudos/categoria/[categoria]/           [Implementada]
+│   └── /conteudos/[slug]/                          [Implementada]
+├── /rss.xml                                        [Implementada]
 │
-├── /contato/                                       [Planejada]
+├── /contato/                                       [Implementada]
 │
 ├── /lp/
 │   ├── /lp/vivo-fibra/                             [Implementada]
@@ -56,14 +58,26 @@ Domínio canônico confirmado: `https://infinicom.com.br`.
 ## Navegação principal
 
 ```text
-Para sua casa
-Para sua empresa
-Condomínios
+Início
+Soluções
+├── Vivo Fibra
+├── Planos móveis
+├── Vivo Total
+├── Portabilidade
+└── Consultar cobertura
+
+Para Empresas
+├── Visão geral
+├── Internet empresarial
+├── Link dedicado
+├── Telefonia
+└── Condomínios e construtoras
+
 Conteúdos
 Sobre
+Contato
 
-Ações
-├── Consultar cobertura
+Ação
 └── Falar com consultor
 ```
 

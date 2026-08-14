@@ -1,0 +1,230 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BusinessLeadForm from '../../components/BusinessLeadForm.astro';
+import { companySolutions, type CompanySolution } from '../../data/companySolutions';
+
+export function getStaticPaths() {
+  return companySolutions.map((solution) => ({
+    params: { slug: solution.slug },
+    props: { solution },
+  }));
+}
+
+interface Props {
+  solution: CompanySolution;
+}
+
+const { solution } = Astro.props;
+---
+
+<BaseLayout title={solution.seoTitle} description={solution.seoDescription}>
+  <section class="relative isolate overflow-hidden bg-[linear-gradient(118deg,#660099_0%,#660099_58%,#461e5f_100%)] text-white">
+    <div class="pointer-events-none absolute -left-40 top-16 size-[30rem] rounded-full bg-fuchsia-300/10 blur-3xl"></div>
+    <div class="container-shell py-10 sm:py-14 lg:py-16">
+      <nav aria-label="Breadcrumb" class="relative z-10 mb-9 text-sm text-fuchsia-100/75">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li><a href="/" class="transition-colors hover:text-white">Início</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li><a href="/para-sua-empresa/" class="transition-colors hover:text-white">Para sua empresa</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li aria-current="page" class="font-medium text-white">{solution.name}</li>
+        </ol>
+      </nav>
+
+      <div class="relative z-10 grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div class="reveal">
+          <p class="eyebrow text-fuchsia-100">{solution.eyebrow}</p>
+          <h1 class="display-title hero-title-balanced mt-5 max-w-[12ch]">{solution.heroTitle}</h1>
+          <p class="mt-6 max-w-[37rem] text-lg leading-7 text-fuchsia-50/85">{solution.heroDescription}</p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a class="btn btn-light" href="#atendimento">
+              Falar com consultor
+              <Icon name="lucide:arrow-down-right" class="size-4" />
+            </a>
+            <a class="btn border border-white/35 text-white hover:bg-white/10" href="#como-funciona">Como funciona</a>
+          </div>
+        </div>
+
+        <div class="overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-2 reveal reveal-delay">
+          <Image
+            src={solution.image}
+            alt={solution.imageAlt}
+            widths={[480, 768, 1100]}
+            sizes="(max-width: 1023px) 100vw, 46vw"
+            format="webp"
+            quality={82}
+            loading="eager"
+            class="aspect-[4/3] w-full rounded-xl object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" aria-labelledby="necessidade-title">
+    <div class="container-shell grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start lg:gap-20">
+      <div class="lg:sticky lg:top-28">
+        <h2 id="necessidade-title" class="section-title max-w-[15ch]">{solution.problemTitle}</h2>
+        <p class="mt-5 max-w-[48ch] text-lg leading-7 text-muted">{solution.problemDescription}</p>
+      </div>
+
+      <div class="grid gap-0 border-t border-[var(--color-border)]">
+        {solution.signals.map((signal) => (
+          <p class="flex items-start gap-4 border-b border-[var(--color-border)] py-6 text-lg leading-7 text-ink">
+            <Icon name="lucide:check" class="mt-1 size-5 shrink-0 text-brand" />
+            {signal}
+          </p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-canvas" aria-labelledby="beneficios-title">
+    <div class="container-shell">
+      <h2 id="beneficios-title" class="section-title">O que essa escolha pode apoiar</h2>
+      <p class="mt-5 max-w-[60ch] text-lg leading-7 text-muted">Benefícios avaliados conforme a rotina, o endereço e as necessidades informadas pela empresa.</p>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-12">
+        {solution.benefits.map((benefit) => (
+          <article class:list={['rounded-2xl border border-[var(--color-border)] p-7 sm:p-8', benefit.tone]}>
+            <Icon name={benefit.icon} class="size-7" />
+            <h3 class="mt-12 text-2xl font-semibold">{benefit.title}</h3>
+            <p class:list={['mt-4 max-w-[48ch] leading-7', benefit.muted]}>{benefit.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" aria-labelledby="caracteristicas-title">
+    <div class="container-shell">
+      <h2 id="caracteristicas-title" class="section-title max-w-[16ch]">O que entra na avaliação</h2>
+      <p class="mt-5 max-w-[60ch] text-lg leading-7 text-muted">A conversa comercial considera o contexto completo antes de indicar um próximo passo.</p>
+
+      <div class="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">
+        {solution.characteristics.map((characteristic, index) => (
+          <article class="border-l-2 border-brand/25 pl-5">
+            <div class="flex items-center gap-3">
+              <span class="font-display text-sm font-semibold text-brand">{String(index + 1).padStart(2, '0')}</span>
+              <h3 class="text-xl font-semibold">{characteristic.title}</h3>
+            </div>
+            <p class="mt-3 max-w-[48ch] leading-7 text-muted">{characteristic.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-soft" aria-labelledby="publico-title">
+    <div class="container-shell">
+      <h2 id="publico-title" class="section-title">Para quem é indicado</h2>
+      <p class="mt-5 max-w-[58ch] text-lg leading-7 text-muted">Cenários comuns que ajudam a identificar quando vale iniciar uma avaliação.</p>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-12">
+        {solution.audiences.map((audience) => (
+          <article class:list={['rounded-2xl border border-[var(--color-border)] p-7 sm:p-8', audience.tone]}>
+            <Icon name={audience.icon} class="size-7" />
+            <h3 class="mt-12 text-2xl font-semibold">{audience.title}</h3>
+            <p class:list={['mt-4 max-w-[46ch] leading-7', audience.tone.includes('text-white') ? 'text-fuchsia-100/75' : 'text-muted']}>{audience.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" id="como-funciona" aria-labelledby="processo-title">
+    <div class="container-shell">
+      <h2 id="processo-title" class="section-title">Como funciona</h2>
+      <p class="mt-5 max-w-[58ch] text-lg leading-7 text-muted">Um caminho simples para entender o cenário antes de avançar.</p>
+
+      <ol class="mt-12 grid gap-8 lg:grid-cols-3 lg:gap-0">
+        {solution.process.map((item, index) => (
+          <li class:list={['relative pr-8', index > 0 && 'border-t border-[var(--color-border)] pt-8 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0']}>
+            <Icon name={index === 0 ? 'lucide:clipboard-pen-line' : index === 1 ? 'lucide:map-pin-check' : 'lucide:messages-square'} class="size-6 text-brand" />
+            <h3 class="mt-8 text-2xl font-semibold">{item.title}</h3>
+            <p class="mt-3 max-w-[36ch] leading-7 text-muted">{item.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-space bg-canvas" aria-labelledby="diferenciais-title">
+    <div class="container-shell grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start lg:gap-20">
+      <div>
+        <h2 id="diferenciais-title" class="section-title max-w-[15ch]">Clareza antes da contratação</h2>
+        <p class="mt-5 max-w-[44ch] text-lg leading-7 text-muted">A INFINICOM conduz o atendimento comercial e ajuda a organizar as informações da empresa.</p>
+      </div>
+
+      <div class="grid gap-4">
+        {solution.differentials.map((item) => (
+          <article class="grid gap-4 rounded-2xl border border-[var(--color-border)] bg-white p-6 sm:grid-cols-[auto_1fr] sm:items-start sm:gap-5">
+            <Icon name={item.icon} class="size-6 text-brand" />
+            <div>
+              <h3 class="text-xl font-semibold">{item.title}</h3>
+              <p class="mt-2 leading-7 text-muted">{item.text}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" aria-labelledby="faq-title">
+    <div class="container-shell grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+      <div>
+        <h2 id="faq-title" class="section-title">Dúvidas frequentes</h2>
+        <p class="mt-5 max-w-[38ch] leading-7 text-muted">Respostas iniciais para ajudar sua empresa a avançar com mais contexto.</p>
+      </div>
+
+      <div class="grid gap-3" x-data="{ active: 0 }">
+        {solution.faqs.map((item, index) => (
+          <article class="rounded-2xl border border-[var(--color-border)] bg-white">
+            <h3>
+              <button type="button" class="flex min-h-16 w-full items-center justify-between gap-5 px-5 py-4 text-left font-display text-lg font-semibold" x-on:click={`active = active === ${index} ? -1 : ${index}`} x-bind:aria-expanded={`active === ${index}`} aria-controls={`solution-faq-${index}`}>
+                <span>{item.question}</span>
+                <Icon name="lucide:plus" class="size-5 shrink-0 text-brand transition-transform" x-bind:class={`active === ${index} && 'rotate-45'`} />
+              </button>
+            </h3>
+            <div id={`solution-faq-${index}`} class="px-5 pb-5 pr-12 leading-7 text-muted" x-show={`active === ${index}`}>
+              <p>{item.answer}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-soft" id="atendimento" aria-labelledby="atendimento-title">
+    <div class="container-shell grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start lg:gap-20">
+      <div class="lg:sticky lg:top-28">
+        <h2 id="atendimento-title" class="section-title max-w-[14ch]">Quer encontrar a melhor opção?</h2>
+        <p class="mt-5 max-w-[46ch] text-lg leading-7 text-muted">Preencha os dados essenciais. Sua mensagem será preparada para continuar o atendimento no WhatsApp.</p>
+      </div>
+      <BusinessLeadForm solution={solution.name} />
+    </div>
+  </section>
+
+  <section class="section-space bg-white" aria-labelledby="relacionadas-title">
+    <div class="container-shell">
+      <h2 id="relacionadas-title" class="section-title max-w-[16ch]">Soluções relacionadas</h2>
+      <p class="mt-5 max-w-[58ch] text-lg leading-7 text-muted">Outros caminhos que podem fazer parte da análise da sua empresa.</p>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-12">
+        {solution.related.map((item, index) => (
+          <a href={item.href} class:list={['group rounded-2xl border border-[var(--color-border)] p-7 transition-transform hover:-translate-y-1', index === 0 ? 'bg-brand-deep text-white md:col-span-6' : index === 1 ? 'bg-soft text-ink md:col-span-3' : 'bg-[#e8dcec] text-ink md:col-span-3']}>
+            <Icon name={item.icon} class="size-7" />
+            <h3 class="mt-12 text-2xl font-semibold">{item.title}</h3>
+            <p class:list={['mt-3 leading-6', index === 0 ? 'text-fuchsia-100/75' : 'text-muted']}>{item.text}</p>
+            <span class="mt-6 inline-flex items-center gap-2 font-semibold">
+              Conhecer no catálogo
+              <Icon name="lucide:arrow-up-right" class="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

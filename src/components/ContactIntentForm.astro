@@ -1,0 +1,226 @@
+---
+import { Icon } from 'astro-icon/components';
+import { site } from '../config/site';
+
+const intents = [
+  {
+    value: 'commercial',
+    icon: 'lucide:briefcase-business',
+    title: 'Quero contratar',
+    text: 'Conte o que você precisa para casa, empresa ou empreendimento.',
+    tone: 'md:col-span-6',
+  },
+  {
+    value: 'client',
+    icon: 'lucide:badge-check',
+    title: 'Já sou cliente',
+    text: 'Informe o serviço e o motivo do contato para uma orientação inicial.',
+    tone: 'md:col-span-3',
+  },
+  {
+    value: 'question',
+    icon: 'lucide:circle-help',
+    title: 'Tenho uma dúvida',
+    text: 'Envie sua pergunta para a equipe entender o assunto.',
+    tone: 'md:col-span-3',
+  },
+];
+
+const products = [
+  'Vivo Fibra',
+  'Planos móveis',
+  'Vivo Total',
+  'Portabilidade',
+  'Internet empresarial',
+  'Link dedicado',
+  'Telefonia empresarial',
+  'IoT',
+  'Condomínios e construtoras',
+  'Outro assunto',
+];
+---
+
+<section
+  x-data={`{
+    intent: 'commercial', profile: 'Pessoa física', name: '', company: '', phone: '', email: '', city: '', product: '', message: '', consent: false,
+    submitting: false, submitted: false, errors: {}, source: 'direto', medium: 'não informado', campaign: 'não informada', referrer: 'acesso direto', page: '/contato/',
+    init() {
+      const params = new URLSearchParams(window.location.search);
+      this.source = params.get('utm_source') || 'direto';
+      this.medium = params.get('utm_medium') || 'não informado';
+      this.campaign = params.get('utm_campaign') || 'não informada';
+      this.page = window.location.pathname;
+      try { this.referrer = document.referrer ? new URL(document.referrer).hostname : 'acesso direto'; } catch { this.referrer = 'não identificado'; }
+    },
+    selectIntent(value) {
+      this.intent = value;
+      this.errors = {};
+      if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'contact_intent_selected', contact_intent: value });
+    },
+    validate() {
+      const errors = {};
+      const phoneDigits = this.phone.replace(/\D/g, '');
+      const emailValid = !this.email.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.trim());
+      if (!this.name.trim()) errors.name = 'Informe seu nome.';
+      if (this.intent === 'commercial' && this.profile !== 'Pessoa física' && !this.company.trim()) errors.company = 'Informe o nome da empresa ou do empreendimento.';
+      if (phoneDigits.length < 10) errors.phone = 'Informe um telefone com DDD.';
+      if (!emailValid) errors.email = 'Informe um e-mail válido.';
+      if (this.intent === 'commercial' && !this.city.trim()) errors.city = 'Informe a cidade do atendimento.';
+      if (this.intent !== 'question' && !this.product) errors.product = 'Selecione o produto ou serviço.';
+      if (!this.message.trim()) errors.message = 'Conte brevemente como podemos ajudar.';
+      if (!this.consent) errors.consent = 'Confirme a autorização para continuar.';
+      this.errors = errors;
+      return Object.keys(errors).length === 0;
+    },
+    submit() {
+      if (!this.validate()) {
+        this.$nextTick(() => this.$root.querySelector('[aria-invalid=true]')?.focus());
+        return;
+      }
+      this.submitting = true;
+      const labels = { commercial: 'Quero contratar', client: 'Já sou cliente', question: 'Tenho uma dúvida' };
+      const lines = [
+        'Olá! Entrei em contato pelo site da INFINICOM.',
+        '',
+        'Intenção: ' + labels[this.intent],
+        this.intent === 'commercial' ? 'Perfil: ' + this.profile : '',
+        'Nome: ' + this.name.trim(),
+        (this.intent === 'client' || (this.intent === 'commercial' && this.profile !== 'Pessoa física')) && this.company.trim() ? 'Empresa: ' + this.company.trim() : '',
+        'Telefone: ' + this.phone.trim(),
+        this.email.trim() ? 'E-mail: ' + this.email.trim() : '',
+        this.city.trim() ? 'Cidade: ' + this.city.trim() : '',
+        this.product ? 'Produto ou serviço: ' + this.product : '',
+        'Mensagem: ' + this.message.trim(),
+        '',
+        'Origem: ' + this.source,
+        'Mídia: ' + this.medium,
+        'Campanha: ' + this.campaign,
+        'Referência: ' + this.referrer,
+        'Página: ' + this.page,
+      ].filter(Boolean);
+      if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'contact_whatsapp_submit', contact_intent: this.intent, product_interest: this.product, lead_source: this.source });
+      this.submitted = true;
+      window.location.href = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(lines.join('\\n'));
+    }
+  }`}
+  x-init="init"
+  aria-labelledby="contact-form-title"
+>
+  <div class="grid gap-4 md:grid-cols-12" role="radiogroup" aria-labelledby="intent-title">
+    <h2 id="intent-title" class="sr-only">Escolha o motivo do contato</h2>
+    {intents.map((intent, index) => (
+      <label class:list={['group relative cursor-pointer', intent.tone]}>
+        <input
+          type="radio"
+          name="contact-intent"
+          value={intent.value}
+          class="peer sr-only"
+          x-model="intent"
+          x-on:change={`selectIntent('${intent.value}')`}
+          checked={index === 0}
+        />
+        <span class="flex min-h-44 h-full flex-col rounded-2xl border border-[var(--color-border-strong)] bg-white p-6 transition-colors group-hover:border-brand peer-checked:border-brand peer-checked:bg-[#f4ecf7] peer-focus-visible:outline peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-[var(--color-focus)]">
+          <Icon name={intent.icon} class="size-7 text-brand" />
+          <span class="mt-auto pt-8 font-display text-xl font-semibold text-ink">{intent.title}</span>
+          <span class="mt-2 text-sm leading-6 text-muted">{intent.text}</span>
+        </span>
+      </label>
+    ))}
+  </div>
+
+  <div class="mt-8 grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start lg:gap-12">
+    <aside class="rounded-2xl bg-brand-deep p-7 text-[#fbf8fc] lg:sticky lg:top-28" aria-labelledby="contact-context-title">
+      <Icon name="lucide:messages-square" class="size-7 text-fuchsia-200" />
+      <h2 id="contact-context-title" class="mt-9 text-2xl font-semibold" x-text="intent === 'commercial' ? 'Vamos entender sua necessidade' : intent === 'client' ? 'Vamos identificar o assunto' : 'Envie sua pergunta'">Vamos entender sua necessidade</h2>
+      <p class="mt-4 leading-7 text-fuchsia-100/80" x-text="intent === 'commercial' ? 'Preencha os dados principais. Sua mensagem será organizada e aberta no WhatsApp.' : intent === 'client' ? 'Este canal faz uma orientação inicial e pode indicar outro atendimento quando necessário.' : 'Compartilhe o contexto da dúvida para facilitar a primeira resposta.'">Preencha os dados principais. Sua mensagem será organizada e aberta no WhatsApp.</p>
+
+      <div class="mt-8 border-t border-white/15 pt-6 text-sm leading-6 text-fuchsia-100/75">
+        <p>A INFINICOM é responsável por este atendimento.</p>
+        <p class="mt-3" x-show="intent === 'client'" x-cloak>Solicitações sobre serviços já contratados podem exigir atendimento pelos canais oficiais da operadora.</p>
+      </div>
+    </aside>
+
+    <form class="rounded-2xl border border-[var(--color-border)] bg-white p-5 shadow-[var(--shadow-soft)] sm:p-8" x-on:submit.prevent="submit" novalidate>
+      <h2 id="contact-form-title" class="text-2xl font-semibold text-ink" x-text="intent === 'commercial' ? 'Conte o que você procura' : intent === 'client' ? 'Conte sobre o serviço contratado' : 'Qual é a sua dúvida?'">Conte o que você procura</h2>
+      <p class="mt-2 text-sm leading-6 text-muted">Campos marcados com * são obrigatórios para a intenção selecionada.</p>
+
+      <div class="mt-7 grid gap-5 sm:grid-cols-2">
+        <div class="grid gap-2" x-bind:class="intent !== 'commercial' && 'sm:col-span-2'">
+          <label class="text-sm font-medium text-ink" for="contact-name">Nome *</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" x-model="name" x-bind:aria-invalid="Boolean(errors.name)" aria-describedby="contact-name-error" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Seu nome" required />
+          <p id="contact-name-error" class="text-sm text-red-800" x-show="errors.name" x-text="errors.name" x-cloak></p>
+        </div>
+
+        <div class="grid gap-2" x-show="intent === 'commercial'">
+          <label class="text-sm font-medium text-ink" for="contact-profile">Perfil *</label>
+          <select id="contact-profile" name="profile" x-model="profile" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink focus:border-brand">
+            <option>Pessoa física</option>
+            <option>Empresa</option>
+            <option>Condomínio ou construtora</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-5 grid gap-2" x-show="intent === 'client' || (intent === 'commercial' && profile !== 'Pessoa física')">
+        <label class="text-sm font-medium text-ink" for="contact-company">Empresa ou empreendimento <span x-show="intent === 'commercial' && profile !== 'Pessoa física'">*</span></label>
+        <input id="contact-company" name="company" type="text" autocomplete="organization" x-model="company" x-bind:required="intent === 'commercial' && profile !== 'Pessoa física'" x-bind:aria-invalid="Boolean(errors.company)" aria-describedby="contact-company-error" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Nome da empresa ou empreendimento" />
+        <p id="contact-company-error" class="text-sm text-red-800" x-show="errors.company" x-text="errors.company" x-cloak></p>
+      </div>
+
+      <div class="mt-5 grid gap-5 sm:grid-cols-2">
+        <div class="grid gap-2">
+          <label class="text-sm font-medium text-ink" for="contact-phone">Telefone ou WhatsApp *</label>
+          <input id="contact-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" x-model="phone" x-bind:aria-invalid="Boolean(errors.phone)" aria-describedby="contact-phone-error" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="(31) 99999-9999" required />
+          <p id="contact-phone-error" class="text-sm text-red-800" x-show="errors.phone" x-text="errors.phone" x-cloak></p>
+        </div>
+
+        <div class="grid gap-2">
+          <label class="text-sm font-medium text-ink" for="contact-email">E-mail <span class="font-normal text-muted">(opcional)</span></label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" x-model="email" x-bind:aria-invalid="Boolean(errors.email)" aria-describedby="contact-email-error" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="voce@empresa.com.br" />
+          <p id="contact-email-error" class="text-sm text-red-800" x-show="errors.email" x-text="errors.email" x-cloak></p>
+        </div>
+      </div>
+
+      <div class="mt-5 grid gap-5 sm:grid-cols-2">
+        <div class="grid gap-2">
+          <label class="text-sm font-medium text-ink" for="contact-city">Cidade <span x-show="intent === 'commercial'">*</span></label>
+          <input id="contact-city" name="city" type="text" autocomplete="address-level2" x-model="city" x-bind:required="intent === 'commercial'" x-bind:aria-invalid="Boolean(errors.city)" aria-describedby="contact-city-error" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Cidade do atendimento" />
+          <p id="contact-city-error" class="text-sm text-red-800" x-show="errors.city" x-text="errors.city" x-cloak></p>
+        </div>
+
+        <div class="grid gap-2">
+          <label class="text-sm font-medium text-ink" for="contact-product">Produto ou serviço <span x-show="intent !== 'question'">*</span></label>
+          <select id="contact-product" name="product" x-model="product" x-bind:required="intent !== 'question'" x-bind:aria-invalid="Boolean(errors.product)" aria-describedby="contact-product-error" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink focus:border-brand">
+            <option value="">Selecione uma opção</option>
+            {products.map((product) => <option value={product}>{product}</option>)}
+          </select>
+          <p id="contact-product-error" class="text-sm text-red-800" x-show="errors.product" x-text="errors.product" x-cloak></p>
+        </div>
+      </div>
+
+      <div class="mt-5 grid gap-2">
+        <label class="text-sm font-medium text-ink" for="contact-message" x-text="intent === 'commercial' ? 'O que você precisa? *' : intent === 'client' ? 'Como podemos orientar? *' : 'Escreva sua dúvida *'">O que você precisa? *</label>
+        <textarea id="contact-message" name="message" rows="5" x-model="message" x-bind:aria-invalid="Boolean(errors.message)" aria-describedby="contact-message-error" class="rounded-xl border border-[var(--color-border-strong)] bg-white px-4 py-3 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Compartilhe o contexto principal da solicitação" required></textarea>
+        <p id="contact-message-error" class="text-sm text-red-800" x-show="errors.message" x-text="errors.message" x-cloak></p>
+      </div>
+
+      <div class="mt-5">
+        <label class="flex items-start gap-3 text-sm leading-6 text-muted">
+          <input type="checkbox" name="consent" x-model="consent" x-bind:aria-invalid="Boolean(errors.consent)" aria-describedby="contact-consent-error" class="mt-0.5 size-5 shrink-0 rounded border-[var(--color-border-strong)] accent-brand" required />
+          <span>Autorizo o contato da INFINICOM sobre esta solicitação e li a <a href="/privacidade" class="font-semibold text-brand underline underline-offset-2">Política de Privacidade</a>.</span>
+        </label>
+        <p id="contact-consent-error" class="mt-2 text-sm text-red-800" x-show="errors.consent" x-text="errors.consent" x-cloak></p>
+      </div>
+
+      <div class="mt-7 rounded-xl bg-[#edf7f1] px-4 py-3 text-sm text-[#245c40]" role="status" aria-live="polite" x-show="submitted" x-cloak>
+        Mensagem preparada. Abrindo o WhatsApp para continuar.
+      </div>
+
+      <button class="btn btn-primary mt-7 w-full disabled:cursor-wait disabled:opacity-70" type="submit" x-bind:disabled="submitting">
+        <Icon name="lucide:message-circle" class="size-5" />
+        <span x-text="submitting ? 'Abrindo WhatsApp...' : intent === 'commercial' ? 'Enviar pelo WhatsApp' : intent === 'client' ? 'Solicitar orientação' : 'Enviar dúvida pelo WhatsApp'">Enviar pelo WhatsApp</span>
+      </button>
+      <p class="mt-3 text-center text-xs leading-5 text-muted">Nenhum dado é enviado para um servidor neste site. A conversa será aberta no WhatsApp.</p>
+    </form>
+  </div>
+</section>
