@@ -5,11 +5,31 @@ import { whatsappUrl } from '../config/site';
 import logoActive from '../assets/brand/infinicom-logo-active.svg';
 
 const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICOM.');
+
+const solutionLinks = [
+  { label: 'Vivo Fibra', href: '/lp/vivo-fibra' },
+  { label: 'Planos móveis', href: '/#solucoes' },
+  { label: 'Vivo Total', href: '/#solucoes' },
+  { label: 'Portabilidade', href: '/#solucoes' },
+  { label: 'Consultar cobertura', href: '/#cobertura' },
+];
+
+const companyLinks = [
+  { label: 'Visão geral', href: '/#empresa' },
+  { label: 'Internet empresarial', href: '/#empresa' },
+  { label: 'Link dedicado', href: '/#empresa' },
+  { label: 'Telefonia', href: '/#empresa' },
+  { label: 'Condomínios e construtoras', href: '/#condominios' },
+];
 ---
 
-<header class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-white/95 text-ink backdrop-blur-md" x-data="{ open: false }">
-  <div class="container-shell flex h-[72px] items-center justify-between gap-6">
-    <a href="/" class="flex h-14 items-center" aria-label="InfiniCom, página inicial">
+<header
+  class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-white/95 text-ink backdrop-blur-md"
+  x-data="{ open: false, solutionsOpen: false, companiesOpen: false }"
+  x-on:keydown.escape.window="open = false; solutionsOpen = false; companiesOpen = false"
+>
+  <div class="container-shell flex h-[72px] items-center justify-between gap-5">
+    <a href="/" class="flex h-14 shrink-0 items-center" aria-label="InfiniCom, página inicial">
       <Image
         src={logoActive}
         alt="InfiniCom"
@@ -19,18 +39,75 @@ const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICO
       />
     </a>
 
-    <nav class="hidden items-center gap-5 text-sm font-medium xl:flex" aria-label="Navegação principal">
-      <a class="transition-colors hover:text-brand" href="/#casa">Para sua casa</a>
-      <a class="transition-colors hover:text-brand" href="/#empresa">Para sua empresa</a>
-      <a class="transition-colors hover:text-brand" href="/#condominios">Condomínios</a>
-      <a class="transition-colors hover:text-brand" href="/#conteudos">Conteúdos</a>
-      <a class="transition-colors hover:text-brand" href="/#sobre">Sobre</a>
+    <nav class="hidden items-center gap-4 text-sm font-medium xl:flex" aria-label="Navegação principal">
+      <a class="rounded-lg px-2 py-2 transition-colors hover:text-brand" href="/">Início</a>
+
+      <div class="relative" x-on:click.outside="solutionsOpen = false">
+        <button
+          type="button"
+          class="flex items-center gap-1.5 rounded-lg px-2 py-2 transition-colors hover:text-brand"
+          x-on:click="solutionsOpen = !solutionsOpen; companiesOpen = false"
+          x-bind:aria-expanded="solutionsOpen"
+          aria-haspopup="true"
+          aria-controls="solutions-menu"
+        >
+          Soluções
+          <Icon name="lucide:chevron-down" class="size-4 transition-transform" x-bind:class="solutionsOpen && 'rotate-180'" />
+        </button>
+        <div
+          id="solutions-menu"
+          class="absolute left-0 top-[calc(100%+0.75rem)] w-64 rounded-2xl border border-[var(--color-border)] bg-white p-2 shadow-[0_20px_50px_rgba(54,16,68,0.14)]"
+          x-show="solutionsOpen"
+          x-cloak
+          x-transition:enter="transition duration-150 ease-out"
+          x-transition:enter-start="-translate-y-2 opacity-0"
+          x-transition:enter-end="translate-y-0 opacity-100"
+        >
+          {solutionLinks.map((link) => (
+            <a class="flex min-h-11 items-center justify-between rounded-xl px-3 py-2.5 hover:bg-soft hover:text-brand" href={link.href} x-on:click="solutionsOpen = false">
+              {link.label}
+              <Icon name="lucide:arrow-up-right" class="size-4 text-brand" />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="relative" x-on:click.outside="companiesOpen = false">
+        <button
+          type="button"
+          class="flex items-center gap-1.5 rounded-lg px-2 py-2 transition-colors hover:text-brand"
+          x-on:click="companiesOpen = !companiesOpen; solutionsOpen = false"
+          x-bind:aria-expanded="companiesOpen"
+          aria-haspopup="true"
+          aria-controls="companies-menu"
+        >
+          Para Empresas
+          <Icon name="lucide:chevron-down" class="size-4 transition-transform" x-bind:class="companiesOpen && 'rotate-180'" />
+        </button>
+        <div
+          id="companies-menu"
+          class="absolute left-0 top-[calc(100%+0.75rem)] w-72 rounded-2xl border border-[var(--color-border)] bg-white p-2 shadow-[0_20px_50px_rgba(54,16,68,0.14)]"
+          x-show="companiesOpen"
+          x-cloak
+          x-transition:enter="transition duration-150 ease-out"
+          x-transition:enter-start="-translate-y-2 opacity-0"
+          x-transition:enter-end="translate-y-0 opacity-100"
+        >
+          {companyLinks.map((link) => (
+            <a class="flex min-h-11 items-center justify-between rounded-xl px-3 py-2.5 hover:bg-soft hover:text-brand" href={link.href} x-on:click="companiesOpen = false">
+              {link.label}
+              <Icon name="lucide:arrow-up-right" class="size-4 text-brand" />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <a class="rounded-lg px-2 py-2 transition-colors hover:text-brand" href="/#conteudos">Conteúdos</a>
+      <a class="rounded-lg px-2 py-2 transition-colors hover:text-brand" href="/#sobre">Sobre</a>
+      <a class="rounded-lg px-2 py-2 transition-colors hover:text-brand" href="/#contato">Contato</a>
     </nav>
 
-    <div class="hidden items-center gap-3 xl:flex">
-      <a class="btn min-h-11 border border-[var(--color-border-strong)] px-4 text-sm text-ink hover:border-brand/45" href="/#cobertura">
-        Consultar cobertura
-      </a>
+    <div class="hidden shrink-0 xl:block">
       <a class="btn min-h-11 bg-brand px-4 text-sm text-white hover:bg-brand-strong" href={consultorUrl} target="_blank" rel="noreferrer">
         <Icon name="lucide:message-circle" class="size-4" />
         Falar com consultor
@@ -50,16 +127,39 @@ const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICO
     </button>
   </div>
 
-  <div id="mobile-menu" class="border-t border-[var(--color-border)] bg-white xl:hidden" x-show="open" x-cloak>
+  <div id="mobile-menu" class="max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-[var(--color-border)] bg-white xl:hidden" x-show="open" x-cloak>
     <nav class="container-shell grid gap-1 py-4 text-base" aria-label="Navegação mobile">
-      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#casa" x-on:click="open = false">Para sua casa</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#empresa" x-on:click="open = false">Para sua empresa</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#condominios" x-on:click="open = false">Condomínios</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/" x-on:click="open = false">Início</a>
+
+      <button type="button" class="flex min-h-12 items-center justify-between rounded-xl px-3 py-3 text-left hover:bg-soft" x-on:click="solutionsOpen = !solutionsOpen; companiesOpen = false" x-bind:aria-expanded="solutionsOpen" aria-controls="mobile-solutions-menu">
+        <span>Soluções</span>
+        <Icon name="lucide:chevron-down" class="size-5 text-brand transition-transform" x-bind:class="solutionsOpen && 'rotate-180'" />
+      </button>
+      <div id="mobile-solutions-menu" class="ml-3 grid border-l-2 border-brand/20 pl-3" x-show="solutionsOpen" x-cloak>
+        {solutionLinks.map((link) => (
+          <a class="rounded-xl px-3 py-2.5 text-sm text-muted hover:bg-soft hover:text-brand" href={link.href} x-on:click="open = false">{link.label}</a>
+        ))}
+      </div>
+
+      <button type="button" class="flex min-h-12 items-center justify-between rounded-xl px-3 py-3 text-left hover:bg-soft" x-on:click="companiesOpen = !companiesOpen; solutionsOpen = false" x-bind:aria-expanded="companiesOpen" aria-controls="mobile-companies-menu">
+        <span>Para Empresas</span>
+        <Icon name="lucide:chevron-down" class="size-5 text-brand transition-transform" x-bind:class="companiesOpen && 'rotate-180'" />
+      </button>
+      <div id="mobile-companies-menu" class="ml-3 grid border-l-2 border-brand/20 pl-3" x-show="companiesOpen" x-cloak>
+        {companyLinks.map((link) => (
+          <a class="rounded-xl px-3 py-2.5 text-sm text-muted hover:bg-soft hover:text-brand" href={link.href} x-on:click="open = false">{link.label}</a>
+        ))}
+      </div>
+
       <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#conteudos" x-on:click="open = false">Conteúdos</a>
       <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#sobre" x-on:click="open = false">Sobre</a>
-      <div class="mt-3 grid gap-3 border-t border-[var(--color-border)] pt-4 sm:grid-cols-2">
-        <a class="btn border border-[var(--color-border-strong)] text-ink" href="/#cobertura" x-on:click="open = false">Consultar cobertura</a>
-        <a class="btn bg-brand text-white" href={consultorUrl} target="_blank" rel="noreferrer">Falar com consultor</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/#contato" x-on:click="open = false">Contato</a>
+
+      <div class="mt-3 border-t border-[var(--color-border)] pt-4">
+        <a class="btn btn-primary w-full" href={consultorUrl} target="_blank" rel="noreferrer">
+          <Icon name="lucide:message-circle" class="size-5" />
+          Falar com consultor
+        </a>
       </div>
     </nav>
   </div>

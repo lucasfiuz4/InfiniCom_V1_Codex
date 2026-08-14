@@ -39,13 +39,13 @@ const faqs = [
           A INFINICOM orienta sua escolha de soluções Vivo para casa, empresa ou empreendimento.
         </p>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a class="btn btn-light" href={consultorUrl} target="_blank" rel="noreferrer">
-            <Icon name="lucide:message-circle" class="size-5" />
-            Falar com consultor
+          <a class="btn btn-light" href="#solucoes">
+            Conheça as soluções
+            <Icon name="lucide:arrow-down-right" class="size-4" />
           </a>
           <a class="btn border border-white/35 text-white hover:bg-white/10" href="#cobertura">
+            <Icon name="lucide:map-pin-check" class="size-5" />
             Consultar cobertura
-            <Icon name="lucide:arrow-down-right" class="size-4" />
           </a>
         </div>
       </div>
@@ -67,11 +67,39 @@ const faqs = [
     </div>
   </section>
 
-  <section class="border-b border-[var(--color-border)] bg-white" aria-label="Posicionamento da marca">
-    <div class="container-shell grid gap-4 py-5 text-sm text-muted sm:grid-cols-3 sm:items-center">
-      <p class="font-semibold text-ink">INFINICOM é a empresa responsável pelo atendimento</p>
-      <p>Portfólio comercial com soluções Vivo</p>
-      <p class="sm:text-right">Atendimento para pessoas e empresas</p>
+  <section class="border-b border-[var(--color-border)] bg-white" aria-labelledby="posicionamento-title">
+    <div class="container-shell grid gap-7 py-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-9">
+      <div class="flex items-start gap-4">
+        <div class="grid size-12 shrink-0 place-items-center rounded-2xl bg-brand text-white shadow-[0_12px_30px_rgba(102,0,153,0.18)]">
+          <Icon name="lucide:messages-square" class="size-6" />
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-brand">Atendimento INFINICOM</p>
+          <h2 id="posicionamento-title" class="mt-1 max-w-[30ch] text-xl font-semibold leading-snug text-ink md:text-2xl">
+            Orientação clara para contratar com confiança.
+          </h2>
+          <p class="mt-2 max-w-[54ch] text-sm leading-6 text-muted">
+            Nossa equipe acompanha sua necessidade e ajuda você a encontrar a solução adequada.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid gap-5 border-t border-[var(--color-border)] pt-6 sm:grid-cols-2 sm:gap-0 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+        <div class="flex gap-3 sm:pr-6">
+          <Icon name="lucide:badge-check" class="mt-0.5 size-5 shrink-0 text-brand" />
+          <div>
+            <h3 class="font-semibold text-ink">Soluções Vivo</h3>
+            <p class="mt-1 text-sm leading-5 text-muted">Portfólio comercial para diferentes necessidades.</p>
+          </div>
+        </div>
+        <div class="flex gap-3 border-t border-[var(--color-border)] pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+          <Icon name="lucide:house-plug" class="mt-0.5 size-5 shrink-0 text-brand" />
+          <div>
+            <h3 class="font-semibold text-ink">Casa e empresa</h3>
+            <p class="mt-1 text-sm leading-5 text-muted">Atendimento adaptado a cada contexto.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -14,6 +14,8 @@ const {
   title = `${site.name} | Soluções Vivo com atendimento consultivo`,
   description = site.description,
 } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toString();
 ---
 
 <!doctype html>
@@ -26,6 +28,8 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
   </head>
   <body>

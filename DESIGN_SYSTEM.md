@@ -66,7 +66,7 @@ Manrope não deve ser usada em parágrafos longos. Inter não deve competir com 
 
 ### Header
 
-Header de 72px, sticky, navegação em uma linha a partir de 1280px e menu Alpine abaixo desse breakpoint.
+Header de 72px, sticky e com navegação em uma linha a partir de 1280px. A hierarquia principal contém Início, Soluções, Para Empresas, Conteúdos, Sobre, Contato e um único CTA comercial. Soluções e Para Empresas usam dropdowns acessíveis no desktop e accordions no menu mobile, controlados por Alpine.
 
 ### Botões
 

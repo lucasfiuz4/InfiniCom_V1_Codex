@@ -17,6 +17,13 @@ Site institucional e landing pages da INFINICOM no mesmo projeto Astro.
 - `/privacidade` Estrutura provisória da política
 - `/cookies` Estrutura provisória da política
 
+## Sitemap
+
+- `public/sitemap.xml`: arquivo entregue aos buscadores, contendo somente rotas publicadas.
+- `SITEMAP.md`: documentação da arquitetura completa e das páginas planejadas.
+
+O domínio canônico confirmado é `https://infinicom.com.br`.
+
 ## Desenvolvimento
 
 ```bash

@@ -1,5 +1,6 @@
 export const site = {
   name: 'INFINICOM',
+  url: 'https://infinicom.com.br',
   description:
     'Consultoria comercial especializada em soluções Vivo para casas, empresas, condomínios e construtoras em Minas Gerais.',
   whatsappNumber: import.meta.env.PUBLIC_WHATSAPP_NUMBER || '5531999999999',
