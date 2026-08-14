@@ -1,0 +1,232 @@
+@import "tailwindcss";
+@import "@fontsource-variable/manrope";
+@import "@fontsource-variable/inter";
+
+@theme {
+  --font-display: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --color-brand: #660099;
+  --color-brand-strong: #550080;
+  --color-brand-deep: #29003d;
+  --color-ink: #180024;
+  --color-muted: #625966;
+  --color-canvas: #f7f5f7;
+  --color-soft: #f1edf2;
+  --color-line: rgba(24, 0, 36, 0.12);
+  --radius-card: 1rem;
+}
+
+:root {
+  color-scheme: light;
+  --color-brand-primary: #660099;
+  --color-brand-hover: #550080;
+  --color-brand-deep: #29003d;
+  --color-brand-night: #180024;
+  --color-bg-primary: #f7f5f7;
+  --color-bg-secondary: #f1edf2;
+  --color-surface: #ffffff;
+  --color-surface-hover: #faf8fa;
+  --color-text-primary: #180024;
+  --color-text-secondary: #625966;
+  --color-text-muted: #817784;
+  --color-text-inverse: #fbf8fc;
+  --color-border: rgba(24, 0, 36, 0.12);
+  --color-border-strong: rgba(24, 0, 36, 0.18);
+  --color-focus: #8a2fb1;
+  --color-success: #26734d;
+  --color-error: #a52a3a;
+  --shadow-soft: 0 20px 50px rgba(54, 16, 68, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-bg-primary);
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+a,
+button,
+input,
+select,
+textarea,
+summary {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-focus), white 24%);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(102, 0, 153, 0.2);
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
+.whatsapp-attention {
+  isolation: isolate;
+}
+
+.whatsapp-attention::before {
+  position: absolute;
+  inset: -5px;
+  z-index: -1;
+  border: 2px solid rgba(37, 211, 102, 0.58);
+  border-radius: 1.25rem;
+  content: "";
+  opacity: 0;
+  animation: whatsapp-pulse 3.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes whatsapp-pulse {
+  0%,
+  58% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  66% {
+    opacity: 0.72;
+  }
+
+  92%,
+  100% {
+    opacity: 0;
+    transform: scale(1.22);
+  }
+}
+
+.container-shell {
+  width: min(100% - 2rem, 80rem);
+  margin-inline: auto;
+}
+
+.section-space {
+  padding-block: clamp(4.5rem, 8vw, 8rem);
+}
+
+.display-title {
+  font-size: clamp(2.65rem, 5.5vw, 4.75rem);
+  line-height: 1.02;
+  font-weight: 650;
+}
+
+.hero-title-balanced {
+  font-size: clamp(2.65rem, 4vw, 3.75rem);
+}
+
+.section-title {
+  max-width: 14ch;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.08;
+  font-weight: 650;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.btn {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.2rem;
+  font-family: var(--font-display);
+  font-weight: 650;
+  white-space: nowrap;
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn-primary {
+  background: var(--color-brand-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--color-brand-hover);
+}
+
+.btn-light {
+  background: #fbf8fc;
+  color: var(--color-brand-deep);
+}
+
+.btn-light:hover {
+  background: #eee8f0;
+}
+
+.btn-outline {
+  border: 1px solid var(--color-border-strong);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--color-text-primary);
+}
+
+.btn-outline:hover {
+  border-color: rgba(102, 0, 153, 0.44);
+  background: var(--color-surface);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: reveal-in 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-delay {
+  animation-delay: 120ms;
+}
+
+@keyframes reveal-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

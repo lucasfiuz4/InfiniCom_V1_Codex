@@ -1,0 +1,59 @@
+---
+import { Icon } from 'astro-icon/components';
+import { site, whatsappUrl } from '../config/site';
+
+const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICOM.');
+---
+
+<footer class="bg-[#180024] text-[#f8f3fa]">
+  <div class="container-shell grid gap-12 py-16 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+    <div>
+      <a href="/" class="font-display text-2xl font-bold tracking-[-0.04em]">INFINI<span class="text-fuchsia-300">COM</span></a>
+      <p class="mt-5 max-w-sm text-sm leading-6 text-fuchsia-100/70">
+        Consultoria comercial especializada em soluções Vivo para pessoas, empresas e empreendimentos em Minas Gerais.
+      </p>
+      <a class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-fuchsia-200" href={consultorUrl} target="_blank" rel="noreferrer">
+        <Icon name="lucide:message-circle" class="size-4" />
+        Falar com consultor
+      </a>
+    </div>
+
+    <div>
+      <h2 class="text-base font-semibold">Soluções</h2>
+      <ul class="mt-4 grid gap-3 text-sm text-fuchsia-100/70">
+        <li><a class="hover:text-white" href="/#casa">Vivo para sua casa</a></li>
+        <li><a class="hover:text-white" href="/#empresa">Vivo para empresas</a></li>
+        <li><a class="hover:text-white" href="/#condominios">Condomínios</a></li>
+        <li><a class="hover:text-white" href="/lp/vivo-fibra">Vivo Fibra</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-base font-semibold">Empresa</h2>
+      <ul class="mt-4 grid gap-3 text-sm text-fuchsia-100/70">
+        <li><a class="hover:text-white" href="/#sobre">Sobre a INFINICOM</a></li>
+        <li><a class="hover:text-white" href="/#conteudos">Conteúdos</a></li>
+        <li><a class="hover:text-white" href="/#faq">Dúvidas frequentes</a></li>
+        <li><a class="hover:text-white" href={`mailto:${site.email}`}>{site.email}</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-base font-semibold">Legal</h2>
+      <ul class="mt-4 grid gap-3 text-sm text-fuchsia-100/70">
+        <li><a class="hover:text-white" href="/privacidade">Privacidade</a></li>
+        <li><a class="hover:text-white" href="/cookies">Cookies</a></li>
+      </ul>
+      <p class="mt-6 text-xs leading-5 text-fuchsia-100/55">
+        A INFINICOM é responsável por este site. Marcas de terceiros pertencem aos seus respectivos titulares.
+      </p>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="container-shell flex flex-col gap-2 py-5 text-xs text-fuchsia-100/55 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {new Date().getFullYear()} INFINICOM. Todos os direitos reservados.</p>
+      <p>Conectar. Aproximar. Transformar.</p>
+    </div>
+  </div>
+</footer>

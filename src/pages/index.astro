@@ -1,0 +1,296 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WhatsAppForm from '../components/WhatsAppForm.astro';
+import heroImage from '../assets/images/hero-consultoria.png';
+import homeImage from '../assets/images/conectividade-casa.png';
+import businessImage from '../assets/images/conectividade-empresa.png';
+import { whatsappUrl } from '../config/site';
+
+const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICOM.');
+
+const solutions = [
+  { icon: 'lucide:wifi', title: 'Vivo Fibra', text: 'Internet para apoiar a rotina conectada da sua casa.', href: '/lp/vivo-fibra', tone: 'bg-brand-deep text-white md:col-span-2' },
+  { icon: 'lucide:smartphone', title: 'Planos móveis', text: 'Controle, Pós e portabilidade com orientação na escolha.', href: consultorUrl, tone: 'bg-white text-ink' },
+  { icon: 'lucide:combine', title: 'Vivo Total', text: 'Conectividade fixa e móvel reunida para sua rotina.', href: consultorUrl, tone: 'bg-[#e9ddee] text-ink' },
+  { icon: 'lucide:building-2', title: 'Vivo Empresas', text: 'Soluções para conectividade e continuidade operacional.', href: '#empresa', tone: 'bg-white text-ink md:col-span-2' },
+  { icon: 'lucide:network', title: 'Projetos especiais', text: 'Análise consultiva para empresas e empreendimentos.', href: '#condominios', tone: 'bg-[#dcc7e5] text-ink' },
+];
+
+const faqs = [
+  ['Como consulto a cobertura?', 'Informe sua cidade e necessidade. Um consultor confirma a disponibilidade antes de apresentar as opções adequadas.'],
+  ['A INFINICOM é a Vivo?', 'Não. A INFINICOM é uma empresa independente e atua como consultoria comercial de soluções Vivo.'],
+  ['Posso contratar para minha empresa?', 'Sim. O atendimento contempla empresas e pode considerar conectividade, telefonia e necessidades específicas da operação.'],
+  ['Como funciona a portabilidade?', 'O consultor verifica seu cenário, orienta os dados necessários e explica as etapas aplicáveis à sua linha.'],
+  ['O atendimento é feito pelo WhatsApp?', 'O primeiro contato pode acontecer pelo WhatsApp. A equipe acompanha a conversa de acordo com a sua solicitação.'],
+];
+---
+
+<BaseLayout>
+  <section class="relative isolate overflow-hidden bg-[linear-gradient(118deg,#660099_0%,#660099_57%,#461e5f_100%)] text-white">
+    <div class="pointer-events-none absolute -left-32 top-20 size-[32rem] rounded-full bg-fuchsia-300/15 blur-3xl"></div>
+    <div class="pointer-events-none absolute right-0 top-0 size-[28rem] rounded-full bg-white/10 blur-3xl"></div>
+    <div class="container-shell grid min-h-[calc(100dvh-72px)] items-center gap-10 py-12 lg:grid-cols-[1.08fr_0.92fr] lg:py-16">
+      <div class="relative z-10 max-w-2xl reveal">
+        <p class="eyebrow text-fuchsia-100">Consultoria em telecomunicações</p>
+        <h1 class="display-title hero-title-balanced mt-5 max-w-none">Conecte melhor. Escolha com clareza.</h1>
+        <p class="mt-6 max-w-[38rem] text-lg leading-7 text-fuchsia-50/85">
+          A INFINICOM orienta sua escolha de soluções Vivo para casa, empresa ou empreendimento.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a class="btn btn-light" href={consultorUrl} target="_blank" rel="noreferrer">
+            <Icon name="lucide:message-circle" class="size-5" />
+            Falar com consultor
+          </a>
+          <a class="btn border border-white/35 text-white hover:bg-white/10" href="#cobertura">
+            Consultar cobertura
+            <Icon name="lucide:arrow-down-right" class="size-4" />
+          </a>
+        </div>
+      </div>
+
+      <div class="relative reveal reveal-delay">
+        <div class="overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-2 shadow-[0_30px_80px_rgba(30,0,44,0.3)]">
+          <Image
+            src={heroImage}
+            alt="Empreendedora brasileira usando um smartphone em seu espaço de trabalho"
+            widths={[480, 720, 960]}
+            sizes="(max-width: 1023px) 100vw, 44vw"
+            format="webp"
+            quality={82}
+            loading="eager"
+            class="aspect-[4/5] w-full rounded-xl object-cover object-[62%_center] sm:aspect-[5/4] lg:aspect-[4/5]"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-[var(--color-border)] bg-white" aria-label="Posicionamento da marca">
+    <div class="container-shell grid gap-4 py-5 text-sm text-muted sm:grid-cols-3 sm:items-center">
+      <p class="font-semibold text-ink">INFINICOM é a empresa responsável pelo atendimento</p>
+      <p>Portfólio comercial com soluções Vivo</p>
+      <p class="sm:text-right">Atendimento para pessoas e empresas</p>
+    </div>
+  </section>
+
+  <section class="section-space bg-canvas" id="sobre">
+    <div class="container-shell">
+      <h2 class="section-title">Encontre a solução ideal para você</h2>
+      <p class="mt-5 max-w-[58ch] text-lg leading-7 text-muted">Escolha o contexto que mais se aproxima da sua necessidade e avance com orientação especializada.</p>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-12">
+        <a href="#casa" class="group relative min-h-72 overflow-hidden rounded-2xl bg-brand-deep p-7 text-white md:col-span-6">
+          <Icon name="lucide:house" class="size-7" />
+          <div class="absolute inset-x-7 bottom-7">
+            <h3 class="text-3xl font-semibold">Para sua casa</h3>
+            <p class="mt-2 max-w-sm text-fuchsia-100/75">Internet, móvel e conectividade para a sua rotina.</p>
+            <Icon name="lucide:arrow-right" class="mt-5 size-5 transition-transform group-hover:translate-x-1" />
+          </div>
+        </a>
+        <a href="#empresa" class="group min-h-72 rounded-2xl border border-[var(--color-border)] bg-white p-7 md:col-span-3">
+          <Icon name="lucide:briefcase-business" class="size-7 text-brand" />
+          <h3 class="mt-20 text-2xl font-semibold">Para sua empresa</h3>
+          <p class="mt-3 leading-6 text-muted">Conectividade para apoiar sua operação.</p>
+          <Icon name="lucide:arrow-right" class="mt-5 size-5 text-brand transition-transform group-hover:translate-x-1" />
+        </a>
+        <a href="#condominios" class="group min-h-72 rounded-2xl bg-[#e8dcec] p-7 md:col-span-3">
+          <Icon name="lucide:building" class="size-7 text-brand" />
+          <h3 class="mt-12 text-2xl font-semibold">Condomínios</h3>
+          <p class="mt-3 leading-6 text-muted">Projetos para empreendimentos e construtoras.</p>
+          <Icon name="lucide:arrow-right" class="mt-5 size-5 text-brand transition-transform group-hover:translate-x-1" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" id="solucoes">
+    <div class="container-shell">
+      <p class="eyebrow text-brand">Soluções</p>
+      <h2 class="section-title mt-4">Escolhas claras para cada cenário</h2>
+      <p class="mt-5 max-w-[60ch] text-lg leading-7 text-muted">Conheça as categorias e converse com a equipe para confirmar disponibilidade e condições oficiais.</p>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-3">
+        {solutions.map((solution) => (
+          <a href={solution.href} class:list={['group min-h-56 rounded-2xl border border-[var(--color-border)] p-7', solution.tone]} target={solution.href.startsWith('http') ? '_blank' : undefined} rel={solution.href.startsWith('http') ? 'noreferrer' : undefined}>
+            <Icon name={solution.icon} class="size-7" />
+            <h3 class="mt-12 text-2xl font-semibold">{solution.title}</h3>
+            <p class:list={['mt-3 max-w-sm leading-6', solution.tone.includes('text-white') ? 'text-fuchsia-100/75' : 'text-muted']}>{solution.text}</p>
+            <Icon name="lucide:arrow-up-right" class="mt-5 size-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-soft" id="cobertura">
+    <div class="container-shell grid items-start gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+      <div class="lg:sticky lg:top-28">
+        <h2 class="section-title">Consulte sua região com uma pessoa</h2>
+        <p class="mt-5 max-w-[48ch] text-lg leading-7 text-muted">A consulta não é automática. Um consultor confirma a disponibilidade e orienta os próximos passos.</p>
+        <div class="mt-8 grid gap-4 text-sm text-muted">
+          <p class="flex items-start gap-3"><Icon name="lucide:map-pin" class="mt-0.5 size-5 shrink-0 text-brand" /> Informe cidade e necessidade.</p>
+          <p class="flex items-start gap-3"><Icon name="lucide:search-check" class="mt-0.5 size-5 shrink-0 text-brand" /> A equipe verifica o cenário aplicável.</p>
+          <p class="flex items-start gap-3"><Icon name="lucide:message-square-text" class="mt-0.5 size-5 shrink-0 text-brand" /> Você recebe orientação pelo WhatsApp.</p>
+        </div>
+      </div>
+      <WhatsAppForm title="Solicitar consulta de cobertura" />
+    </div>
+  </section>
+
+  <section class="section-space bg-white">
+    <div class="container-shell grid gap-10 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-5">
+        <h2 class="section-title">Consultoria antes da contratação</h2>
+        <p class="mt-5 text-lg leading-7 text-muted">A tecnologia faz sentido quando resolve uma necessidade real. A equipe ajuda a organizar essa decisão.</p>
+      </div>
+      <div class="grid gap-7 sm:grid-cols-2 lg:col-span-7">
+        <div class="border-l-2 border-brand pl-5">
+          <h3 class="text-xl font-semibold">Entender</h3>
+          <p class="mt-2 leading-6 text-muted">Começamos pelo contexto da sua casa, negócio ou projeto.</p>
+        </div>
+        <div class="border-l-2 border-brand pl-5">
+          <h3 class="text-xl font-semibold">Orientar</h3>
+          <p class="mt-2 leading-6 text-muted">Explicamos caminhos possíveis sem inventar condições ou disponibilidade.</p>
+        </div>
+        <div class="border-l-2 border-brand pl-5">
+          <h3 class="text-xl font-semibold">Confirmar</h3>
+          <p class="mt-2 leading-6 text-muted">Verificamos as informações necessárias para avançar com segurança.</p>
+        </div>
+        <div class="border-l-2 border-brand pl-5">
+          <h3 class="text-xl font-semibold">Acompanhar</h3>
+          <p class="mt-2 leading-6 text-muted">Mantemos o contato durante as etapas da contratação.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-canvas" id="casa">
+    <div class="container-shell grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+      <div class="overflow-hidden rounded-2xl">
+        <Image src={homeImage} alt="Família brasileira usando notebook e tablet em casa" widths={[480, 768, 1100]} sizes="(max-width: 1023px) 100vw, 54vw" format="webp" quality={80} class="aspect-[4/3] w-full object-cover" />
+      </div>
+      <div>
+        <p class="eyebrow text-brand">Para sua casa</p>
+        <h2 class="section-title mt-4">Sua rotina conectada com mais clareza</h2>
+        <p class="mt-5 text-lg leading-7 text-muted">Explore Fibra, Controle, Pós, Vivo Total e portabilidade com apoio para comparar o que se aplica ao seu endereço.</p>
+        <a class="btn btn-primary mt-8" href={consultorUrl} target="_blank" rel="noreferrer">Falar com consultor <Icon name="lucide:arrow-up-right" class="size-4" /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-[#29003d] text-white" id="empresa">
+    <div class="container-shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+      <div>
+        <h2 class="section-title">Conectividade alinhada à sua operação</h2>
+        <p class="mt-5 text-lg leading-7 text-fuchsia-100/75">Para negócios que precisam avaliar internet, telefonia, linhas ou soluções personalizadas com contexto comercial.</p>
+        <div class="mt-8 flex flex-wrap gap-3 text-sm text-fuchsia-100/80">
+          <span class="rounded-lg border border-white/15 px-3 py-2">Internet empresarial</span>
+          <span class="rounded-lg border border-white/15 px-3 py-2">Telefonia</span>
+          <span class="rounded-lg border border-white/15 px-3 py-2">Link dedicado</span>
+          <span class="rounded-lg border border-white/15 px-3 py-2">IoT</span>
+        </div>
+        <a class="btn btn-light mt-8" href={consultorUrl} target="_blank" rel="noreferrer">Falar com consultor <Icon name="lucide:arrow-up-right" class="size-4" /></a>
+      </div>
+      <div class="overflow-hidden rounded-2xl border border-white/15 p-2">
+        <Image src={businessImage} alt="Equipe de uma empresa brasileira trabalhando com notebooks e smartphones" widths={[480, 768, 1100]} sizes="(max-width: 1023px) 100vw, 55vw" format="webp" quality={80} class="aspect-[16/10] w-full rounded-xl object-cover" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" id="condominios">
+    <div class="container-shell grid overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[#f1edf2] lg:grid-cols-2">
+      <div class="p-7 sm:p-10 lg:p-14">
+        <Icon name="lucide:building-2" class="size-8 text-brand" />
+        <h2 class="section-title mt-8">Projetos para condomínios e construtoras</h2>
+        <p class="mt-5 max-w-[52ch] text-lg leading-7 text-muted">Atendimento para síndicos, administradoras, construtoras e empreendimentos que precisam avaliar conectividade.</p>
+        <a class="btn btn-primary mt-8" href={consultorUrl} target="_blank" rel="noreferrer">Falar com consultor <Icon name="lucide:arrow-up-right" class="size-4" /></a>
+      </div>
+      <div class="grid min-h-80 place-items-center bg-[radial-gradient(circle_at_65%_35%,rgba(183,126,211,0.8),transparent_28%),linear-gradient(140deg,#660099,#29003d)] p-8 text-white">
+        <div class="grid w-full max-w-md grid-cols-2 gap-4" aria-hidden="true">
+          <div class="aspect-[4/5] rounded-2xl border border-white/20 bg-white/10"></div>
+          <div class="mt-12 aspect-[4/5] rounded-2xl border border-white/20 bg-white/5"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-canvas">
+    <div class="container-shell">
+      <h2 class="section-title">Da necessidade ao próximo passo</h2>
+      <div class="mt-12 grid gap-5 md:grid-cols-4">
+        {[
+          ['Conte sua necessidade', 'Explique onde e como pretende usar a solução.'],
+          ['Verificamos o cenário', 'A equipe reúne os dados necessários para a análise.'],
+          ['Conheça as opções', 'Você recebe orientação sobre caminhos aplicáveis.'],
+          ['Acompanhe a contratação', 'O consultor mantém o contato durante o processo.'],
+        ].map(([title, text], index) => (
+          <div class="relative border-t-2 border-brand pt-6">
+            <span class="font-display text-sm font-semibold text-brand">{String(index + 1).padStart(2, '0')}</span>
+            <h3 class="mt-8 text-xl font-semibold">{title}</h3>
+            <p class="mt-3 text-sm leading-6 text-muted">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" id="conteudos">
+    <div class="container-shell">
+      <h2 class="section-title">Conteúdo para decidir melhor</h2>
+      <p class="mt-5 max-w-[58ch] text-lg leading-7 text-muted">Guias objetivos sobre conectividade, contratação e uso de serviços no dia a dia.</p>
+      <div class="mt-12 grid gap-5 md:grid-cols-[1.2fr_0.8fr]">
+        <article class="rounded-2xl bg-brand-deep p-7 text-white sm:p-10">
+          <Icon name="lucide:router" class="size-7" />
+          <h3 class="mt-16 max-w-lg text-3xl font-semibold">O que observar antes de contratar internet para sua casa</h3>
+          <p class="mt-4 max-w-lg leading-6 text-fuchsia-100/75">Cobertura, rotina, quantidade de dispositivos e suporte entram na decisão.</p>
+          <a class="mt-8 inline-flex items-center gap-2 font-semibold hover:text-fuchsia-200" href="/#faq">Ler orientações <Icon name="lucide:arrow-right" class="size-4" /></a>
+        </article>
+        <article class="rounded-2xl border border-[var(--color-border)] bg-soft p-7 sm:p-10">
+          <Icon name="lucide:briefcase-business" class="size-7 text-brand" />
+          <h3 class="mt-12 text-2xl font-semibold">Conectividade para pequenas empresas</h3>
+          <p class="mt-4 leading-6 text-muted">Perguntas úteis para mapear o que sua operação precisa.</p>
+          <a class="mt-8 inline-flex items-center gap-2 font-semibold text-brand hover:text-brand-strong" href="#empresa">Ver contexto empresarial <Icon name="lucide:arrow-right" class="size-4" /></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-soft" id="faq">
+    <div class="container-shell grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+      <div>
+        <p class="eyebrow text-brand">Dúvidas frequentes</p>
+        <h2 class="section-title mt-4">Informação clara antes de avançar</h2>
+      </div>
+      <div class="grid gap-3" x-data="{ active: 0 }">
+        {faqs.map(([question, answer], index) => (
+          <div class="rounded-2xl border border-[var(--color-border)] bg-white">
+            <h3>
+              <button class="flex min-h-16 w-full items-center justify-between gap-5 px-5 py-4 text-left font-display text-lg font-semibold" type="button" x-on:click={`active = active === ${index} ? -1 : ${index}`} x-bind:aria-expanded={`active === ${index}`}>
+                <span>{question}</span>
+                <Icon name="lucide:plus" class="size-5 shrink-0 text-brand transition-transform" x-bind:class={`active === ${index} && 'rotate-45'`} />
+              </button>
+            </h3>
+            <div class="px-5 pb-5 pr-12 leading-7 text-muted" x-show={`active === ${index}`}>
+              <p>{answer}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#461e5f] py-16 text-white sm:py-20">
+    <div class="container-shell flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <h2 class="section-title max-w-[16ch]">Encontre a solução adequada para o seu momento</h2>
+        <p class="mt-4 max-w-xl text-lg leading-7 text-fuchsia-100/75">Conte sua necessidade e receba orientação de um consultor.</p>
+      </div>
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <a class="btn btn-light" href={consultorUrl} target="_blank" rel="noreferrer">Falar com consultor <Icon name="lucide:arrow-up-right" class="size-4" /></a>
+        <a class="btn border border-white/30 text-white hover:bg-white/10" href="#cobertura">Consultar cobertura</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

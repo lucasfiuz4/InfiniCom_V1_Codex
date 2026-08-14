@@ -1,0 +1,132 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WhatsAppForm from '../../components/WhatsAppForm.astro';
+import homeImage from '../../assets/images/conectividade-casa.png';
+import { whatsappUrl } from '../../config/site';
+
+const consultorUrl = whatsappUrl('Olá, quero entender as opções de Vivo Fibra com a INFINICOM.');
+
+const questions = [
+  ['Como saber se há cobertura no meu endereço?', 'Envie sua cidade e endereço pelo formulário. A equipe confirma a disponibilidade antes de apresentar opções.'],
+  ['Os valores são os mesmos em todas as regiões?', 'Condições e disponibilidade podem variar. O consultor apresenta somente as informações oficiais aplicáveis ao seu endereço.'],
+  ['A contratação é feita pela INFINICOM?', 'A INFINICOM presta atendimento comercial e acompanha o processo relacionado às soluções apresentadas.'],
+  ['Posso consultar uma solução para empresa?', 'Sim. Selecione o perfil Empresa e descreva o uso esperado para receber uma orientação adequada.'],
+];
+---
+
+<BaseLayout
+  title="Vivo Fibra com atendimento consultivo | INFINICOM"
+  description="Consulte cobertura e conheça opções de Vivo Fibra com atendimento comercial da INFINICOM."
+>
+  <section class="bg-[linear-gradient(118deg,#660099_0%,#461e5f_100%)] text-white">
+    <div class="container-shell grid min-h-[calc(100dvh-72px)] items-center gap-10 py-12 lg:grid-cols-[0.95fr_1.05fr] lg:py-16">
+      <div class="reveal">
+        <p class="eyebrow text-fuchsia-100">Vivo Fibra com a INFINICOM</p>
+        <h1 class="display-title hero-title-balanced mt-5 max-w-none">Internet para sua rotina.</h1>
+        <p class="mt-6 max-w-[34rem] text-lg leading-7 text-fuchsia-50/85">Consulte a cobertura e receba orientação para escolher uma opção disponível no seu endereço.</p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a class="btn btn-light" href="#consulta">Consultar cobertura <Icon name="lucide:arrow-down-right" class="size-4" /></a>
+          <a class="btn border border-white/35 text-white hover:bg-white/10" href={consultorUrl} target="_blank" rel="noreferrer">Falar com consultor</a>
+        </div>
+      </div>
+      <div class="overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-2 reveal reveal-delay">
+        <Image src={homeImage} alt="Família brasileira conectada em casa" widths={[480, 768, 1100]} sizes="(max-width: 1023px) 100vw, 52vw" format="webp" quality={82} loading="eager" class="aspect-[4/3] w-full rounded-xl object-cover" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" x-data="{ audience: 'casa' }">
+    <div class="container-shell">
+      <h2 class="section-title">Veja o caminho para o seu perfil</h2>
+      <p class="mt-5 max-w-[58ch] text-lg leading-7 text-muted">As condições são confirmadas na consulta. Aqui você escolhe o contexto do atendimento.</p>
+
+      <div class="mt-8 inline-flex rounded-xl border border-[var(--color-border)] bg-soft p-1" role="group" aria-label="Selecionar perfil">
+        <button type="button" class="min-h-11 rounded-lg px-5 text-sm font-semibold transition-colors" x-on:click="audience = 'casa'" x-bind:class="audience === 'casa' ? 'bg-brand text-white' : 'text-muted hover:text-ink'" x-bind:aria-pressed="audience === 'casa'">Casa</button>
+        <button type="button" class="min-h-11 rounded-lg px-5 text-sm font-semibold transition-colors" x-on:click="audience = 'empresa'" x-bind:class="audience === 'empresa' ? 'bg-brand text-white' : 'text-muted hover:text-ink'" x-bind:aria-pressed="audience === 'empresa'">Empresa</button>
+      </div>
+
+      <div class="mt-10 grid gap-5 md:grid-cols-12" x-show="audience === 'casa'">
+        <article class="rounded-2xl bg-brand-deep p-7 text-white md:col-span-7">
+          <Icon name="lucide:house-wifi" class="size-7" />
+          <h3 class="mt-12 text-3xl font-semibold">Vivo Fibra para sua casa</h3>
+          <p class="mt-4 max-w-lg leading-7 text-fuchsia-100/75">Conectividade residencial para trabalho, estudo, entretenimento e dispositivos da rotina.</p>
+          <a class="btn btn-light mt-8" href="#consulta">Consultar cobertura</a>
+        </article>
+        <div class="grid gap-5 md:col-span-5">
+          <article class="rounded-2xl border border-[var(--color-border)] bg-soft p-6">
+            <Icon name="lucide:map-pin-check" class="size-6 text-brand" />
+            <h3 class="mt-8 text-xl font-semibold">Cobertura primeiro</h3>
+            <p class="mt-3 leading-6 text-muted">A disponibilidade precisa ser confirmada para o endereço informado.</p>
+          </article>
+          <article class="rounded-2xl border border-[var(--color-border)] bg-white p-6">
+            <Icon name="lucide:messages-square" class="size-6 text-brand" />
+            <h3 class="mt-8 text-xl font-semibold">Escolha orientada</h3>
+            <p class="mt-3 leading-6 text-muted">Converse sobre uso, quantidade de pessoas e dispositivos.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="mt-10 grid gap-5 md:grid-cols-[0.8fr_1.2fr]" x-show="audience === 'empresa'" x-cloak>
+        <article class="rounded-2xl border border-[var(--color-border)] bg-soft p-7">
+          <Icon name="lucide:building-2" class="size-7 text-brand" />
+          <h3 class="mt-12 text-3xl font-semibold">Internet para empresas</h3>
+          <p class="mt-4 leading-7 text-muted">Avalie conectividade de acordo com o porte, a operação e o endereço do negócio.</p>
+        </article>
+        <article class="rounded-2xl bg-[#461e5f] p-7 text-white sm:p-10">
+          <h3 class="text-2xl font-semibold">Seu uso define a conversa</h3>
+          <div class="mt-8 grid gap-5 sm:grid-cols-2">
+            <p class="border-l-2 border-fuchsia-300 pl-4 text-fuchsia-100/80">Quantidade de pessoas e dispositivos conectados.</p>
+            <p class="border-l-2 border-fuchsia-300 pl-4 text-fuchsia-100/80">Sistemas que fazem parte da rotina operacional.</p>
+            <p class="border-l-2 border-fuchsia-300 pl-4 text-fuchsia-100/80">Endereço e contexto de disponibilidade.</p>
+            <p class="border-l-2 border-fuchsia-300 pl-4 text-fuchsia-100/80">Necessidade de outras soluções comerciais.</p>
+          </div>
+          <a class="btn btn-light mt-8" href={consultorUrl} target="_blank" rel="noreferrer">Falar com consultor</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-soft" id="consulta">
+    <div class="container-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-20">
+      <div>
+        <p class="eyebrow text-brand">Consulta de cobertura</p>
+        <h2 class="section-title mt-4">Comece pelo seu endereço</h2>
+        <p class="mt-5 max-w-[48ch] text-lg leading-7 text-muted">Preencha os dados essenciais. A mensagem será preparada para continuar no WhatsApp.</p>
+      </div>
+      <WhatsAppForm title="Consultar Vivo Fibra" compact />
+    </div>
+  </section>
+
+  <section class="section-space bg-white">
+    <div class="container-shell grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+      <h2 class="section-title">Perguntas sobre a contratação</h2>
+      <div class="grid gap-3" x-data="{ active: 0 }">
+        {questions.map(([question, answer], index) => (
+          <article class="rounded-2xl border border-[var(--color-border)] bg-white">
+            <h3>
+              <button type="button" class="flex min-h-16 w-full items-center justify-between gap-5 px-5 py-4 text-left font-display text-lg font-semibold" x-on:click={`active = active === ${index} ? -1 : ${index}`} x-bind:aria-expanded={`active === ${index}`}>
+                <span>{question}</span>
+                <Icon name="lucide:plus" class="size-5 shrink-0 text-brand transition-transform" x-bind:class={`active === ${index} && 'rotate-45'`} />
+              </button>
+            </h3>
+            <div class="px-5 pb-5 pr-12 leading-7 text-muted" x-show={`active === ${index}`}>
+              <p>{answer}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#461e5f] py-16 text-white sm:py-20">
+    <div class="container-shell flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <h2 class="section-title">Descubra o que está disponível para você</h2>
+        <p class="mt-4 max-w-xl text-lg leading-7 text-fuchsia-100/75">Envie seu endereço e receba orientação pelo WhatsApp.</p>
+      </div>
+      <a class="btn btn-light" href="#consulta">Consultar cobertura <Icon name="lucide:arrow-up-right" class="size-4" /></a>
+    </div>
+  </section>
+</BaseLayout>

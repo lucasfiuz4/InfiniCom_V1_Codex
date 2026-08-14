@@ -1,0 +1,73 @@
+---
+import { Icon } from 'astro-icon/components';
+import { site } from '../config/site';
+
+interface Props {
+  title?: string;
+  compact?: boolean;
+}
+
+const {
+  title = 'Conte o que você precisa',
+  compact = false,
+} = Astro.props;
+---
+
+<section
+  class:list={['rounded-2xl border border-[var(--color-border)] bg-white p-5 shadow-[var(--shadow-soft)] sm:p-7', { 'lg:p-8': !compact }]}
+  x-data={`{
+    name: '', city: '', profile: 'Casa', need: '', consent: false, submitting: false, error: '',
+    submit() {
+      this.error = '';
+      if (!this.name.trim() || !this.city.trim() || !this.need.trim() || !this.consent) {
+        this.error = 'Preencha os campos obrigatórios e confirme o consentimento.';
+        return;
+      }
+      this.submitting = true;
+      const message = 'Olá, sou ' + this.name + '. Cidade: ' + this.city + '. Perfil: ' + this.profile + '. Preciso de: ' + this.need;
+      window.location.href = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(message);
+    }
+  }`}
+>
+  <h2 class="text-2xl font-semibold">{title}</h2>
+  <p class="mt-2 text-sm leading-6 text-muted">Vamos abrir uma conversa no WhatsApp com sua mensagem pronta.</p>
+
+  <form class="mt-6 grid gap-5" x-on:submit.prevent="submit" novalidate>
+    <div class="grid gap-2">
+      <label class="text-sm font-medium" for="lead-name">Nome *</label>
+      <input id="lead-name" name="name" type="text" autocomplete="name" x-model="name" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Como podemos chamar você?" />
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div class="grid gap-2">
+        <label class="text-sm font-medium" for="lead-city">Cidade *</label>
+        <input id="lead-city" name="city" type="text" autocomplete="address-level2" x-model="city" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Sua cidade" />
+      </div>
+      <div class="grid gap-2">
+        <label class="text-sm font-medium" for="lead-profile">Perfil</label>
+        <select id="lead-profile" name="profile" x-model="profile" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink focus:border-brand">
+          <option>Casa</option>
+          <option>Empresa</option>
+          <option>Condomínio ou construtora</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid gap-2">
+      <label class="text-sm font-medium" for="lead-need">O que você procura? *</label>
+      <textarea id="lead-need" name="need" rows="3" x-model="need" class="rounded-xl border border-[var(--color-border-strong)] bg-white px-4 py-3 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Exemplo: internet para minha casa"></textarea>
+    </div>
+
+    <label class="flex items-start gap-3 text-sm leading-5 text-muted">
+      <input type="checkbox" x-model="consent" class="mt-0.5 size-5 rounded border-[var(--color-border-strong)] accent-brand" />
+      <span>Autorizo o contato da INFINICOM sobre esta solicitação.</span>
+    </label>
+
+    <p class="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert" x-show="error" x-text="error" x-cloak></p>
+
+    <button class="btn btn-primary w-full disabled:cursor-wait disabled:opacity-70" type="submit" x-bind:disabled="submitting">
+      <Icon name="lucide:message-circle" class="size-5" />
+      <span x-text="submitting ? 'Abrindo WhatsApp...' : 'Enviar pelo WhatsApp'">Enviar pelo WhatsApp</span>
+    </button>
+  </form>
+</section>

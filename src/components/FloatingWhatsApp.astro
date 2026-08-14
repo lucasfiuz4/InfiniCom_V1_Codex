@@ -1,0 +1,82 @@
+---
+import { Icon } from 'astro-icon/components';
+import { whatsappUrl } from '../config/site';
+
+const consultorUrl = whatsappUrl('Olá, quero falar com a equipe da INFINICOM.');
+---
+
+<aside
+  class="fixed right-4 z-30 sm:right-6"
+  style="bottom: max(1rem, env(safe-area-inset-bottom));"
+  x-data="{ open: false }"
+  x-on:keydown.escape.window="open = false"
+>
+  <section
+    id="whatsapp-popup"
+    role="dialog"
+    aria-label="Atendimento pelo WhatsApp"
+    class="absolute bottom-[calc(100%+0.75rem)] right-0 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-[0_24px_64px_rgba(54,16,68,0.22)]"
+    style="width: min(22rem, calc(100vw - 2rem));"
+    x-show="open"
+    x-cloak
+    x-transition:enter="transition duration-200 ease-out"
+    x-transition:enter-start="translate-y-3 scale-[0.98] opacity-0"
+    x-transition:enter-end="translate-y-0 scale-100 opacity-100"
+    x-transition:leave="transition duration-150 ease-in"
+    x-transition:leave-start="translate-y-0 scale-100 opacity-100"
+    x-transition:leave-end="translate-y-2 scale-[0.98] opacity-0"
+    x-on:click.outside="open = false"
+  >
+    <div class="flex items-start justify-between gap-5 bg-brand-deep p-5 text-white">
+      <div class="flex items-center gap-3">
+        <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-white/10" aria-hidden="true">
+          <Icon name="lucide:users-round" class="size-5" />
+        </span>
+        <div>
+          <p class="font-display font-semibold">Equipe INFINICOM</p>
+          <p class="mt-0.5 text-xs text-fuchsia-100/75">Atendimento consultivo</p>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="grid size-10 shrink-0 place-items-center rounded-xl text-white/75 transition-colors hover:bg-white/10 hover:text-white"
+        x-on:click="open = false; $refs.trigger.focus()"
+        aria-label="Fechar atendimento"
+      >
+        <Icon name="lucide:x" class="size-5" aria-hidden="true" />
+      </button>
+    </div>
+
+    <div class="p-5">
+      <h2 class="text-xl font-semibold text-ink">Olá! Como podemos ajudar?</h2>
+      <p class="mt-2 text-sm leading-6 text-muted">
+        Nossa equipe está pronta para entender sua necessidade e orientar o próximo passo.
+      </p>
+      <a
+        href={consultorUrl}
+        target="_blank"
+        rel="noreferrer"
+        class="btn btn-primary mt-5 w-full"
+      >
+        <Icon name="lucide:message-circle" class="size-5" aria-hidden="true" />
+        Conversar agora
+      </a>
+      <p class="mt-3 text-center text-xs leading-5 text-muted">A conversa será aberta no WhatsApp.</p>
+    </div>
+  </section>
+
+  <button
+    type="button"
+    class="whatsapp-attention group relative flex h-14 w-14 items-center justify-center gap-2 rounded-2xl border border-[#72e59a] bg-[#25d366] px-0 text-[#073b20] shadow-[0_18px_42px_rgba(18,140,74,0.38)] transition-transform duration-200 hover:-translate-y-1 hover:bg-[#20bd5b] active:translate-y-px active:scale-[0.98] sm:w-auto sm:min-w-48 sm:px-5"
+    x-ref="trigger"
+    x-on:click="open = !open"
+    x-bind:aria-expanded="open"
+    aria-controls="whatsapp-popup"
+    aria-label="Abrir atendimento pelo WhatsApp"
+    title="WhatsApp"
+  >
+    <Icon name="lucide:message-circle" class="size-6" x-show="!open" aria-hidden="true" />
+    <Icon name="lucide:x" class="size-6" x-show="open" x-cloak aria-hidden="true" />
+    <span class="sr-only sm:not-sr-only sm:font-display sm:text-sm sm:font-semibold" x-text="open ? 'Fechar' : 'Fale com a equipe'">Fale com a equipe</span>
+  </button>
+</aside>
