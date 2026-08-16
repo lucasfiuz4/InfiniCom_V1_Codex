@@ -13,6 +13,7 @@ interface Props {
   publishedTime?: string;
   modifiedTime?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   publishedTime,
   modifiedTime,
   schema,
+  noindex = false,
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toString();
@@ -34,6 +36,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toStrin
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#29003d" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

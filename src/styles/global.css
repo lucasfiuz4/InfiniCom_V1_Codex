@@ -78,6 +78,11 @@ summary {
   outline-offset: 3px;
 }
 
+:is(input, select, textarea)[aria-invalid="true"] {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-error), transparent 35%);
+}
+
 ::selection {
   background: rgba(102, 0, 153, 0.2);
 }

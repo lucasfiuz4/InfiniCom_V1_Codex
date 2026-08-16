@@ -5,29 +5,76 @@ import { site } from '../config/site';
 interface Props {
   title?: string;
   compact?: boolean;
+  campaign?: string;
+  product?: string;
 }
 
 const {
   title = 'Conte o que você precisa',
   compact = false,
+  campaign = 'site-institucional',
+  product = 'Soluções Vivo',
 } = Astro.props;
 ---
 
 <section
   class:list={['rounded-2xl border border-[var(--color-border)] bg-white p-5 shadow-[var(--shadow-soft)] sm:p-7', { 'lg:p-8': !compact }]}
   x-data={`{
-    name: '', city: '', profile: 'Casa', need: '', consent: false, submitting: false, error: '',
+    name: '', phone: '', city: '', profile: 'Casa', need: '', consent: false, submitting: false, submitted: false, errors: {}, redirectUrl: '',
+    source: 'direto', medium: 'não informado', campaign: '${campaign}', content: 'não informado', page: '', referrer: 'acesso direto',
+    init() {
+      const params = new URLSearchParams(window.location.search);
+      this.source = params.get('utm_source') || 'direto';
+      this.medium = params.get('utm_medium') || 'não informado';
+      this.campaign = params.get('utm_campaign') || '${campaign}';
+      this.content = params.get('utm_content') || 'não informado';
+      this.page = window.location.pathname;
+      try { this.referrer = document.referrer ? new URL(document.referrer).hostname : 'acesso direto'; } catch { this.referrer = 'não identificado'; }
+    },
+    validate() {
+      const errors = {};
+      if (!this.name.trim()) errors.name = 'Informe seu nome.';
+      if (this.phone.replace(/\\D/g, '').length < 10) errors.phone = 'Informe um telefone com DDD.';
+      if (!this.city.trim()) errors.city = 'Informe sua cidade.';
+      if (!this.need.trim()) errors.need = 'Conte brevemente o que você procura.';
+      if (!this.consent) errors.consent = 'Confirme a autorização para continuar.';
+      this.errors = errors;
+      return Object.keys(errors).length === 0;
+    },
     submit() {
-      this.error = '';
-      if (!this.name.trim() || !this.city.trim() || !this.need.trim() || !this.consent) {
-        this.error = 'Preencha os campos obrigatórios e confirme o consentimento.';
+      this.submitted = false;
+      if (!this.validate()) {
+        this.$nextTick(() => this.$root.querySelector('[aria-invalid=true]')?.focus());
         return;
       }
       this.submitting = true;
-      const message = 'Olá, sou ' + this.name + '. Cidade: ' + this.city + '. Perfil: ' + this.profile + '. Preciso de: ' + this.need;
-      window.location.href = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(message);
+      const lines = [
+        'Olá! Quero consultar cobertura com a INFINICOM.',
+        '',
+        'Produto: ${product}',
+        'Nome: ' + this.name.trim(),
+        'Telefone: ' + this.phone.trim(),
+        'Cidade: ' + this.city.trim(),
+        'Perfil: ' + this.profile,
+        'Necessidade: ' + this.need.trim(),
+        '',
+        'Origem: ' + this.source,
+        'Mídia: ' + this.medium,
+        'Campanha: ' + this.campaign,
+        'Conteúdo: ' + this.content,
+        'Referência: ' + this.referrer,
+        'Página: ' + this.page,
+      ];
+      if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'lp_whatsapp_submit', product: '${product}', lead_source: this.source, campaign: this.campaign });
+      this.redirectUrl = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(lines.join('\\n'));
+      this.submitted = true;
+      setTimeout(() => {
+        window.location.assign(this.redirectUrl);
+        this.submitting = false;
+      }, 350);
     }
   }`}
+  x-init="init"
 >
   <h2 class="text-2xl font-semibold">{title}</h2>
   <p class="mt-2 text-sm leading-6 text-muted">Vamos abrir uma conversa no WhatsApp com sua mensagem pronta.</p>
@@ -35,15 +82,22 @@ const {
   <form class="mt-6 grid gap-5" x-on:submit.prevent="submit" novalidate>
     <div class="grid gap-2">
       <label class="text-sm font-medium" for="lead-name">Nome *</label>
-      <input id="lead-name" name="name" type="text" autocomplete="name" x-model="name" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Como podemos chamar você?" />
+      <input id="lead-name" name="name" type="text" autocomplete="name" x-model="name" x-bind:aria-invalid="Boolean(errors.name)" aria-describedby="lead-name-error" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Como podemos chamar você?" required />
+      <p id="lead-name-error" class="text-sm text-red-800" x-show="errors.name" x-text="errors.name" x-cloak></p>
     </div>
 
     <div class="grid gap-5 sm:grid-cols-2">
       <div class="grid gap-2">
-        <label class="text-sm font-medium" for="lead-city">Cidade *</label>
-        <input id="lead-city" name="city" type="text" autocomplete="address-level2" x-model="city" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Sua cidade" />
+        <label class="text-sm font-medium" for="lead-phone">Telefone ou WhatsApp *</label>
+        <input id="lead-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" x-model="phone" x-bind:aria-invalid="Boolean(errors.phone)" aria-describedby="lead-phone-error" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="(31) 99999-9999" required />
+        <p id="lead-phone-error" class="text-sm text-red-800" x-show="errors.phone" x-text="errors.phone" x-cloak></p>
       </div>
       <div class="grid gap-2">
+        <label class="text-sm font-medium" for="lead-city">Cidade *</label>
+        <input id="lead-city" name="city" type="text" autocomplete="address-level2" x-model="city" x-bind:aria-invalid="Boolean(errors.city)" aria-describedby="lead-city-error" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Sua cidade" required />
+        <p id="lead-city-error" class="text-sm text-red-800" x-show="errors.city" x-text="errors.city" x-cloak></p>
+      </div>
+      <div class="grid gap-2 sm:col-span-2">
         <label class="text-sm font-medium" for="lead-profile">Perfil</label>
         <select id="lead-profile" name="profile" x-model="profile" class="min-h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-ink focus:border-brand">
           <option>Casa</option>
@@ -55,19 +109,34 @@ const {
 
     <div class="grid gap-2">
       <label class="text-sm font-medium" for="lead-need">O que você procura? *</label>
-      <textarea id="lead-need" name="need" rows="3" x-model="need" class="rounded-xl border border-[var(--color-border-strong)] bg-white px-4 py-3 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Exemplo: internet para minha casa"></textarea>
+      <textarea id="lead-need" name="need" rows="3" x-model="need" x-bind:aria-invalid="Boolean(errors.need)" aria-describedby="lead-need-error" class="rounded-xl border border-[var(--color-border-strong)] bg-white px-4 py-3 text-ink placeholder:text-[#756a78] focus:border-brand" placeholder="Exemplo: internet para minha casa" required></textarea>
+      <p id="lead-need-error" class="text-sm text-red-800" x-show="errors.need" x-text="errors.need" x-cloak></p>
     </div>
 
-    <label class="flex items-start gap-3 text-sm leading-5 text-muted">
-      <input type="checkbox" x-model="consent" class="mt-0.5 size-5 rounded border-[var(--color-border-strong)] accent-brand" />
-      <span>Autorizo o contato da INFINICOM sobre esta solicitação.</span>
-    </label>
+    <div>
+      <label class="flex items-start gap-3 text-sm leading-5 text-muted">
+        <input id="lead-consent" name="consent" type="checkbox" x-model="consent" x-bind:aria-invalid="Boolean(errors.consent)" aria-describedby="lead-consent-error" class="mt-0.5 size-5 rounded border-[var(--color-border-strong)] accent-brand" required />
+        <span>Autorizo o contato da INFINICOM sobre esta solicitação.</span>
+      </label>
+      <p id="lead-consent-error" class="mt-2 text-sm text-red-800" x-show="errors.consent" x-text="errors.consent" x-cloak></p>
+    </div>
 
-    <p class="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert" x-show="error" x-text="error" x-cloak></p>
+    <p class="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert" x-show="Object.keys(errors).length > 0" x-cloak>Revise os campos indicados antes de continuar.</p>
+    <div class="rounded-xl bg-[#edf7f1] px-4 py-3 text-sm leading-6 text-[#245c40]" role="status" aria-live="polite" x-show="submitted" x-cloak>
+      <p>Mensagem preparada. Abrindo o WhatsApp para continuar.</p>
+      <a class="mt-2 inline-flex font-semibold underline underline-offset-2" x-bind:href="redirectUrl">Se o WhatsApp não abrir, toque aqui</a>
+    </div>
 
     <button class="btn btn-primary w-full disabled:cursor-wait disabled:opacity-70" type="submit" x-bind:disabled="submitting">
       <Icon name="lucide:message-circle" class="size-5" />
       <span x-text="submitting ? 'Abrindo WhatsApp...' : 'Enviar pelo WhatsApp'">Enviar pelo WhatsApp</span>
     </button>
+    <p class="text-center text-xs leading-5 text-muted">Nenhum dado é enviado para um servidor neste site. A conversa será aberta no WhatsApp.</p>
+    <noscript>
+      <p class="rounded-xl bg-soft px-4 py-3 text-center text-sm leading-6 text-muted">
+        Ative o JavaScript para preparar a mensagem ou
+        <a class="font-semibold text-brand underline underline-offset-2" href={site.floatingWhatsappUrl}>fale diretamente pelo WhatsApp</a>.
+      </p>
+    </noscript>
   </form>
 </section>

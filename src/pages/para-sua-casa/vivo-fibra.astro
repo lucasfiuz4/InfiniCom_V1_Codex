@@ -1,0 +1,128 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import homeImage from '../../assets/images/conectividade-casa.png';
+
+const questions = [
+  ['Como consultar a cobertura?', 'A disponibilidade depende do endereço. Use o botão de consulta e envie sua cidade e localização pelo WhatsApp.'],
+  ['Como escolher a opção adequada?', 'A equipe considera o endereço e o contexto de uso antes de orientar sobre as opções disponíveis.'],
+  ['A INFINICOM é a operadora?', 'Não. A INFINICOM realiza atendimento comercial especializado e apresenta soluções do portfólio Vivo.'],
+];
+---
+
+<BaseLayout
+  title="Vivo Fibra para sua casa | INFINICOM"
+  description="Conheça Vivo Fibra para sua casa e consulte a cobertura com atendimento comercial da INFINICOM."
+>
+  <section class="relative isolate overflow-hidden bg-[linear-gradient(118deg,#660099_0%,#660099_58%,#461e5f_100%)] text-white">
+    <div class="pointer-events-none absolute -left-40 top-16 size-[30rem] rounded-full bg-fuchsia-300/10 blur-3xl"></div>
+    <div class="container-shell py-10 sm:py-14 lg:py-16">
+      <nav aria-label="Breadcrumb" class="relative z-10 mb-9 text-sm text-fuchsia-100/75">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li><a href="/" class="transition-colors hover:text-white">Início</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li><a href="/para-sua-casa/" class="transition-colors hover:text-white">Para sua casa</a></li>
+          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
+          <li aria-current="page" class="font-medium text-white">Vivo Fibra</li>
+        </ol>
+      </nav>
+
+      <div class="relative z-10 grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <div class="reveal">
+        <p class="eyebrow text-fuchsia-100">Conectividade para sua casa</p>
+        <h1 class="display-title hero-title-balanced mt-5 max-w-[12ch]">Internet para uma rotina conectada.</h1>
+        <p class="mt-6 max-w-[36rem] text-lg leading-7 text-fuchsia-50/85">Conheça o caminho para consultar Vivo Fibra de acordo com seu endereço e sua rotina.</p>
+        <a class="btn btn-light mt-8" href="/#cobertura">Consultar cobertura <Icon name="lucide:arrow-up-right" class="size-4" /></a>
+      </div>
+
+      <div class="overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-2 reveal reveal-delay">
+        <Image
+          src={homeImage}
+          alt="Família conectada utilizando internet em casa"
+          widths={[480, 768, 1100]}
+          sizes="(max-width: 1023px) 100vw, 52vw"
+          format="webp"
+          quality={82}
+          loading="eager"
+          class="aspect-[4/3] w-full rounded-xl object-cover"
+        />
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-soft" aria-labelledby="needs-title">
+    <div class="container-shell grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+      <div>
+        <h2 id="needs-title" class="section-title">Conexão para diferentes momentos</h2>
+        <p class="mt-5 max-w-[45ch] text-lg leading-7 text-muted">A escolha começa pela disponibilidade e pelo entendimento do que faz parte da sua rotina.</p>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2">
+        {[
+          ['lucide:laptop', 'Trabalho e estudo', 'Videoconferências, plataformas digitais e atividades realizadas em casa.'],
+          ['lucide:tv', 'Entretenimento', 'Streaming, jogos e conteúdos acessados por diferentes dispositivos.'],
+          ['lucide:smartphone', 'Dispositivos conectados', 'Celulares, computadores, televisores e outros equipamentos da rotina.'],
+          ['lucide:users-round', 'Uso compartilhado', 'Necessidades de pessoas que utilizam a conexão ao mesmo tempo.'],
+        ].map(([icon, title, text]) => (
+          <article class="rounded-2xl border border-[var(--color-border)] bg-white p-6">
+            <Icon name={icon} class="size-6 text-brand" />
+            <h3 class="mt-8 text-xl font-semibold">{title}</h3>
+            <p class="mt-3 text-sm leading-6 text-muted">{text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white" aria-labelledby="process-title">
+    <div class="container-shell">
+      <h2 id="process-title" class="section-title">Como consultar</h2>
+      <div class="mt-12 grid gap-8 md:grid-cols-3 md:gap-0">
+        {[
+          ['lucide:map-pinned', 'Compartilhe o endereço', 'Informe a localização para iniciar a verificação de disponibilidade.'],
+          ['lucide:messages-square', 'Converse sobre sua rotina', 'Explique quantas pessoas e dispositivos utilizam a conexão.'],
+          ['lucide:badge-check', 'Receba a orientação', 'A equipe apresenta o próximo passo de acordo com a consulta realizada.'],
+        ].map(([icon, title, text], index) => (
+          <article class:list={['md:px-8', index === 0 ? 'md:pl-0' : 'md:border-l md:border-[var(--color-border)]', index === 2 && 'md:pr-0']}>
+            <Icon name={icon} class="size-6 text-brand" />
+            <h3 class="mt-8 text-xl font-semibold">{title}</h3>
+            <p class="mt-3 text-sm leading-6 text-muted">{text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-soft" aria-labelledby="faq-title">
+    <div class="container-shell grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+      <h2 id="faq-title" class="section-title">Dúvidas frequentes</h2>
+      <div class="grid gap-3" x-data="{ active: 0 }">
+        {questions.map(([question, answer], index) => (
+          <article class="rounded-2xl border border-[var(--color-border)] bg-white">
+            <h3>
+              <button type="button" class="flex min-h-16 w-full items-center justify-between gap-5 px-5 py-4 text-left font-display text-lg font-semibold" x-on:click={`active = active === ${index} ? -1 : ${index}`} x-bind:aria-expanded={`active === ${index}`}>
+                <span>{question}</span>
+                <Icon name="lucide:plus" class="size-5 shrink-0 text-brand transition-transform" x-bind:class={`active === ${index} && 'rotate-45'`} />
+              </button>
+            </h3>
+            <div class="px-5 pb-5 pr-12 leading-7 text-muted" x-show={`active === ${index}`}>
+              <p>{answer}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#461e5f] py-16 text-white sm:py-20">
+    <div class="container-shell flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <h2 class="section-title">Consulte a cobertura no seu endereço</h2>
+        <p class="mt-4 max-w-xl text-lg leading-7 text-fuchsia-100/75">Compartilhe sua localização e receba orientação comercial da INFINICOM.</p>
+      </div>
+      <a class="btn btn-light" href="/#cobertura">Consultar cobertura <Icon name="lucide:arrow-up-right" class="size-4" /></a>
+    </div>
+  </section>
+</BaseLayout>

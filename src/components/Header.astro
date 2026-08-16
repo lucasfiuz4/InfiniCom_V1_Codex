@@ -7,7 +7,8 @@ import logoActive from '../assets/brand/infinicom-logo-active.svg';
 const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICOM.');
 
 const solutionLinks = [
-  { label: 'Vivo Fibra', href: '/lp/vivo-fibra' },
+  { label: 'Soluções para sua casa', href: '/para-sua-casa/' },
+  { label: 'Vivo Fibra', href: '/para-sua-casa/vivo-fibra/' },
   { label: 'Planos móveis', href: '/#solucoes' },
   { label: 'Vivo Total', href: '/#solucoes' },
   { label: 'Portabilidade', href: '/#solucoes' },
@@ -25,8 +26,10 @@ const companyLinks = [
 
 <header
   class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-white/95 text-ink backdrop-blur-md"
-  x-data="{ open: false, solutionsOpen: false, companiesOpen: false }"
-  x-on:keydown.escape.window="open = false; solutionsOpen = false; companiesOpen = false"
+  x-data="{ open: false, solutionsOpen: false, companiesOpen: false, closeMobileMenu(returnFocus = false) { this.open = false; this.solutionsOpen = false; this.companiesOpen = false; if (returnFocus) this.$nextTick(() => this.$refs.menuButton?.focus()); } }"
+  x-effect="document.documentElement.classList.toggle('overflow-hidden', open)"
+  x-on:keydown.escape.window="open ? closeMobileMenu(true) : (solutionsOpen = false, companiesOpen = false)"
+  x-on:resize.window="if (window.innerWidth >= 1280 && open) closeMobileMenu(false)"
 >
   <div class="container-shell flex h-[72px] items-center justify-between gap-5">
     <a href="/" class="flex h-14 shrink-0 items-center" aria-label="InfiniCom, página inicial">
@@ -116,11 +119,12 @@ const companyLinks = [
 
     <button
       type="button"
+      x-ref="menuButton"
       class="grid size-11 place-items-center rounded-xl border border-[var(--color-border-strong)] text-brand xl:hidden"
-      x-on:click="open = !open"
+      x-on:click="open ? closeMobileMenu(true) : (open = true)"
       x-bind:aria-expanded="open"
+      x-bind:aria-label="open ? 'Fechar menu' : 'Abrir menu'"
       aria-controls="mobile-menu"
-      aria-label="Abrir menu"
     >
       <Icon name="lucide:menu" class="size-5" x-show="!open" />
       <Icon name="lucide:x" class="size-5" x-show="open" x-cloak />
@@ -129,7 +133,7 @@ const companyLinks = [
 
   <div id="mobile-menu" class="max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-[var(--color-border)] bg-white xl:hidden" x-show="open" x-cloak>
     <nav class="container-shell grid gap-1 py-4 text-base" aria-label="Navegação mobile">
-      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/" x-on:click="open = false">Início</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/" x-on:click="closeMobileMenu(false)">Início</a>
 
       <button type="button" class="flex min-h-12 items-center justify-between rounded-xl px-3 py-3 text-left hover:bg-soft" x-on:click="solutionsOpen = !solutionsOpen; companiesOpen = false" x-bind:aria-expanded="solutionsOpen" aria-controls="mobile-solutions-menu">
         <span>Soluções</span>
@@ -137,7 +141,7 @@ const companyLinks = [
       </button>
       <div id="mobile-solutions-menu" class="ml-3 grid border-l-2 border-brand/20 pl-3" x-show="solutionsOpen" x-cloak>
         {solutionLinks.map((link) => (
-          <a class="rounded-xl px-3 py-2.5 text-sm text-muted hover:bg-soft hover:text-brand" href={link.href} x-on:click="open = false">{link.label}</a>
+          <a class="rounded-xl px-3 py-2.5 text-sm text-muted hover:bg-soft hover:text-brand" href={link.href} x-on:click="closeMobileMenu(false)">{link.label}</a>
         ))}
       </div>
 
@@ -147,16 +151,16 @@ const companyLinks = [
       </button>
       <div id="mobile-companies-menu" class="ml-3 grid border-l-2 border-brand/20 pl-3" x-show="companiesOpen" x-cloak>
         {companyLinks.map((link) => (
-          <a class="rounded-xl px-3 py-2.5 text-sm text-muted hover:bg-soft hover:text-brand" href={link.href} x-on:click="open = false">{link.label}</a>
+          <a class="rounded-xl px-3 py-2.5 text-sm text-muted hover:bg-soft hover:text-brand" href={link.href} x-on:click="closeMobileMenu(false)">{link.label}</a>
         ))}
       </div>
 
-      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/conteudos/" x-on:click="open = false">Conteúdos</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/sobre/" x-on:click="open = false">Sobre</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/contato/" x-on:click="open = false">Contato</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/conteudos/" x-on:click="closeMobileMenu(false)">Conteúdos</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/sobre/" x-on:click="closeMobileMenu(false)">Sobre</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-soft" href="/contato/" x-on:click="closeMobileMenu(false)">Contato</a>
 
       <div class="mt-3 border-t border-[var(--color-border)] pt-4">
-        <a class="btn btn-primary w-full" href={consultorUrl} target="_blank" rel="noreferrer">
+        <a class="btn btn-primary w-full" href={consultorUrl} target="_blank" rel="noreferrer" x-on:click="closeMobileMenu(false)">
           <Icon name="lucide:message-circle" class="size-5" />
           Falar com consultor
         </a>

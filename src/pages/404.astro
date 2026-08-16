@@ -1,0 +1,41 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Página não encontrada | INFINICOM"
+  description="A página solicitada não foi encontrada. Acesse os principais caminhos do site da INFINICOM."
+  noindex
+>
+  <section class="flex min-h-[calc(100dvh-5rem)] items-center bg-canvas py-12 sm:py-16">
+    <div class="container-shell">
+      <div class="grid items-center gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+        <div aria-hidden="true" class="select-none border-b border-[var(--color-border)] pb-8 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-14">
+          <p class="font-display text-[clamp(7rem,20vw,15rem)] font-semibold leading-[0.78] tracking-[-0.08em] text-brand">404</p>
+        </div>
+
+        <div>
+          <div class="flex size-12 items-center justify-center rounded-xl bg-soft text-brand">
+            <Icon name="lucide:compass" class="size-6" />
+          </div>
+          <h1 class="mt-7 max-w-[13ch] text-4xl font-semibold leading-[1.08] text-ink sm:text-5xl">Esta página não foi encontrada</h1>
+          <p class="mt-5 max-w-[36rem] text-lg leading-7 text-muted">O endereço pode ter mudado ou o link pode estar incorreto. Escolha um caminho para continuar.</p>
+
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a class="btn btn-primary" href="/">
+              <Icon name="lucide:house" class="size-5" />
+              Voltar ao início
+            </a>
+            <a class="btn btn-outline" href="/para-sua-casa/">Soluções para casa</a>
+          </div>
+
+          <p class="mt-7 text-sm leading-6 text-muted">
+            Procurando soluções empresariais?
+            <a href="/para-sua-empresa/" class="font-semibold text-brand underline decoration-brand/30 underline-offset-4 hover:decoration-brand">Acesse a área para empresas</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

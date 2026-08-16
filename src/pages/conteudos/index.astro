@@ -14,8 +14,14 @@ const filterItems = articles.map((entry) => ({
   category: entry.data.category,
   search: `${entry.data.title} ${entry.data.summary} ${entry.data.category}`.toLocaleLowerCase('pt-BR'),
 }));
+const featuredItem = featured
+  ? {
+      category: featured.data.category,
+      search: `${featured.data.title} ${featured.data.summary} ${featured.data.category}`.toLocaleLowerCase('pt-BR'),
+    }
+  : null;
 
-const filterState = `{ query: '', category: 'Todos', items: ${JSON.stringify(filterItems)}, matches(item) { const term = this.query.trim().toLocaleLowerCase('pt-BR'); return (this.category === 'Todos' || item.category === this.category) && (!term || item.search.includes(term)); }, get filteredCount() { return this.items.filter((item) => this.matches(item)).length; } }`;
+const filterState = `{ query: '', category: 'Todos', items: ${JSON.stringify(filterItems)}, featured: ${JSON.stringify(featuredItem)}, matches(item) { if (!item) return false; const term = this.query.trim().toLocaleLowerCase('pt-BR'); return (this.category === 'Todos' || item.category === this.category) && (!term || item.search.includes(term)); }, get filteredCount() { return this.items.filter((item) => this.matches(item)).length; }, get featuredMatches() { return this.matches(this.featured); }, get remainingCount() { return this.filteredCount - (this.featuredMatches ? 1 : 0); }, get resultLabel() { return this.filteredCount === 1 ? '1 conteúdo encontrado' : this.filteredCount + ' conteúdos encontrados'; } }`;
 const filterExpression = (entry: (typeof articles)[number]) =>
   `matches(${JSON.stringify({
     category: entry.data.category,
@@ -77,8 +83,9 @@ const filterExpression = (entry: (typeof articles)[number]) =>
       </div>
 
       <div class="mt-14" x-ref="articles">
+        <p class="mb-8 text-sm font-semibold text-muted" role="status" aria-live="polite" aria-atomic="true" x-text="resultLabel"></p>
         {featured && (
-          <div>
+          <div x-show="featuredMatches">
             <h2 class="text-2xl font-semibold text-ink">Artigo em destaque</h2>
             <div class="mt-6 grid md:grid-cols-2">
               <ArticleCard entry={featured} featured filterExpression={filterExpression(featured)} />
@@ -87,7 +94,7 @@ const filterExpression = (entry: (typeof articles)[number]) =>
         )}
 
         {remaining.length > 0 && (
-          <div class="mt-16">
+          <div class="mt-16" x-show="remainingCount > 0">
             <h2 class="text-2xl font-semibold text-ink">Mais conteúdos</h2>
             <div class="mt-7 grid gap-x-7 gap-y-12 md:grid-cols-2">
               {remaining.map((entry) => <ArticleCard entry={entry} filterExpression={filterExpression(entry)} />)}

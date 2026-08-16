@@ -43,7 +43,7 @@ const products = [
 <section
   x-data={`{
     intent: 'commercial', profile: 'Pessoa física', name: '', company: '', phone: '', email: '', city: '', product: '', message: '', consent: false,
-    submitting: false, submitted: false, errors: {}, source: 'direto', medium: 'não informado', campaign: 'não informada', referrer: 'acesso direto', page: '/contato/',
+    submitting: false, submitted: false, errors: {}, redirectUrl: '', source: 'direto', medium: 'não informado', campaign: 'não informada', referrer: 'acesso direto', page: '/contato/',
     init() {
       const params = new URLSearchParams(window.location.search);
       this.source = params.get('utm_source') || 'direto';
@@ -55,12 +55,15 @@ const products = [
     selectIntent(value) {
       this.intent = value;
       this.errors = {};
+      this.submitted = false;
+      this.redirectUrl = '';
       if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'contact_intent_selected', contact_intent: value });
     },
     validate() {
       const errors = {};
-      const phoneDigits = this.phone.replace(/\D/g, '');
-      const emailValid = !this.email.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.trim());
+      const phoneDigits = [...this.phone].filter((character) => character >= '0' && character <= '9').join('');
+      const emailParts = this.email.trim().split('@');
+      const emailValid = !this.email.trim() || (emailParts.length === 2 && emailParts[0].length > 0 && emailParts[1].includes('.') && !this.email.includes(' '));
       if (!this.name.trim()) errors.name = 'Informe seu nome.';
       if (this.intent === 'commercial' && this.profile !== 'Pessoa física' && !this.company.trim()) errors.company = 'Informe o nome da empresa ou do empreendimento.';
       if (phoneDigits.length < 10) errors.phone = 'Informe um telefone com DDD.';
@@ -73,6 +76,7 @@ const products = [
       return Object.keys(errors).length === 0;
     },
     submit() {
+      this.submitted = false;
       if (!this.validate()) {
         this.$nextTick(() => this.$root.querySelector('[aria-invalid=true]')?.focus());
         return;
@@ -99,8 +103,12 @@ const products = [
         'Página: ' + this.page,
       ].filter(Boolean);
       if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'contact_whatsapp_submit', contact_intent: this.intent, product_interest: this.product, lead_source: this.source });
+      this.redirectUrl = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(lines.join('\\n'));
       this.submitted = true;
-      window.location.href = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(lines.join('\\n'));
+      setTimeout(() => {
+        window.location.assign(this.redirectUrl);
+        this.submitting = false;
+      }, 350);
     }
   }`}
   x-init="init"
@@ -212,8 +220,9 @@ const products = [
         <p id="contact-consent-error" class="mt-2 text-sm text-red-800" x-show="errors.consent" x-text="errors.consent" x-cloak></p>
       </div>
 
-      <div class="mt-7 rounded-xl bg-[#edf7f1] px-4 py-3 text-sm text-[#245c40]" role="status" aria-live="polite" x-show="submitted" x-cloak>
-        Mensagem preparada. Abrindo o WhatsApp para continuar.
+      <div class="mt-7 rounded-xl bg-[#edf7f1] px-4 py-3 text-sm leading-6 text-[#245c40]" role="status" aria-live="polite" x-show="submitted" x-cloak>
+        <p>Mensagem preparada. Abrindo o WhatsApp para continuar.</p>
+        <a class="mt-2 inline-flex font-semibold underline underline-offset-2" x-bind:href="redirectUrl">Se o WhatsApp não abrir, toque aqui</a>
       </div>
 
       <button class="btn btn-primary mt-7 w-full disabled:cursor-wait disabled:opacity-70" type="submit" x-bind:disabled="submitting">
@@ -221,6 +230,12 @@ const products = [
         <span x-text="submitting ? 'Abrindo WhatsApp...' : intent === 'commercial' ? 'Enviar pelo WhatsApp' : intent === 'client' ? 'Solicitar orientação' : 'Enviar dúvida pelo WhatsApp'">Enviar pelo WhatsApp</span>
       </button>
       <p class="mt-3 text-center text-xs leading-5 text-muted">Nenhum dado é enviado para um servidor neste site. A conversa será aberta no WhatsApp.</p>
+      <noscript>
+        <p class="mt-4 rounded-xl bg-soft px-4 py-3 text-center text-sm leading-6 text-muted">
+          Ative o JavaScript para preparar a mensagem ou
+          <a class="font-semibold text-brand underline underline-offset-2" href={site.floatingWhatsappUrl}>fale diretamente pelo WhatsApp</a>.
+        </p>
+      </noscript>
     </form>
   </div>
 </section>

@@ -16,8 +16,8 @@ Domínio canônico confirmado: `https://infinicom.com.br`.
 /
 ├── Home                                             [Implementada]
 │
-├── /para-sua-casa/                                 [Planejada]
-│   ├── /para-sua-casa/vivo-fibra/                  [Planejada]
+├── /para-sua-casa/                                 [Implementada]
+│   ├── /para-sua-casa/vivo-fibra/                  [Implementada]
 │   ├── /para-sua-casa/vivo-controle/               [Planejada]
 │   ├── /para-sua-casa/vivo-pos/                    [Planejada]
 │   ├── /para-sua-casa/vivo-total/                  [Planejada]
@@ -42,17 +42,17 @@ Domínio canônico confirmado: `https://infinicom.com.br`.
 ├── /contato/                                       [Implementada]
 │
 ├── /lp/
-│   ├── /lp/vivo-fibra/                             [Implementada]
+│   ├── /lp/vivo-fibra/                             [Implementada, campanha, noindex]
 │   ├── /lp/portabilidade/                          [Planejada]
 │   ├── /lp/vivo-total/                             [Planejada]
 │   ├── /lp/vivo-empresas/                          [Planejada]
 │   └── /lp/[campanha]/                             [Planejada]
 │
-├── /obrigado/                                      [Planejada]
+├── /obrigado/                                      [Implementada, noindex]
 ├── /privacidade/                                   [Estrutura provisória]
 ├── /cookies/                                       [Estrutura provisória]
 ├── /termos/                                        [Planejada]
-└── /404/                                           [Planejada]
+└── /404/                                           [Implementada, noindex]
 ```
 
 ## Navegação principal
@@ -80,6 +80,8 @@ Contato
 Ação
 └── Falar com consultor
 ```
+
+As rotas em `/lp/` são destinadas a campanhas e não fazem parte da navegação institucional. A solução Vivo Fibra presente no menu aponta para `/para-sua-casa/vivo-fibra/`.
 
 ## Footer
 
@@ -121,6 +123,16 @@ Tráfego
 → Consultor
 ```
 
+### Conversão por mídia paga
+
+```text
+Google Ads ou outra campanha
+→ Landing Page sem navegação institucional
+→ Formulário com origem e UTMs
+→ WhatsApp
+→ Atendimento comercial
+```
+
 ### Conteúdo orgânico
 
 ```text
@@ -144,5 +156,7 @@ Campanha
 ## Regra para o sitemap.xml
 
 O arquivo `public/sitemap.xml` deve conter somente páginas publicadas e indexáveis. Rotas planejadas devem ser adicionadas ao XML apenas depois que existirem e tiverem conteúdo definitivo.
+
+As páginas `/obrigado/` e `/404/` existem como rotas utilitárias, mas não entram no `sitemap.xml` porque estão marcadas como `noindex`.
 
 O domínio deve permanecer sem `www` nas URLs canônicas e no `sitemap.xml`.
