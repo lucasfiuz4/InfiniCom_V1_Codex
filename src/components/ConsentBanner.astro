@@ -1,0 +1,73 @@
+<aside
+  x-data="{
+    open: false,
+    customize: false,
+    analytics: false,
+    marketing: false,
+    init() {
+      const saved = window.infinicomConsent?.get();
+      this.analytics = Boolean(saved?.analytics);
+      this.marketing = Boolean(saved?.marketing);
+      this.open = !saved;
+      window.addEventListener('infinicom:consent-open', () => {
+        const current = window.infinicomConsent?.get();
+        this.analytics = Boolean(current?.analytics);
+        this.marketing = Boolean(current?.marketing);
+        this.customize = true;
+        this.open = true;
+        this.$nextTick(() => this.$refs.heading?.focus());
+      });
+    },
+    save(analytics, marketing) {
+      this.analytics = analytics;
+      this.marketing = marketing;
+      window.infinicomConsent?.save({ analytics, marketing });
+      this.open = false;
+      this.customize = false;
+    }
+  }"
+  x-show="open"
+  x-cloak
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--color-border-strong)] bg-white shadow-[0_-20px_60px_rgba(41,0,61,0.16)]"
+  role="dialog"
+  aria-labelledby="consent-title"
+  aria-describedby="consent-description"
+>
+  <div class="container-shell py-5 sm:py-6">
+    <div class="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-10">
+      <div>
+        <h2 id="consent-title" class="text-xl font-semibold text-ink" tabindex="-1" x-ref="heading">Sua privacidade importa</h2>
+        <p id="consent-description" class="mt-2 max-w-3xl text-sm leading-6 text-muted">
+          Usamos cookies necessários para o funcionamento do site. Com sua autorização, também usamos dados de análise e publicidade para medir resultados e melhorar campanhas.
+          <a class="font-semibold text-brand underline underline-offset-2 hover:text-brand-strong" href="/cookies/">Conheça a Política de Cookies</a>.
+        </p>
+      </div>
+
+      <div class="grid gap-2 sm:grid-cols-3 lg:min-w-[36rem]">
+        <button type="button" class="btn btn-primary order-1 w-full sm:order-3" x-on:click="save(true, true)">Aceitar todos</button>
+        <button type="button" class="btn btn-outline order-2 w-full sm:order-1" x-on:click="save(false, false)">Rejeitar não essenciais</button>
+        <button type="button" class="btn btn-outline order-3 w-full sm:order-2" x-on:click="customize = !customize" x-bind:aria-expanded="customize" aria-controls="consent-preferences">Personalizar</button>
+      </div>
+    </div>
+
+    <div id="consent-preferences" class="mt-6 border-t border-[var(--color-border)] pt-5" x-show="customize" x-cloak>
+      <div class="grid gap-5 md:grid-cols-3">
+        <label class="flex items-start gap-3">
+          <input type="checkbox" checked disabled class="mt-1 size-4 accent-[var(--color-brand-primary)]" />
+          <span><strong class="block text-sm text-ink">Necessários</strong><span class="mt-1 block text-xs leading-5 text-muted">Mantêm segurança, preferências e recursos essenciais. Sempre ativos.</span></span>
+        </label>
+        <label class="flex cursor-pointer items-start gap-3">
+          <input type="checkbox" x-model="analytics" class="mt-1 size-4 accent-[var(--color-brand-primary)]" />
+          <span><strong class="block text-sm text-ink">Análise</strong><span class="mt-1 block text-xs leading-5 text-muted">Ajuda a entender visitas e desempenho por meio do Google Analytics.</span></span>
+        </label>
+        <label class="flex cursor-pointer items-start gap-3">
+          <input type="checkbox" x-model="marketing" class="mt-1 size-4 accent-[var(--color-brand-primary)]" />
+          <span><strong class="block text-sm text-ink">Publicidade</strong><span class="mt-1 block text-xs leading-5 text-muted">Permite mensuração e personalização com Google Ads e Meta Pixel.</span></span>
+        </label>
+      </div>
+      <div class="mt-5 flex justify-end">
+        <button type="button" class="btn btn-primary w-full sm:w-auto" x-on:click="save(analytics, marketing)">Salvar preferências</button>
+      </div>
+    </div>
+  </div>
+</aside>

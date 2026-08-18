@@ -2,6 +2,9 @@
 import '../styles/global.css';
 import { Image } from 'astro:assets';
 import { site } from '../config/site';
+import ConsentBanner from '../components/ConsentBanner.astro';
+import TrackingHead from '../components/TrackingHead.astro';
+import TrackingNoScript from '../components/TrackingNoScript.astro';
 import logoActive from '../assets/brand/infinicom-logo-active.svg';
 
 interface Props {
@@ -26,6 +29,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toStrin
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <TrackingHead />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#29003d" />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -41,6 +45,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toStrin
     <title>{title}</title>
   </head>
   <body>
+    <TrackingNoScript />
     <a href="#conteudo" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-ink">
       Ir para o conteúdo
     </a>
@@ -65,11 +70,13 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toStrin
     <footer class="border-t border-[var(--color-border)] bg-white">
       <div class="container-shell flex flex-col gap-4 py-7 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
         <p>© {new Date().getFullYear()} INFINICOM. Todos os direitos reservados.</p>
-        <nav class="flex gap-5" aria-label="Links legais">
+        <nav class="flex flex-wrap gap-5" aria-label="Links legais">
           <a class="font-medium hover:text-brand" href="/privacidade">Privacidade</a>
           <a class="font-medium hover:text-brand" href="/cookies">Cookies</a>
+          <button type="button" class="font-medium hover:text-brand" x-on:click="window.infinicomConsent?.open()">Gerenciar cookies</button>
         </nav>
       </div>
     </footer>
+    <ConsentBanner />
   </body>
 </html>

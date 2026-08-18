@@ -3,6 +3,9 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
+import TrackingHead from '../components/TrackingHead.astro';
+import TrackingNoScript from '../components/TrackingNoScript.astro';
 import { site } from '../config/site';
 
 interface Props {
@@ -35,6 +38,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toStrin
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <TrackingHead />
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#29003d" />
@@ -55,6 +59,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toStrin
     <title>{title}</title>
   </head>
   <body>
+    <TrackingNoScript />
     <a href="#conteudo" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-ink">
       Ir para o conteúdo
     </a>
@@ -64,5 +69,6 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toStrin
     </main>
     <Footer />
     <FloatingWhatsApp />
+    <ConsentBanner />
   </body>
 </html>

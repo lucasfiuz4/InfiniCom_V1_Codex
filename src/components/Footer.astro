@@ -102,6 +102,7 @@ const socialLinks = [
           <ul class="mt-4 grid gap-3 text-sm leading-5 text-fuchsia-100/65">
             <li><a class="transition hover:text-white" href="/privacidade/">Privacidade</a></li>
             <li><a class="transition hover:text-white" href="/cookies/">Cookies</a></li>
+            <li><button type="button" class="text-left transition hover:text-white" x-on:click="window.infinicomConsent?.open()">Gerenciar cookies</button></li>
           </ul>
 
           {socialLinks.length > 0 && (

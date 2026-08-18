@@ -1,5 +1,8 @@
 export const site = {
   name: 'INFINICOM',
+  legalName: 'INFINICOM LTDA',
+  cnpj: '58.684.626/0001-44',
+  legalAddress: 'Rua Vicente Risola, 456, Santa Inês, Belo Horizonte, MG, CEP 31080-160',
   url: 'https://infinicom.com.br',
   description:
     'Consultoria comercial especializada em soluções Vivo para casas, empresas, condomínios e construtoras em Minas Gerais.',
@@ -9,6 +12,9 @@ export const site = {
   phoneNumber: import.meta.env.PUBLIC_PHONE_NUMBER || '5531995308690',
   phoneDisplay: import.meta.env.PUBLIC_PHONE_DISPLAY || '(31) 99530-8690',
   email: import.meta.env.PUBLIC_CONTACT_EMAIL || 'contato@infinicom.com.br',
+  privacyEmail: import.meta.env.PUBLIC_PRIVACY_EMAIL || 'admin@infinicom.com.br',
+  privacyContactName: 'André Souza',
+  gtmId: import.meta.env.PUBLIC_GTM_ID || 'GTM-5Z2SX62K',
   serviceHours: import.meta.env.PUBLIC_SERVICE_HOURS || '',
   instagramUrl: import.meta.env.PUBLIC_INSTAGRAM_URL || '',
   linkedinUrl: import.meta.env.PUBLIC_LINKEDIN_URL || '',

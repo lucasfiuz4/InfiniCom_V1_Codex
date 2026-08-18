@@ -1,0 +1,94 @@
+---
+import { site } from '../config/site';
+
+const gtmId = site.gtmId;
+---
+
+{
+  gtmId && (
+    <script is:inline define:vars={{ gtmId }}>
+      (() => {
+        const cookieName = 'infinicom_consent_v1';
+        const cookieDuration = 60 * 60 * 24 * 180;
+
+        const readConsent = () => {
+          const prefix = `${cookieName}=`;
+          const entry = document.cookie
+            .split(';')
+            .map((item) => item.trim())
+            .find((item) => item.startsWith(prefix));
+
+          if (!entry) return null;
+
+          try {
+            const value = JSON.parse(decodeURIComponent(entry.slice(prefix.length)));
+            return value?.version === 1 ? value : null;
+          } catch {
+            return null;
+          }
+        };
+
+        const toGoogleState = (choice) => ({
+          analytics_storage: choice?.analytics ? 'granted' : 'denied',
+          ad_storage: choice?.marketing ? 'granted' : 'denied',
+          ad_user_data: choice?.marketing ? 'granted' : 'denied',
+          ad_personalization: choice?.marketing ? 'granted' : 'denied',
+        });
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+
+        const savedConsent = readConsent();
+        window.gtag('consent', 'default', {
+          ...toGoogleState(savedConsent),
+          functionality_storage: 'granted',
+          security_storage: 'granted',
+          wait_for_update: 500,
+        });
+        window.gtag('set', 'ads_data_redaction', true);
+        window.gtag('set', 'url_passthrough', false);
+
+        window.dataLayer.push({
+          event: 'infinicom_consent_default',
+          consent_analytics: Boolean(savedConsent?.analytics),
+          consent_marketing: Boolean(savedConsent?.marketing),
+        });
+
+        window.infinicomConsent = {
+          get: readConsent,
+          save(choice) {
+            const value = {
+              version: 1,
+              analytics: Boolean(choice.analytics),
+              marketing: Boolean(choice.marketing),
+              updatedAt: new Date().toISOString(),
+            };
+            const secure = location.protocol === 'https:' ? '; Secure' : '';
+            document.cookie = `${cookieName}=${encodeURIComponent(JSON.stringify(value))}; Path=/; Max-Age=${cookieDuration}; SameSite=Lax${secure}`;
+            window.gtag('consent', 'update', toGoogleState(value));
+            window.dataLayer.push({
+              event: 'infinicom_consent_update',
+              consent_analytics: value.analytics,
+              consent_marketing: value.marketing,
+            });
+            window.dispatchEvent(new CustomEvent('infinicom:consent-saved', { detail: value }));
+          },
+          open() {
+            window.dispatchEvent(new CustomEvent('infinicom:consent-open'));
+          },
+        };
+
+        ((windowObject, documentObject, tagName, layerName, containerId) => {
+          windowObject[layerName] = windowObject[layerName] || [];
+          windowObject[layerName].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          const firstScript = documentObject.getElementsByTagName(tagName)[0];
+          const script = documentObject.createElement(tagName);
+          const layerQuery = layerName !== 'dataLayer' ? `&l=${layerName}` : '';
+          script.async = true;
+          script.src = `https://www.googletagmanager.com/gtm.js?id=${containerId}${layerQuery}`;
+          firstScript.parentNode.insertBefore(script, firstScript);
+        })(window, document, 'script', 'dataLayer', gtmId);
+      })();
+    </script>
+  )
+}
