@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import heroImage from '../../assets/images/hero-consultoria.png';
 import businessImage from '../../assets/images/conectividade-empresa.png';
@@ -46,13 +47,7 @@ const structure = [
   <section class="relative isolate overflow-hidden bg-canvas">
     <div class="pointer-events-none absolute -right-48 -top-56 size-[34rem] rounded-full bg-[#dbc5e4]/70 blur-3xl"></div>
     <div class="container-shell py-10 sm:py-14 lg:py-16">
-      <nav aria-label="Breadcrumb" class="relative mb-9 text-sm text-muted">
-        <ol class="flex items-center gap-2">
-          <li><a href="/" class="transition-colors hover:text-brand">Início</a></li>
-          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
-          <li aria-current="page" class="font-medium text-ink">Sobre a INFINICOM</li>
-        </ol>
-      </nav>
+      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Sobre a INFINICOM' }]} />
 
       <div class="relative grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
         <div class="reveal">

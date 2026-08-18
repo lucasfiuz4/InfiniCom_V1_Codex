@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import businessImage from '../../assets/images/conectividade-empresa.png';
 import { whatsappUrl } from '../../config/site';
@@ -81,13 +82,7 @@ const solutions = [
   <section class="relative isolate overflow-hidden bg-[linear-gradient(118deg,#660099_0%,#660099_58%,#461e5f_100%)] text-white">
     <div class="pointer-events-none absolute -left-40 top-16 size-[30rem] rounded-full bg-fuchsia-300/10 blur-3xl"></div>
     <div class="container-shell py-10 sm:py-14 lg:py-16">
-      <nav aria-label="Breadcrumb" class="relative z-10 mb-9 text-sm text-fuchsia-100/75">
-        <ol class="flex items-center gap-2">
-          <li><a href="/" class="transition-colors hover:text-white">Início</a></li>
-          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
-          <li aria-current="page" class="font-medium text-white">Para sua empresa</li>
-        </ol>
-      </nav>
+      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Para sua empresa' }]} variant="inverse" />
 
       <div class="relative z-10 grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         <div class="reveal">

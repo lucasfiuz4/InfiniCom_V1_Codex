@@ -5,65 +5,150 @@ import { site, whatsappUrl } from '../config/site';
 import logoActive from '../assets/brand/infinicom-logo-active.svg';
 
 const consultorUrl = whatsappUrl('Olá, quero falar com um consultor da INFINICOM.');
+const phoneUrl = `tel:+${site.phoneNumber}`;
+const socialLinks = [
+  site.instagramUrl
+    ? { label: 'Instagram', href: site.instagramUrl, icon: 'lucide:instagram' }
+    : null,
+  site.linkedinUrl
+    ? { label: 'LinkedIn', href: site.linkedinUrl, icon: 'lucide:linkedin' }
+    : null,
+].filter((link): link is NonNullable<typeof link> => Boolean(link));
 ---
 
 <footer id="contato" class="scroll-mt-24 bg-[#180024] text-[#f8f3fa]">
-  <div class="container-shell grid gap-12 py-16 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
-    <div>
-      <a href="/" class="inline-flex rounded-2xl bg-white p-3" aria-label="InfiniCom, página inicial">
-        <Image
-          src={logoActive}
-          alt="InfiniCom"
-          width={112}
-          class="h-auto w-28 object-contain"
-        />
-      </a>
-      <p class="mt-5 max-w-sm text-sm leading-6 text-fuchsia-100/70">
-        Consultoria comercial especializada em soluções Vivo para pessoas, empresas e empreendimentos em Minas Gerais.
+  <div class="container-shell py-14 sm:py-16">
+    <div class="grid gap-10 border-b border-white/10 pb-12 lg:grid-cols-[1.35fr_2fr] lg:gap-16">
+      <div>
+        <a
+          href="/"
+          class="inline-flex rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          aria-label="InfiniCom, página inicial"
+        >
+          <Image
+            src={logoActive}
+            alt="InfiniCom"
+            width={128}
+            class="h-auto w-32 object-contain brightness-0 invert"
+          />
+        </a>
+        <p class="mt-5 max-w-md text-sm leading-6 text-fuchsia-100/70">
+          Consultoria comercial especializada em soluções Vivo para pessoas, empresas e empreendimentos em Minas Gerais.
+        </p>
+        <a
+          class="mt-7 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-[#46005f] transition hover:bg-fuchsia-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          href={consultorUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Icon name="lucide:message-circle" class="size-4" />
+          Falar com consultor
+        </a>
+      </div>
+
+      <nav class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4" aria-label="Navegação do rodapé">
+        <div>
+          <h2 class="text-sm font-semibold text-white">Soluções</h2>
+          <ul class="mt-4 grid gap-3 text-sm leading-5 text-fuchsia-100/65">
+            <li><a class="transition hover:text-white" href="/para-sua-casa/">Para sua casa</a></li>
+            <li><a class="transition hover:text-white" href="/para-sua-casa/vivo-fibra/">Vivo Fibra</a></li>
+            <li><a class="transition hover:text-white" href="/para-sua-empresa/">Para sua empresa</a></li>
+            <li><a class="transition hover:text-white" href="/para-sua-empresa/internet-empresarial/">Internet empresarial</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-sm font-semibold text-white">Empresa</h2>
+          <ul class="mt-4 grid gap-3 text-sm leading-5 text-fuchsia-100/65">
+            <li><a class="transition hover:text-white" href="/sobre/">Sobre a INFINICOM</a></li>
+            <li><a class="transition hover:text-white" href="/conteudos/">Conteúdos</a></li>
+            <li><a class="transition hover:text-white" href="/contato/">Contato</a></li>
+            <li><a class="transition hover:text-white" href="/#faq">Dúvidas frequentes</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-sm font-semibold text-white">Atendimento</h2>
+          <ul class="mt-4 grid gap-3 text-sm leading-5 text-fuchsia-100/65">
+            <li>
+              <a class="inline-flex gap-2 transition hover:text-white" href={consultorUrl} target="_blank" rel="noreferrer">
+                <Icon name="lucide:message-circle" class="mt-0.5 size-4 shrink-0" />
+                WhatsApp
+              </a>
+            </li>
+            <li>
+              <a class="inline-flex gap-2 transition hover:text-white" href={phoneUrl}>
+                <Icon name="lucide:phone" class="mt-0.5 size-4 shrink-0" />
+                {site.phoneDisplay}
+              </a>
+            </li>
+            <li>
+              <a class="inline-flex gap-2 break-all transition hover:text-white" href={`mailto:${site.email}`}>
+                <Icon name="lucide:mail" class="mt-0.5 size-4 shrink-0" />
+                {site.email}
+              </a>
+            </li>
+            {site.serviceHours && (
+              <li class="inline-flex gap-2">
+                <Icon name="lucide:clock-3" class="mt-0.5 size-4 shrink-0" />
+                <span>{site.serviceHours}</span>
+              </li>
+            )}
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-sm font-semibold text-white">Legal</h2>
+          <ul class="mt-4 grid gap-3 text-sm leading-5 text-fuchsia-100/65">
+            <li><a class="transition hover:text-white" href="/privacidade/">Privacidade</a></li>
+            <li><a class="transition hover:text-white" href="/cookies/">Cookies</a></li>
+          </ul>
+
+          {socialLinks.length > 0 && (
+            <div class="mt-7">
+              <h2 class="text-sm font-semibold text-white">Redes sociais</h2>
+              <div class="mt-4 flex gap-2">
+                {socialLinks.map((link) => (
+                  <a
+                    class="inline-flex size-10 items-center justify-center rounded-full border border-white/15 text-fuchsia-100/70 transition hover:border-white/35 hover:bg-white/10 hover:text-white"
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={link.label}
+                  >
+                    <Icon name={link.icon} class="size-4" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </nav>
+    </div>
+
+    <div class="grid gap-3 border-b border-white/10 py-6 sm:grid-cols-[auto_1fr] sm:items-start sm:gap-5">
+      <div class="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-fuchsia-100/80">
+        <Icon name="lucide:badge-check" class="size-4" />
+        Informação institucional
+      </div>
+      <p class="max-w-3xl text-xs leading-5 text-fuchsia-100/55">
+        A INFINICOM realiza o atendimento comercial das soluções apresentadas neste site. Marcas de terceiros pertencem aos seus respectivos titulares.
       </p>
-      <a class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-fuchsia-200" href={consultorUrl} target="_blank" rel="noreferrer">
-        <Icon name="lucide:message-circle" class="size-4" />
-        Falar com consultor
-      </a>
     </div>
 
-    <div>
-      <h2 class="text-base font-semibold">Soluções</h2>
-      <ul class="mt-4 grid gap-3 text-sm text-fuchsia-100/70">
-        <li><a class="hover:text-white" href="/para-sua-casa/">Vivo para sua casa</a></li>
-        <li><a class="hover:text-white" href="/para-sua-empresa/">Vivo para empresas</a></li>
-        <li><a class="hover:text-white" href="/#condominios">Condomínios</a></li>
-        <li><a class="hover:text-white" href="/para-sua-casa/vivo-fibra/">Vivo Fibra</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <h2 class="text-base font-semibold">Empresa</h2>
-      <ul class="mt-4 grid gap-3 text-sm text-fuchsia-100/70">
-        <li><a class="hover:text-white" href="/sobre/">Sobre a INFINICOM</a></li>
-        <li><a class="hover:text-white" href="/conteudos/">Conteúdos</a></li>
-        <li><a class="hover:text-white" href="/contato/">Contato</a></li>
-        <li><a class="hover:text-white" href="/#faq">Dúvidas frequentes</a></li>
-        <li><a class="hover:text-white" href={`mailto:${site.email}`}>{site.email}</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <h2 class="text-base font-semibold">Legal</h2>
-      <ul class="mt-4 grid gap-3 text-sm text-fuchsia-100/70">
-        <li><a class="hover:text-white" href="/privacidade">Privacidade</a></li>
-        <li><a class="hover:text-white" href="/cookies">Cookies</a></li>
-      </ul>
-      <p class="mt-6 text-xs leading-5 text-fuchsia-100/55">
-        A INFINICOM é responsável por este site. Marcas de terceiros pertencem aos seus respectivos titulares.
-      </p>
-    </div>
-  </div>
-
-  <div class="border-t border-white/10">
-    <div class="container-shell flex flex-col gap-2 py-5 text-xs text-fuchsia-100/55 sm:flex-row sm:items-center sm:justify-between">
+    <div class="flex flex-col gap-2 pt-6 text-xs text-fuchsia-100/55 sm:flex-row sm:items-center sm:justify-between">
       <p>© {new Date().getFullYear()} INFINICOM. Todos os direitos reservados.</p>
-      <p>Conectar. Aproximar. Transformar.</p>
+      <p>
+        Desenvolvido por
+        <a
+          href="https://ak7digitalhub.com.br/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-medium text-fuchsia-100/75 underline-offset-4 transition hover:text-white hover:underline focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          AK7 DigitalHub
+        </a>.
+      </p>
     </div>
   </div>
 </footer>

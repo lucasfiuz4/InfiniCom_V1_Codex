@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import ArticleCard from '../../components/ArticleCard.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site, whatsappUrl } from '../../config/site';
 import { categorySlug, contentSlug, formatContentDate, readingTime, sortContents } from '../../lib/content';
@@ -84,17 +85,14 @@ const schema = [
 >
   <article class="bg-canvas">
     <header class="container-shell py-10 sm:py-14 lg:py-16">
-      <nav aria-label="Breadcrumb" class="mb-10 text-sm text-muted">
-        <ol class="flex flex-wrap items-center gap-2">
-          <li><a href="/" class="hover:text-brand">Início</a></li>
-          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
-          <li><a href="/conteudos/" class="hover:text-brand">Conteúdos</a></li>
-          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
-          <li><a href={`/conteudos/categoria/${categorySlug(data.category)}/`} class="hover:text-brand">{data.category}</a></li>
-          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
-          <li aria-current="page" class="max-w-[28ch] truncate font-medium text-ink">{data.title}</li>
-        </ol>
-      </nav>
+      <Breadcrumb
+        items={[
+          { label: 'Início', href: '/' },
+          { label: 'Conteúdos', href: '/conteudos/' },
+          { label: data.category, href: `/conteudos/categoria/${categorySlug(data.category)}/` },
+          { label: data.title },
+        ]}
+      />
 
       <div class="max-w-4xl">
         <a class="text-sm font-semibold text-brand hover:text-brand-strong" href={`/conteudos/categoria/${categorySlug(data.category)}/`}>{data.category}</a>

@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import ArticleCard from '../../components/ArticleCard.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { categorySlug, sortContents } from '../../lib/content';
 
@@ -34,14 +35,8 @@ const filterExpression = (entry: (typeof articles)[number]) =>
   description="Artigos da INFINICOM sobre conectividade, gestão e decisões de telecomunicações para empresas."
 >
   <section class="bg-canvas" x-data={filterState}>
-    <div class="container-shell py-12 sm:py-16 lg:py-20">
-      <nav aria-label="Breadcrumb" class="mb-10 text-sm text-muted">
-        <ol class="flex items-center gap-2">
-          <li><a href="/" class="transition-colors hover:text-brand">Início</a></li>
-          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
-          <li aria-current="page" class="font-medium text-ink">Conteúdos</li>
-        </ol>
-      </nav>
+    <div class="container-shell pb-12 pt-10 sm:pb-16 sm:pt-14 lg:pb-20 lg:pt-16">
+      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Conteúdos' }]} />
 
       <div class="max-w-3xl">
         <p class="eyebrow text-brand">Conteúdos INFINICOM</p>
@@ -73,7 +68,7 @@ const filterExpression = (entry: (typeof articles)[number]) =>
                 class="min-h-11 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand"
                 x-on:click={`category = ${JSON.stringify(category)}`}
                 x-bind:aria-pressed={`category === ${JSON.stringify(category)}`}
-                x-bind:class={`category === ${JSON.stringify(category)} && 'border-brand bg-brand text-white'`}
+                x-bind:class={`category === ${JSON.stringify(category)} && '!border-brand !bg-brand !text-white hover:!border-brand-strong hover:!bg-brand-strong hover:!text-white'`}
               >
                 {category}
               </button>

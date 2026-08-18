@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContactIntentForm from '../../components/ContactIntentForm.astro';
 import contactImage from '../../assets/images/hero-consultoria.png';
@@ -12,13 +13,7 @@ import contactImage from '../../assets/images/hero-consultoria.png';
 >
   <section class="bg-canvas">
     <div class="container-shell py-10 sm:py-14 lg:py-16">
-      <nav aria-label="Breadcrumb" class="mb-9 text-sm text-muted">
-        <ol class="flex items-center gap-2">
-          <li><a href="/" class="transition-colors hover:text-brand">Início</a></li>
-          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
-          <li aria-current="page" class="font-medium text-ink">Contato</li>
-        </ol>
-      </nav>
+      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Contato' }]} />
 
       <div class="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>

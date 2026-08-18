@@ -1,9 +1,11 @@
 ---
+import Breadcrumb from '../components/Breadcrumb.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Política de cookies | INFINICOM" description="Política de cookies da INFINICOM.">
-  <section class="section-space bg-white">
-    <div class="container-shell max-w-3xl">
+  <section class="bg-white">
+    <div class="container-shell max-w-3xl py-10 sm:py-14 lg:py-16">
+      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Política de cookies' }]} />
       <h1 class="section-title">Política de cookies</h1>
       <p class="mt-6 leading-7 text-muted">O texto jurídico definitivo deve ser validado e publicado pela INFINICOM antes do lançamento.</p>
     </div>

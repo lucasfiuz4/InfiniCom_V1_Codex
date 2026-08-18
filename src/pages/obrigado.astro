@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../config/site';
 ---
@@ -11,13 +12,7 @@ import { site } from '../config/site';
 >
   <section class="bg-canvas py-10 sm:py-14 lg:py-16">
     <div class="container-shell">
-      <nav aria-label="Breadcrumb" class="mb-9 text-sm text-muted">
-        <ol class="flex items-center gap-2">
-          <li><a href="/" class="transition-colors hover:text-brand">Início</a></li>
-          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
-          <li aria-current="page" class="font-medium text-ink">Obrigado</li>
-        </ol>
-      </nav>
+      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Obrigado' }]} />
 
       <div class="grid overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-[var(--shadow-soft)] lg:grid-cols-[1.08fr_0.92fr]">
         <div class="relative isolate overflow-hidden bg-brand-deep p-8 text-white sm:p-12 lg:p-14">

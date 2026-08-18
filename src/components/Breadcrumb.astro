@@ -1,0 +1,49 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  variant?: 'default' | 'inverse';
+}
+
+const { items, variant = 'default' } = Astro.props;
+const inverse = variant === 'inverse';
+---
+
+<nav
+  aria-label="Breadcrumb"
+  class:list={[
+    'relative z-10 mb-9 text-sm',
+    inverse ? 'text-fuchsia-100/75' : 'text-muted',
+  ]}
+>
+  <ol class="flex flex-wrap items-center gap-2">
+    {items.map((item, index) => (
+      <li class="flex min-w-0 items-center gap-2" aria-current={!item.href ? 'page' : undefined}>
+        {index > 0 && (
+          <Icon name="lucide:chevron-right" class="size-4 shrink-0" aria-hidden="true" />
+        )}
+        {item.href ? (
+          <a
+            href={item.href}
+            class:list={[
+              'transition-colors',
+              inverse ? 'hover:text-white' : 'hover:text-brand',
+            ]}
+          >
+            {item.label}
+          </a>
+        ) : (
+          <span class:list={['block max-w-[28ch] truncate font-medium', inverse ? 'text-white' : 'text-ink']}>
+            {item.label}
+          </span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

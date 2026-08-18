@@ -86,28 +86,41 @@ As rotas em `/lp/` são destinadas a campanhas e não fazem parte da navegação
 ## Footer
 
 ```text
+INFINICOM
+├── Descrição institucional
+└── Falar com consultor
+
 Soluções
+├── Para sua casa
 ├── Vivo Fibra
-├── Planos móveis
-├── Vivo Total
-└── Portabilidade
+├── Para sua empresa
+└── Internet empresarial
 
-Empresas
-├── Internet empresarial
-├── Link dedicado
-├── Telefonia
-└── Soluções personalizadas
-
-Institucional
-├── Sobre
+Empresa
+├── Sobre a INFINICOM
 ├── Conteúdos
-└── Contato
+├── Contato
+└── Dúvidas frequentes
+
+Atendimento
+├── WhatsApp
+├── Telefone
+├── E-mail
+└── Horário, quando configurado
 
 Legal
 ├── Privacidade
-├── Cookies
-└── Termos
+└── Cookies
+
+Redes sociais, quando configuradas
+├── Instagram
+└── LinkedIn
+
+Informação institucional
+└── Aviso sobre atendimento comercial e marcas de terceiros
 ```
+
+O footer faz parte da arquitetura de informação, mas não representa uma rota própria. Apenas os links internos indexáveis entram no `sitemap.xml`; WhatsApp, telefone, e-mail e redes sociais permanecem fora dele.
 
 ## Fluxos principais
 

@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import ArticleCard from '../../../components/ArticleCard.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { categorySlug, sortContents } from '../../../lib/content';
 
@@ -35,17 +36,15 @@ const descriptions: Record<string, string> = {
   title={`${category} | Conteúdos INFINICOM`}
   description={`${descriptions[category]} Leia os artigos da INFINICOM.`}
 >
-  <section class="section-space bg-canvas">
-    <div class="container-shell">
-      <nav aria-label="Breadcrumb" class="mb-10 text-sm text-muted">
-        <ol class="flex flex-wrap items-center gap-2">
-          <li><a href="/" class="hover:text-brand">Início</a></li>
-          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
-          <li><a href="/conteudos/" class="hover:text-brand">Conteúdos</a></li>
-          <li aria-hidden="true"><Icon name="lucide:chevron-right" class="size-4" /></li>
-          <li aria-current="page" class="font-medium text-ink">{category}</li>
-        </ol>
-      </nav>
+  <section class="bg-canvas">
+    <div class="container-shell pb-12 pt-10 sm:pb-16 sm:pt-14 lg:pb-20 lg:pt-16">
+      <Breadcrumb
+        items={[
+          { label: 'Início', href: '/' },
+          { label: 'Conteúdos', href: '/conteudos/' },
+          { label: category },
+        ]}
+      />
 
       <div class="max-w-3xl">
         <p class="eyebrow text-brand">Categoria</p>
