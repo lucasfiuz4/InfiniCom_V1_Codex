@@ -23,7 +23,9 @@ const { solution } = Astro.props;
       }
       this.submitting = true;
       const message = 'Olá, quero falar sobre ${solution}. Nome: ' + this.name + '. Empresa: ' + this.company + '. Telefone: ' + this.phone + '. E-mail: ' + this.email + '. Cidade: ' + this.city + '. Necessidade: ' + this.need;
-      window.location.href = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(message);
+      const redirectUrl = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(message);
+      window.infinicomTracking?.trackWhatsApp({ ctaLocation: 'formulario_solucao', ctaType: 'form_submit', product: '${solution}' });
+      setTimeout(() => { window.location.href = redirectUrl; }, 350);
     }
   }`}
 >

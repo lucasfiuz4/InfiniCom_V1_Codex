@@ -6,6 +6,7 @@ import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
 import ConsentBanner from '../components/ConsentBanner.astro';
 import TrackingHead from '../components/TrackingHead.astro';
 import TrackingNoScript from '../components/TrackingNoScript.astro';
+import WhatsAppTracking from '../components/WhatsAppTracking.astro';
 import { site } from '../config/site';
 
 interface Props {
@@ -70,5 +71,6 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toStrin
     <Footer />
     <FloatingWhatsApp />
     <ConsentBanner />
+    <WhatsAppTracking />
   </body>
 </html>

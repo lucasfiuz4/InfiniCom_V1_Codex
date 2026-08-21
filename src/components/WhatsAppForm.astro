@@ -66,6 +66,7 @@ const {
         'Página: ' + this.page,
       ];
       if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'lp_whatsapp_submit', product: '${product}', lead_source: this.source, campaign: this.campaign });
+      window.infinicomTracking?.trackWhatsApp({ ctaLocation: 'formulario_cobertura', ctaType: 'form_submit', product: '${product}' });
       this.redirectUrl = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(lines.join('\\n'));
       this.submitted = true;
       setTimeout(() => {

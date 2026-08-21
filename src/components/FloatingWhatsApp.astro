@@ -6,6 +6,7 @@ const consultorUrl = site.floatingWhatsappUrl;
 ---
 
 <aside
+  data-whatsapp-location="botao_flutuante"
   class="fixed right-4 z-30 sm:right-6"
   style="bottom: max(1rem, env(safe-area-inset-bottom));"
   x-data="{ open: false }"
@@ -54,6 +55,7 @@ const consultorUrl = site.floatingWhatsappUrl;
       </p>
       <a
         href={consultorUrl}
+        data-whatsapp-type="popup"
         target="_blank"
         rel="noreferrer"
         class="btn btn-primary mt-5 w-full"

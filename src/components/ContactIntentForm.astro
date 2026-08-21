@@ -103,6 +103,7 @@ const products = [
         'Página: ' + this.page,
       ].filter(Boolean);
       if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'contact_whatsapp_submit', contact_intent: this.intent, product_interest: this.product, lead_source: this.source });
+      window.infinicomTracking?.trackWhatsApp({ ctaLocation: 'formulario_contato', ctaType: 'form_submit', product: this.product || 'Não informado' });
       this.redirectUrl = 'https://wa.me/${site.whatsappNumber}?text=' + encodeURIComponent(lines.join('\\n'));
       this.submitted = true;
       setTimeout(() => {

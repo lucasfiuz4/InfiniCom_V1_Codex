@@ -57,18 +57,15 @@ As bases legais aplicáveis, os usos internos posteriores e os prazos de retenç
 
 ## Tecnologias de armazenamento e rastreamento
 
-Na versão analisada, não foram encontrados:
+Na versão atual, foram implementados:
 
-- Uso de `document.cookie`.
-- Uso de `localStorage`.
-- Uso de `sessionStorage`.
-- Google Analytics carregado.
-- Google Tag Manager carregado.
-- Meta Pixel carregado.
-- Microsoft Clarity carregado.
-- PostHog carregado.
+- Cookie necessário `infinicom_consent_v1`, com duração de 180 dias, para registrar as preferências do visitante.
+- Google Consent Mode V2 com categorias não essenciais negadas por padrão.
+- Google Analytics 4 pela Google tag `G-7PC3DVRBPP`.
+- Google Tag Manager pelo contêiner `GTM-5Z2SX62K`.
+- Eventos de interação sem envio dos dados pessoais preenchidos nos formulários.
 
-Existem chamadas condicionais para `window.dataLayer`. Elas somente registram eventos se uma ferramenta que crie esse objeto for instalada posteriormente. O código atual não instala nem carrega essa ferramenta.
+Não foram implementados `localStorage`, `sessionStorage`, Microsoft Clarity ou PostHog. Google Ads e Meta Pixel estão previstos, mas aguardam os identificadores oficiais e a configuração no GTM.
 
 O provedor de hospedagem, CDN, DNS e segurança ainda precisa ser confirmado. Esses serviços podem manter registros técnicos como endereço IP, data, horário, user-agent e logs de acesso.
 
@@ -112,7 +109,9 @@ Referência contratual consultada: https://www.hostgator.com.br/termos-de-servic
 
 - Contêiner confirmado: Google Tag Manager `GTM-5Z2SX62K`.
 - Propriedade confirmada: Google Analytics 4 `G-7PC3DVRBPP`.
-- Google Tag Manager será o gerenciador central das tags.
+- Destino confirmado: Google Ads `AW-18397424069`.
+- Google Analytics será carregado diretamente pela Google tag compartilhada entre todas as páginas.
+- Google Tag Manager permanecerá como gerenciador das tags de Google Ads, Meta Pixel e eventos.
 - Google Analytics será classificado na categoria Análise.
 - Google Ads e Meta Pixel serão classificados na categoria Publicidade.
 - Categorias não essenciais permanecerão desativadas por padrão.
@@ -120,7 +119,7 @@ Referência contratual consultada: https://www.hostgator.com.br/termos-de-servic
 - O visitante poderá alterar ou revogar suas escolhas por um link permanente no footer.
 - O site implementará Google Consent Mode V2 com `analytics_storage`, `ad_storage`, `ad_user_data` e `ad_personalization` negados por padrão.
 - O Meta Pixel não poderá disparar sem consentimento para Publicidade.
-- As demais tags não deverão ser instaladas diretamente no código para evitar duplicidade fora do controle do Google Tag Manager.
+- A propriedade `G-7PC3DVRBPP` não deverá ser configurada também no Google Tag Manager, evitando duplicidade de pageviews e eventos.
 
 As escolhas serão mantidas no cookie estritamente necessário `infinicom_consent_v1` por 180 dias.
 
@@ -144,8 +143,8 @@ André Souza foi informado como responsável por responder às solicitações. O
 
 ## Decisões necessárias
 
-1. Configurar o Google Analytics `G-7PC3DVRBPP` no contêiner `GTM-5Z2SX62K`.
-2. Obter os IDs do Google Ads e Meta Pixel e configurar as tags no mesmo contêiner.
+1. Validar a Google tag direta `G-7PC3DVRBPP` no domínio publicado e confirmar que ela não foi duplicada no contêiner `GTM-5Z2SX62K`.
+2. Obter o rótulo da conversão de WhatsApp no Google Ads, ou importar `whatsapp_click` do GA4, e obter o ID do Meta Pixel.
 3. Definir o papel da AK7 DigitalHub no tratamento de dados.
 4. Confirmar se haverá designação formal de encarregado ou aplicação de eventual dispensa.
 5. Confirmar plano, localização do servidor e política de logs após a contratação da HostGator.

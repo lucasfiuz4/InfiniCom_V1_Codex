@@ -2,10 +2,13 @@
 import { site } from '../config/site';
 
 const gtmId = site.gtmId;
+const googleTagId = site.googleTagId;
+const googleAdsId = site.googleAdsId;
+const googleTagSrc = `https://www.googletagmanager.com/gtag/js?id=${googleTagId}`;
 ---
 
 {
-  gtmId && (
+  (gtmId || googleTagId) && (
     <script is:inline define:vars={{ gtmId }}>
       (() => {
         const cookieName = 'infinicom_consent_v1';
@@ -78,17 +81,32 @@ const gtmId = site.gtmId;
           },
         };
 
-        ((windowObject, documentObject, tagName, layerName, containerId) => {
-          windowObject[layerName] = windowObject[layerName] || [];
-          windowObject[layerName].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-          const firstScript = documentObject.getElementsByTagName(tagName)[0];
-          const script = documentObject.createElement(tagName);
-          const layerQuery = layerName !== 'dataLayer' ? `&l=${layerName}` : '';
-          script.async = true;
-          script.src = `https://www.googletagmanager.com/gtm.js?id=${containerId}${layerQuery}`;
-          firstScript.parentNode.insertBefore(script, firstScript);
-        })(window, document, 'script', 'dataLayer', gtmId);
+        if (gtmId) {
+          ((windowObject, documentObject, tagName, layerName, containerId) => {
+            windowObject[layerName] = windowObject[layerName] || [];
+            windowObject[layerName].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+            const firstScript = documentObject.getElementsByTagName(tagName)[0];
+            const script = documentObject.createElement(tagName);
+            const layerQuery = layerName !== 'dataLayer' ? `&l=${layerName}` : '';
+            script.async = true;
+            script.src = `https://www.googletagmanager.com/gtm.js?id=${containerId}${layerQuery}`;
+            firstScript.parentNode.insertBefore(script, firstScript);
+          })(window, document, 'script', 'dataLayer', gtmId);
+        }
       })();
     </script>
+  )
+}
+
+{
+  googleTagId && (
+    <>
+      <script is:inline async src={googleTagSrc}></script>
+      <script is:inline define:vars={{ googleTagId, googleAdsId }}>
+        window.gtag('js', new Date());
+        window.gtag('config', googleTagId);
+        if (googleAdsId) window.gtag('config', googleAdsId);
+      </script>
+    </>
   )
 }

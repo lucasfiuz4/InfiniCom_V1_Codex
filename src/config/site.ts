@@ -15,6 +15,8 @@ export const site = {
   privacyEmail: import.meta.env.PUBLIC_PRIVACY_EMAIL || 'admin@infinicom.com.br',
   privacyContactName: 'André Souza',
   gtmId: import.meta.env.PUBLIC_GTM_ID || 'GTM-5Z2SX62K',
+  googleTagId: import.meta.env.PUBLIC_GOOGLE_TAG_ID || 'G-7PC3DVRBPP',
+  googleAdsId: import.meta.env.PUBLIC_GOOGLE_ADS_ID || 'AW-18397424069',
   serviceHours: import.meta.env.PUBLIC_SERVICE_HOURS || '',
   instagramUrl: import.meta.env.PUBLIC_INSTAGRAM_URL || '',
   linkedinUrl: import.meta.env.PUBLIC_LINKEDIN_URL || '',

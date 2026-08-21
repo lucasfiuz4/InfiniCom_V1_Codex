@@ -5,6 +5,7 @@ import { site } from '../config/site';
 import ConsentBanner from '../components/ConsentBanner.astro';
 import TrackingHead from '../components/TrackingHead.astro';
 import TrackingNoScript from '../components/TrackingNoScript.astro';
+import WhatsAppTracking from '../components/WhatsAppTracking.astro';
 import logoActive from '../assets/brand/infinicom-logo-active.svg';
 
 interface Props {
@@ -78,5 +79,6 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toStrin
       </div>
     </footer>
     <ConsentBanner />
+    <WhatsAppTracking />
   </body>
 </html>

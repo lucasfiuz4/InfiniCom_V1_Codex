@@ -38,6 +38,7 @@ const socialLinks = [
         <a
           class="mt-7 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-[#46005f] transition hover:bg-fuchsia-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           href={consultorUrl}
+          data-whatsapp-location="footer_cta"
           target="_blank"
           rel="noreferrer"
         >
@@ -71,7 +72,7 @@ const socialLinks = [
           <h2 class="text-sm font-semibold text-white">Atendimento</h2>
           <ul class="mt-4 grid gap-3 text-sm leading-5 text-fuchsia-100/65">
             <li>
-              <a class="inline-flex gap-2 transition hover:text-white" href={consultorUrl} target="_blank" rel="noreferrer">
+              <a class="inline-flex gap-2 transition hover:text-white" href={consultorUrl} target="_blank" rel="noreferrer" data-whatsapp-location="footer_atendimento">
                 <Icon name="lucide:message-circle" class="mt-0.5 size-4 shrink-0" />
                 WhatsApp
               </a>
