@@ -1,13 +1,166 @@
 ---
-import Breadcrumb from '../components/Breadcrumb.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalDocument from '../components/LegalDocument.astro';
+import { site } from '../config/site';
+
+const updatedAt = '21 de agosto de 2026';
+const toc = [
+  { id: 'sobre', label: 'Sobre esta política' },
+  { id: 'controlador', label: 'Quem controla os dados' },
+  { id: 'dados', label: 'Dados que tratamos' },
+  { id: 'finalidades', label: 'Finalidades e bases legais' },
+  { id: 'formularios', label: 'Formulários e WhatsApp' },
+  { id: 'cookies', label: 'Medição e publicidade' },
+  { id: 'compartilhamento', label: 'Compartilhamento' },
+  { id: 'transferencias', label: 'Transferências internacionais' },
+  { id: 'retencao', label: 'Retenção e eliminação' },
+  { id: 'direitos', label: 'Direitos do titular' },
+  { id: 'seguranca', label: 'Segurança' },
+  { id: 'criancas', label: 'Crianças e adolescentes' },
+  { id: 'alteracoes', label: 'Alterações desta política' },
+  { id: 'contato', label: 'Canal de privacidade' },
+];
 ---
-<BaseLayout title="Política de privacidade | INFINICOM" description="Política de privacidade da INFINICOM.">
-  <section class="bg-white">
-    <div class="container-shell max-w-3xl py-10 sm:py-14 lg:py-16">
-      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Política de privacidade' }]} />
-      <h1 class="section-title">Política de privacidade</h1>
-      <p class="mt-6 leading-7 text-muted">O texto jurídico definitivo deve ser validado e publicado pela INFINICOM antes do lançamento.</p>
-    </div>
-  </section>
+
+<BaseLayout
+  title="Política de Privacidade | INFINICOM"
+  description="Saiba como a INFINICOM coleta, utiliza, armazena e protege dados pessoais em seu site e atendimento comercial."
+>
+  <LegalDocument
+    title="Política de Privacidade"
+    description="Este documento explica, em linguagem clara, como a INFINICOM trata dados pessoais no site, nos pedidos de contato e durante o atendimento comercial."
+    updatedAt={updatedAt}
+    toc={toc}
+  >
+    <section id="sobre" class="scroll-mt-28">
+      <h2>1. Sobre esta política</h2>
+      <p>Esta Política de Privacidade se aplica ao site <a href={site.url}>{site.url}</a>, às páginas de campanha mantidas neste domínio e aos contatos iniciados pelos formulários ou botões de WhatsApp da INFINICOM.</p>
+      <p>O tratamento de dados pessoais observa a Lei nº 13.709/2018, a Lei Geral de Proteção de Dados Pessoais (LGPD), e os princípios de finalidade, adequação, necessidade, transparência, segurança e prestação de contas.</p>
+    </section>
+
+    <section id="controlador" class="scroll-mt-28">
+      <h2>2. Quem controla os dados</h2>
+      <p>A responsável pelas decisões sobre o tratamento descrito nesta política é:</p>
+      <ul>
+        <li><strong>Razão social:</strong> {site.legalName}</li>
+        <li><strong>CNPJ:</strong> {site.cnpj}</li>
+        <li><strong>Endereço:</strong> {site.legalAddress}</li>
+        <li><strong>Canal de privacidade:</strong> <a href={`mailto:${site.privacyEmail}`}>{site.privacyEmail}</a></li>
+      </ul>
+      <p>{site.privacyContactName} é o responsável pelo atendimento desse canal. Essa informação não representa, por si só, uma designação formal de encarregado pelo tratamento de dados pessoais.</p>
+    </section>
+
+    <section id="dados" class="scroll-mt-28">
+      <h2>3. Dados pessoais que podemos tratar</h2>
+      <p>Conforme o formulário, a página acessada e a solicitação apresentada, podemos tratar:</p>
+      <ul>
+        <li>nome e perfil residencial, empresarial ou de empreendimento;</li>
+        <li>empresa, condomínio, construtora ou empreendimento;</li>
+        <li>telefone ou WhatsApp, e-mail e cidade;</li>
+        <li>produto ou serviço de interesse;</li>
+        <li>necessidade, dúvida e outras informações inseridas voluntariamente na mensagem;</li>
+        <li>origem, mídia, campanha, conteúdo de campanha, página acessada e domínio de referência;</li>
+        <li>dados técnicos, como endereço IP, localização aproximada derivada do IP, data e horário, navegador, dispositivo, registros de acesso e eventos de interação.</li>
+      </ul>
+      <p>Não solicitamos dados pessoais sensíveis nos formulários. Evite incluir informações sobre saúde, origem racial ou étnica, convicções, biometria ou outros dados desnecessários no campo de mensagem.</p>
+    </section>
+
+    <section id="finalidades" class="scroll-mt-28">
+      <h2>4. Para que usamos os dados e quais bases legais podem ser aplicadas</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[42rem] border-collapse text-left text-sm leading-6">
+          <thead><tr class="border-b border-[var(--color-border-strong)] text-ink"><th class="px-3 py-3">Finalidade</th><th class="px-3 py-3">Dados relacionados</th><th class="px-3 py-3">Base legal aplicável</th></tr></thead>
+          <tbody class="divide-y divide-[var(--color-border)]">
+            <tr><td class="px-3 py-3">Responder solicitações, orientar a escolha e preparar o atendimento.</td><td class="px-3 py-3">Dados cadastrais, contato, cidade, perfil, produto e mensagem.</td><td class="px-3 py-3">Procedimentos preliminares relacionados a contrato, a pedido do titular; ou legítimo interesse, conforme o contexto.</td></tr>
+            <tr><td class="px-3 py-3">Organizar o histórico do lead e acompanhar a solicitação.</td><td class="px-3 py-3">Contato, interesse, origem e histórico do atendimento.</td><td class="px-3 py-3">Legítimo interesse, respeitados os direitos e as expectativas do titular.</td></tr>
+            <tr><td class="px-3 py-3">Medir o uso do site e melhorar páginas e campanhas.</td><td class="px-3 py-3">Identificadores on-line, dispositivo, navegação e eventos.</td><td class="px-3 py-3">Consentimento para as categorias Análise e Publicidade.</td></tr>
+            <tr><td class="px-3 py-3">Proteger o site, prevenir abuso e manter registros técnicos.</td><td class="px-3 py-3">IP, data, horário, navegador, dispositivo e logs.</td><td class="px-3 py-3">Legítimo interesse, segurança e exercício regular de direitos.</td></tr>
+            <tr><td class="px-3 py-3">Cumprir obrigações legais e responder a autoridades.</td><td class="px-3 py-3">Dados necessários ao cumprimento da obrigação ou solicitação válida.</td><td class="px-3 py-3">Cumprimento de obrigação legal ou regulatória e exercício regular de direitos.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A base legal pode variar conforme a relação estabelecida e a finalidade concreta. Quando o tratamento depender de consentimento, você poderá revogá-lo pelos meios indicados nesta política.</p>
+    </section>
+
+    <section id="formularios" class="scroll-mt-28">
+      <h2>5. Como funcionam os formulários e o WhatsApp</h2>
+      <p>Os formulários funcionam no navegador e não enviam os campos para um banco de dados próprio do site. Após a validação, o site monta uma mensagem e abre um endereço do WhatsApp que contém o texto preparado. Nesse redirecionamento, os dados passam a ser tratados pelo WhatsApp/Meta; a mensagem somente é entregue à equipe INFINICOM quando você confirma o envio na plataforma.</p>
+      <p>Depois do contato, as informações podem ser registradas em planilha ou CRM para organizar e acompanhar o atendimento. Os eventos enviados às ferramentas de medição não incluem nome, telefone, e-mail nem o conteúdo livre da mensagem.</p>
+    </section>
+
+    <section id="cookies" class="scroll-mt-28">
+      <h2>6. Cookies, medição e publicidade</h2>
+      <p>Utilizamos um registro necessário para guardar suas preferências e, mediante autorização, Google Analytics e Google Ads para analisar visitas, eventos e resultados de campanhas. O Google Tag Manager organiza integrações e eventos técnicos.</p>
+      <p>As categorias não essenciais começam desativadas. Você pode aceitar, rejeitar ou personalizar e alterar a escolha a qualquer momento pelo link <strong>Gerenciar cookies</strong> no rodapé. Consulte a <a href="/cookies/">Política de Cookies</a> para os detalhes.</p>
+    </section>
+
+    <section id="compartilhamento" class="scroll-mt-28">
+      <h2>7. Com quem os dados podem ser compartilhados</h2>
+      <p>O acesso é limitado ao necessário para cada finalidade e pode envolver:</p>
+      <ul>
+        <li><strong>Meta/WhatsApp:</strong> quando você abre o redirecionamento com a mensagem preparada e continua a conversa na plataforma;</li>
+        <li><strong>Google:</strong> para Analytics, Ads e Tag Manager, conforme suas preferências de cookies;</li>
+        <li><strong>HostGator:</strong> para hospedagem, disponibilidade, segurança e registros técnicos do site;</li>
+        <li><strong>prestadores de planilha, CRM, tecnologia e suporte:</strong> quando contratados para apoiar a operação, sob instruções e medidas de proteção compatíveis;</li>
+        <li><strong>autoridades públicas e terceiros legitimados:</strong> quando houver obrigação legal, ordem válida ou necessidade de exercício de direitos.</li>
+      </ul>
+      <p>No fluxo atual, os dados dos leads recebidos pelo site não são compartilhados com a Vivo, consultores externos ou parceiros comerciais. Qualquer mudança futura nesse processo exigirá atualização desta política, informação ao titular e uma base legal adequada.</p>
+    </section>
+
+    <section id="transferencias" class="scroll-mt-28">
+      <h2>8. Transferências internacionais</h2>
+      <p>Google, Meta e outros fornecedores tecnológicos podem armazenar ou processar informações fora do Brasil. Nesses casos, buscamos utilizar fornecedores reconhecidos e mecanismos contratuais e legais compatíveis com a LGPD e com a proteção dos direitos do titular.</p>
+    </section>
+
+    <section id="retencao" class="scroll-mt-28">
+      <h2>9. Por quanto tempo mantemos os dados</h2>
+      <ul>
+        <li><strong>Leads e solicitações sem contratação:</strong> até 12 meses após a última interação.</li>
+        <li><strong>Solicitações de eliminação:</strong> exclusão após validação do pedido, ressalvadas as hipóteses legais de conservação.</li>
+        <li><strong>Dados que resultem em contratação:</strong> pelo período necessário à relação e aos prazos contratuais, fiscais, regulatórios e de defesa de direitos.</li>
+        <li><strong>Preferência de cookies:</strong> 180 dias.</li>
+        <li><strong>Logs técnicos:</strong> pelo período necessário à operação, segurança, diagnóstico e cumprimento de obrigações aplicáveis.</li>
+      </ul>
+      <p>Ao final do prazo aplicável, os dados serão eliminados, anonimizados ou conservados apenas quando houver fundamento legal.</p>
+    </section>
+
+    <section id="direitos" class="scroll-mt-28">
+      <h2>10. Seus direitos</h2>
+      <p>Nos termos da LGPD, você pode solicitar, conforme aplicável:</p>
+      <ul>
+        <li>confirmação da existência de tratamento e acesso aos dados;</li>
+        <li>correção de dados incompletos, inexatos ou desatualizados;</li>
+        <li>anonimização, bloqueio ou eliminação de dados desnecessários ou tratados em desconformidade;</li>
+        <li>portabilidade, observada a regulamentação aplicável;</li>
+        <li>informações sobre compartilhamentos e sobre a possibilidade de negar consentimento;</li>
+        <li>revogação do consentimento e eliminação dos dados tratados com essa base, quando cabível;</li>
+        <li>oposição a tratamento realizado em desconformidade com a LGPD;</li>
+        <li>revisão de decisões automatizadas, se houver tratamento dessa natureza.</li>
+      </ul>
+      <p>Para proteger o titular, poderemos solicitar informações razoáveis para confirmar a identidade e a legitimidade do pedido. As solicitações serão atendidas nos prazos aplicáveis.</p>
+    </section>
+
+    <section id="seguranca" class="scroll-mt-28">
+      <h2>11. Segurança da informação</h2>
+      <p>Adotamos medidas técnicas e administrativas proporcionais ao porte e aos riscos da operação, incluindo controle de acesso, limitação de dados, conexões seguras e seleção de fornecedores. Nenhum ambiente é totalmente imune a incidentes; se ocorrer evento relevante, serão adotadas as providências legais e técnicas aplicáveis.</p>
+    </section>
+
+    <section id="criancas" class="scroll-mt-28">
+      <h2>12. Crianças e adolescentes</h2>
+      <p>O site e o atendimento comercial não são direcionados a crianças. Se você for responsável legal e acreditar que uma criança forneceu dados indevidamente, entre em contato para avaliação e adoção das medidas cabíveis.</p>
+    </section>
+
+    <section id="alteracoes" class="scroll-mt-28">
+      <h2>13. Alterações desta política</h2>
+      <p>Esta política poderá ser atualizada para refletir mudanças legais, operacionais ou tecnológicas. A data e a versão no início da página indicarão a revisão mais recente. Alterações relevantes poderão ser comunicadas por destaque no site ou pelos canais apropriados.</p>
+    </section>
+
+    <section id="contato" class="scroll-mt-28">
+      <h2>14. Canal de privacidade</h2>
+      <div class="rounded-2xl bg-soft p-5 sm:p-6">
+        <p><strong>{site.legalName}</strong><br />CNPJ {site.cnpj}<br />{site.legalAddress}</p>
+        <p>Para exercer direitos ou esclarecer dúvidas, envie um e-mail para <a href={`mailto:${site.privacyEmail}`}>{site.privacyEmail}</a>, aos cuidados de {site.privacyContactName}.</p>
+      </div>
+    </section>
+  </LegalDocument>
 </BaseLayout>

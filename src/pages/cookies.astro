@@ -1,13 +1,122 @@
 ---
-import Breadcrumb from '../components/Breadcrumb.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalDocument from '../components/LegalDocument.astro';
+import { site } from '../config/site';
+
+const updatedAt = '21 de agosto de 2026';
+const toc = [
+  { id: 'conceito', label: 'O que são cookies' },
+  { id: 'tecnologias', label: 'Tecnologias utilizadas' },
+  { id: 'categorias', label: 'Categorias' },
+  { id: 'lista', label: 'Cookies e identificadores' },
+  { id: 'consentimento', label: 'Consentimento' },
+  { id: 'google', label: 'Serviços Google' },
+  { id: 'gerenciar', label: 'Como gerenciar' },
+  { id: 'terceiros', label: 'Tecnologias de terceiros' },
+  { id: 'alteracoes', label: 'Alterações' },
+  { id: 'contato', label: 'Contato' },
+];
 ---
-<BaseLayout title="Política de cookies | INFINICOM" description="Política de cookies da INFINICOM.">
-  <section class="bg-white">
-    <div class="container-shell max-w-3xl py-10 sm:py-14 lg:py-16">
-      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Política de cookies' }]} />
-      <h1 class="section-title">Política de cookies</h1>
-      <p class="mt-6 leading-7 text-muted">O texto jurídico definitivo deve ser validado e publicado pela INFINICOM antes do lançamento.</p>
-    </div>
-  </section>
+
+<BaseLayout
+  title="Política de Cookies | INFINICOM"
+  description="Entenda quais cookies e tecnologias de medição a INFINICOM utiliza e como gerenciar suas preferências."
+>
+  <LegalDocument
+    title="Política de Cookies"
+    description="Esta política explica as tecnologias utilizadas no site, suas finalidades, durações e as opções disponíveis para controlar cookies de análise e publicidade."
+    updatedAt={updatedAt}
+    toc={toc}
+  >
+    <section id="conceito" class="scroll-mt-28">
+      <h2>1. O que são cookies</h2>
+      <p>Cookies são pequenos arquivos ou registros armazenados no dispositivo durante a navegação. Eles podem guardar preferências, manter recursos essenciais, distinguir sessões e ajudar a compreender como uma página é utilizada.</p>
+      <p>Outras tecnologias, como tags, pixels e identificadores on-line, podem exercer funções semelhantes. Nesta política, a expressão “cookies” também pode abranger essas tecnologias quando apropriado.</p>
+    </section>
+
+    <section id="tecnologias" class="scroll-mt-28">
+      <h2>2. Tecnologias utilizadas neste site</h2>
+      <ul>
+        <li><strong>Preferência INFINICOM:</strong> guarda a escolha feita no banner.</li>
+        <li><strong>Google Analytics 4:</strong> mede visitas, páginas, dispositivos e eventos de interação.</li>
+        <li><strong>Google Ads:</strong> apoia a mensuração e a atribuição de campanhas publicitárias.</li>
+        <li><strong>Google Tag Manager:</strong> organiza tags, eventos e integrações; o contêiner não é, por si só, um cookie.</li>
+      </ul>
+      <p>O Meta Pixel não está ativo na versão atual. Caso seja instalado, esta política e o banner deverão ser atualizados antes da ativação, e seu uso dependerá da preferência de Publicidade.</p>
+    </section>
+
+    <section id="categorias" class="scroll-mt-28">
+      <h2>3. Categorias utilizadas</h2>
+      <h3>Necessários</h3>
+      <p>Permitem registrar preferências de privacidade e manter recursos essenciais. Permanecem ativos porque são necessários ao funcionamento da escolha feita pelo visitante, com fundamento no legítimo interesse de oferecer controles de privacidade, segurança e transparência, sem finalidade de rastreamento publicitário.</p>
+      <h3>Análise</h3>
+      <p>Ajudam a entender visitas, páginas acessadas, sessões, dispositivos e eventos como cliques de contato. O tratamento e o armazenamento associados a essa categoria são baseados no consentimento.</p>
+      <h3>Publicidade</h3>
+      <p>Permitem medir campanhas, atribuir resultados e, quando autorizado e configurado, personalizar publicidade. O tratamento, o armazenamento e o uso publicitário associados a essa categoria são baseados no consentimento.</p>
+    </section>
+
+    <section id="lista" class="scroll-mt-28">
+      <h2>4. Cookies e identificadores que podem ser utilizados</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[44rem] border-collapse text-left text-sm leading-6">
+          <thead><tr class="border-b border-[var(--color-border-strong)] text-ink"><th class="px-3 py-3">Nome ou serviço</th><th class="px-3 py-3">Categoria</th><th class="px-3 py-3">Finalidade</th><th class="px-3 py-3">Duração típica</th></tr></thead>
+          <tbody class="divide-y divide-[var(--color-border)]">
+            <tr><td class="px-3 py-3"><code>infinicom_consent_v1</code></td><td class="px-3 py-3">Necessário</td><td class="px-3 py-3">Guardar as escolhas de Análise e Publicidade.</td><td class="px-3 py-3">180 dias</td></tr>
+            <tr><td class="px-3 py-3"><code>_ga</code></td><td class="px-3 py-3">Análise</td><td class="px-3 py-3">Distinguir visitantes para medição agregada.</td><td class="px-3 py-3">Até 2 anos, sujeito ao navegador e à configuração</td></tr>
+            <tr><td class="px-3 py-3"><code>_ga_&lt;id&gt;</code></td><td class="px-3 py-3">Análise</td><td class="px-3 py-3">Manter o estado da sessão do Google Analytics.</td><td class="px-3 py-3">Até 2 anos, sujeito ao navegador e à configuração</td></tr>
+            <tr><td class="px-3 py-3">Identificadores Google Ads</td><td class="px-3 py-3">Publicidade</td><td class="px-3 py-3">Mensuração, atribuição e recursos publicitários autorizados.</td><td class="px-3 py-3">Varia conforme o identificador, o domínio, a região e a configuração Google</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Os nomes e prazos podem mudar por atualização do fornecedor, limitação do navegador, região, dispositivo ou configuração da conta. A lista deve ser interpretada em conjunto com as informações oficiais dos fornecedores.</p>
+    </section>
+
+    <section id="consentimento" class="scroll-mt-28">
+      <h2>5. Como funciona o consentimento</h2>
+      <p>Na primeira visita, Análise e Publicidade são definidas como negadas. O banner permite:</p>
+      <ul>
+        <li><strong>Aceitar todos:</strong> autoriza Análise e Publicidade.</li>
+        <li><strong>Rejeitar não essenciais:</strong> mantém somente o registro necessário da escolha.</li>
+        <li><strong>Personalizar:</strong> permite escolher cada categoria separadamente.</li>
+      </ul>
+      <p>O site utiliza Google Consent Mode V2. Mesmo sem autorização para armazenamento, as tags Google podem transmitir sinais limitados e sem identificadores de cookies para comunicar o estado de consentimento e apoiar medição agregada. Cookies de Analytics e Ads não devem ser gravados enquanto as respectivas permissões estiverem negadas.</p>
+    </section>
+
+    <section id="google" class="scroll-mt-28">
+      <h2>6. Serviços Google ativos</h2>
+      <ul>
+        <li><strong>Google Analytics 4:</strong> propriedade <code>{site.googleTagId}</code>.</li>
+        <li><strong>Google Ads:</strong> destino <code>{site.googleAdsId}</code>.</li>
+        <li><strong>Google Tag Manager:</strong> contêiner <code>{site.gtmId}</code>.</li>
+      </ul>
+      <p>Eventos comerciais enviam apenas contexto da interação, como página, posição do botão, produto e origem de campanha. Nome, telefone, e-mail e conteúdo da mensagem não devem ser enviados às ferramentas de medição.</p>
+      <p>Consulte a <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Política de Privacidade do Google</a> e as <a href="https://business.safety.google/adscookies/" target="_blank" rel="noopener noreferrer">informações sobre cookies de publicidade e medição</a>.</p>
+    </section>
+
+    <section id="gerenciar" class="scroll-mt-28">
+      <h2>7. Como gerenciar ou revogar sua escolha</h2>
+      <p>Você pode reabrir o painel a qualquer momento pelo link <strong>Gerenciar cookies</strong> no rodapé ou pelo botão abaixo:</p>
+      <button type="button" class="btn btn-primary" x-on:click="window.infinicomConsent?.open()">Gerenciar preferências</button>
+      <p>Também é possível apagar ou bloquear cookies nas configurações do navegador. Essa ação pode remover preferências já salvas e fazer o banner aparecer novamente. Controles do navegador não substituem necessariamente as escolhas disponíveis no site.</p>
+    </section>
+
+    <section id="terceiros" class="scroll-mt-28">
+      <h2>8. Tecnologias de terceiros</h2>
+      <p>Serviços de terceiros podem aplicar seus próprios prazos, domínios e políticas. A INFINICOM controla as categorias autorizadas no site, mas não controla integralmente as tecnologias e políticas internas dos fornecedores.</p>
+      <p>Quando você abre o redirecionamento, o endereço enviado ao WhatsApp contém a mensagem preparada. A plataforma passa a tratar esses dados nesse momento; o conteúdo só é entregue à equipe INFINICOM depois que você confirma o envio. Consulte a <a href="https://www.whatsapp.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Política de Privacidade do WhatsApp</a>.</p>
+    </section>
+
+    <section id="alteracoes" class="scroll-mt-28">
+      <h2>9. Alterações desta política</h2>
+      <p>Esta política será revisada quando houver mudança relevante nas ferramentas, categorias, finalidades ou prazos. A instalação futura do Meta Pixel, de outra plataforma de publicidade ou de uma nova tecnologia exigirá atualização deste documento e, quando aplicável, do mecanismo de consentimento.</p>
+    </section>
+
+    <section id="contato" class="scroll-mt-28">
+      <h2>10. Contato</h2>
+      <div class="rounded-2xl bg-soft p-5 sm:p-6">
+        <p>Em caso de dúvidas sobre cookies ou proteção de dados, escreva para <a href={`mailto:${site.privacyEmail}`}>{site.privacyEmail}</a>, aos cuidados de {site.privacyContactName}.</p>
+        <p>Consulte também a <a href="/privacidade/">Política de Privacidade</a>.</p>
+      </div>
+    </section>
+  </LegalDocument>
 </BaseLayout>

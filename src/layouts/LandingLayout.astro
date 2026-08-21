@@ -4,7 +4,6 @@ import { Image } from 'astro:assets';
 import { site } from '../config/site';
 import ConsentBanner from '../components/ConsentBanner.astro';
 import TrackingHead from '../components/TrackingHead.astro';
-import TrackingNoScript from '../components/TrackingNoScript.astro';
 import WhatsAppTracking from '../components/WhatsAppTracking.astro';
 import logoActive from '../assets/brand/infinicom-logo-active.svg';
 
@@ -46,7 +45,6 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toStrin
     <title>{title}</title>
   </head>
   <body>
-    <TrackingNoScript />
     <a href="#conteudo" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-ink">
       Ir para o conteúdo
     </a>

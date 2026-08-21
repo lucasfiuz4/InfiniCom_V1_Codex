@@ -1,0 +1,78 @@
+---
+import Breadcrumb from './Breadcrumb.astro';
+
+interface TocItem {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  updatedAt: string;
+  version?: string;
+  toc: TocItem[];
+}
+
+const { title, description, updatedAt, version = '1.0', toc } = Astro.props;
+---
+
+<section class="bg-white">
+  <div class="container-shell py-10 sm:py-14 lg:py-16">
+    <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: title }]} />
+    <div class="mt-8 max-w-4xl">
+      <p class="eyebrow text-brand">Transparência e proteção de dados</p>
+      <h1 class="section-title mt-4 max-w-[18ch]">{title}</h1>
+      <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">{description}</p>
+      <div class="mt-7 flex flex-wrap gap-2 text-xs font-semibold text-muted">
+        <span class="rounded-full border border-[var(--color-border)] bg-soft px-3 py-1.5">Versão {version}</span>
+        <span class="rounded-full border border-[var(--color-border)] bg-soft px-3 py-1.5">Atualizada em {updatedAt}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="border-t border-[var(--color-border)] bg-canvas py-12 sm:py-16">
+  <div class="container-shell grid gap-10 lg:grid-cols-[15rem_minmax(0,48rem)] lg:items-start lg:justify-center lg:gap-16">
+    <aside class="rounded-2xl border border-[var(--color-border)] bg-white p-5 lg:sticky lg:top-28" aria-label="Nesta página">
+      <h2 class="text-sm font-semibold text-ink">Nesta página</h2>
+      <nav class="mt-4" aria-label={`Seções de ${title}`}>
+        <ol class="grid gap-1 text-sm leading-5 text-muted">
+          {toc.map((item, index) => (
+            <li>
+              <a class="flex gap-2 rounded-lg px-2 py-2 transition hover:bg-soft hover:text-brand" href={`#${item.id}`}>
+                <span class="text-xs font-semibold text-brand">{String(index + 1).padStart(2, '0')}</span>
+                <span>{item.label}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </aside>
+
+    <article class="legal-document article-body min-w-0 rounded-2xl border border-[var(--color-border)] bg-white p-6 shadow-[var(--shadow-soft)] sm:p-9 lg:p-11">
+      <slot />
+    </article>
+  </div>
+</section>
+
+<style>
+  .legal-document :global(section:first-child h2),
+  .legal-document :global(section + section h2) {
+    margin-top: 0;
+  }
+
+  .legal-document :global(section + section) {
+    margin-top: 3.5rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 3.5rem;
+  }
+
+  .legal-document :global(code) {
+    border-radius: 0.35rem;
+    background: var(--color-bg-secondary);
+    padding: 0.1rem 0.35rem;
+    color: var(--color-text-primary);
+    font-size: 0.9em;
+  }
+</style>

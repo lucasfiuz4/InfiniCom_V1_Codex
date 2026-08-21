@@ -7,7 +7,7 @@ Domínio canônico confirmado: `https://infinicom.com.br`.
 ## Status
 
 - Implementada: a rota existe e pode ser publicada.
-- Estrutura provisória: a rota existe, mas ainda depende de conteúdo definitivo.
+- Publicada: a rota existe, possui conteúdo completo e integra o sitemap indexável.
 - Planejada: faz parte da arquitetura, porém ainda não foi desenvolvida.
 
 ## Arquitetura completa
@@ -49,8 +49,8 @@ Domínio canônico confirmado: `https://infinicom.com.br`.
 │   └── /lp/[campanha]/                             [Planejada]
 │
 ├── /obrigado/                                      [Implementada, noindex]
-├── /privacidade/                                   [Estrutura provisória]
-├── /cookies/                                       [Estrutura provisória]
+├── /privacidade/                                   [Publicada]
+├── /cookies/                                       [Publicada]
 ├── /termos/                                        [Planejada]
 └── /404/                                           [Implementada, noindex]
 ```

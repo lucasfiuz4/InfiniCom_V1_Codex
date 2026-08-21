@@ -4,15 +4,21 @@ import { site } from '../config/site';
 const gtmId = site.gtmId;
 const googleTagId = site.googleTagId;
 const googleAdsId = site.googleAdsId;
-const googleTagSrc = `https://www.googletagmanager.com/gtag/js?id=${googleTagId}`;
 ---
 
 {
   (gtmId || googleTagId) && (
-    <script is:inline define:vars={{ gtmId }}>
+    <script is:inline define:vars={{ gtmId, googleTagId, googleAdsId }}>
       (() => {
         const cookieName = 'infinicom_consent_v1';
         const cookieDuration = 60 * 60 * 24 * 180;
+        const allowedTrackingHosts = new Set([
+          'infinicom.com.br',
+          'www.infinicom.com.br',
+        ]);
+        const isTrackingHost = allowedTrackingHosts.has(window.location.hostname.toLowerCase());
+
+        window.infinicomTrackingAllowed = isTrackingHost;
 
         const readConsent = () => {
           const prefix = `${cookieName}=`;
@@ -38,10 +44,39 @@ const googleTagSrc = `https://www.googletagmanager.com/gtag/js?id=${googleTagId}
           ad_personalization: choice?.marketing ? 'granted' : 'denied',
         });
 
+        const savedConsent = readConsent();
+
+        window.infinicomConsent = {
+          get: readConsent,
+          save(choice) {
+            const value = {
+              version: 1,
+              analytics: Boolean(choice.analytics),
+              marketing: Boolean(choice.marketing),
+              updatedAt: new Date().toISOString(),
+            };
+            const secure = location.protocol === 'https:' ? '; Secure' : '';
+            document.cookie = `${cookieName}=${encodeURIComponent(JSON.stringify(value))}; Path=/; Max-Age=${cookieDuration}; SameSite=Lax${secure}`;
+            if (isTrackingHost && typeof window.gtag === 'function') {
+              window.gtag('consent', 'update', toGoogleState(value));
+              window.dataLayer.push({
+                event: 'infinicom_consent_update',
+                consent_analytics: value.analytics,
+                consent_marketing: value.marketing,
+              });
+            }
+            window.dispatchEvent(new CustomEvent('infinicom:consent-saved', { detail: value }));
+          },
+          open() {
+            window.dispatchEvent(new CustomEvent('infinicom:consent-open'));
+          },
+        };
+
+        if (!isTrackingHost) return;
+
         window.dataLayer = window.dataLayer || [];
         window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
 
-        const savedConsent = readConsent();
         window.gtag('consent', 'default', {
           ...toGoogleState(savedConsent),
           functionality_storage: 'granted',
@@ -57,30 +92,6 @@ const googleTagSrc = `https://www.googletagmanager.com/gtag/js?id=${googleTagId}
           consent_marketing: Boolean(savedConsent?.marketing),
         });
 
-        window.infinicomConsent = {
-          get: readConsent,
-          save(choice) {
-            const value = {
-              version: 1,
-              analytics: Boolean(choice.analytics),
-              marketing: Boolean(choice.marketing),
-              updatedAt: new Date().toISOString(),
-            };
-            const secure = location.protocol === 'https:' ? '; Secure' : '';
-            document.cookie = `${cookieName}=${encodeURIComponent(JSON.stringify(value))}; Path=/; Max-Age=${cookieDuration}; SameSite=Lax${secure}`;
-            window.gtag('consent', 'update', toGoogleState(value));
-            window.dataLayer.push({
-              event: 'infinicom_consent_update',
-              consent_analytics: value.analytics,
-              consent_marketing: value.marketing,
-            });
-            window.dispatchEvent(new CustomEvent('infinicom:consent-saved', { detail: value }));
-          },
-          open() {
-            window.dispatchEvent(new CustomEvent('infinicom:consent-open'));
-          },
-        };
-
         if (gtmId) {
           ((windowObject, documentObject, tagName, layerName, containerId) => {
             windowObject[layerName] = windowObject[layerName] || [];
@@ -93,20 +104,18 @@ const googleTagSrc = `https://www.googletagmanager.com/gtag/js?id=${googleTagId}
             firstScript.parentNode.insertBefore(script, firstScript);
           })(window, document, 'script', 'dataLayer', gtmId);
         }
+
+        if (googleTagId) {
+          const googleTagScript = document.createElement('script');
+          googleTagScript.async = true;
+          googleTagScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleTagId)}`;
+          document.head.appendChild(googleTagScript);
+
+          window.gtag('js', new Date());
+          window.gtag('config', googleTagId);
+          if (googleAdsId) window.gtag('config', googleAdsId);
+        }
       })();
     </script>
-  )
-}
-
-{
-  googleTagId && (
-    <>
-      <script is:inline async src={googleTagSrc}></script>
-      <script is:inline define:vars={{ googleTagId, googleAdsId }}>
-        window.gtag('js', new Date());
-        window.gtag('config', googleTagId);
-        if (googleAdsId) window.gtag('config', googleAdsId);
-      </script>
-    </>
   )
 }

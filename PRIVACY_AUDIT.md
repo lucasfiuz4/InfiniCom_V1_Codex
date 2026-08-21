@@ -1,6 +1,6 @@
 # Inventário de privacidade e cookies
 
-Última revisão técnica: 18/08/2026
+Última revisão técnica: 21/08/2026
 
 Este documento registra o funcionamento técnico observado no projeto. Ele serve de base para as Políticas de Privacidade e Cookies, mas não substitui a validação jurídica dos documentos finais.
 
@@ -20,12 +20,13 @@ Visitante
 → preenche o formulário no navegador
 → o site valida os campos localmente
 → o site monta uma mensagem com os dados
-→ o navegador abre uma conversa no WhatsApp
-→ o visitante confirma e envia a mensagem no WhatsApp
+→ o navegador abre um endereço do WhatsApp contendo a mensagem preparada
+→ WhatsApp/Meta passa a tratar os dados incluídos no redirecionamento
+→ o visitante confirma o envio da mensagem para a INFINICOM
 → a equipe INFINICOM continua o atendimento
 ```
 
-O projeto não possui backend, API de leads ou banco de dados. Antes do redirecionamento, os dados permanecem no navegador. Quando o visitante envia a mensagem, o tratamento continua no WhatsApp e nos processos internos de atendimento da INFINICOM.
+O projeto não possui backend, API de leads ou banco de dados. Antes do redirecionamento, os dados permanecem no navegador. Ao abrir o endereço com o texto preparado, as informações passam a ser tratadas pelo WhatsApp/Meta. A equipe INFINICOM recebe a mensagem apenas quando o visitante confirma o envio na plataforma.
 
 ## Dados tratados nos formulários
 
@@ -53,7 +54,7 @@ Os campos de mensagem livre podem receber outros dados inseridos voluntariamente
 - Identificar a origem da campanha e a página que gerou o contato.
 - Facilitar a continuidade do atendimento pela equipe.
 
-As bases legais aplicáveis, os usos internos posteriores e os prazos de retenção precisam ser definidos e validados pela INFINICOM e por sua assessoria jurídica.
+As finalidades, bases legais e regras de retenção foram consolidadas nas minutas públicas de Privacidade e Cookies. A redação permanece sujeita à validação jurídica final da INFINICOM.
 
 ## Tecnologias de armazenamento e rastreamento
 
@@ -65,15 +66,15 @@ Na versão atual, foram implementados:
 - Google Tag Manager pelo contêiner `GTM-5Z2SX62K`.
 - Eventos de interação sem envio dos dados pessoais preenchidos nos formulários.
 
-Não foram implementados `localStorage`, `sessionStorage`, Microsoft Clarity ou PostHog. Google Ads e Meta Pixel estão previstos, mas aguardam os identificadores oficiais e a configuração no GTM.
+Não foram implementados `localStorage`, `sessionStorage`, Microsoft Clarity, PostHog ou Meta Pixel. Google Ads está ativo como destino `AW-18397424069` da Google tag e respeita os estados de Publicidade do Consent Mode V2.
 
-O provedor de hospedagem, CDN, DNS e segurança ainda precisa ser confirmado. Esses serviços podem manter registros técnicos como endereço IP, data, horário, user-agent e logs de acesso.
+O site está hospedado na HostGator. CDN, DNS, localização do servidor e política detalhada de logs ainda devem ser confirmados, pois esses serviços podem manter registros técnicos como endereço IP, data, horário, user-agent e logs de acesso.
 
 ## Terceiros e compartilhamentos
 
 ### Confirmado tecnicamente
 
-- WhatsApp: recebe os dados somente quando o visitante confirma e envia a mensagem na plataforma.
+- WhatsApp: recebe os dados incluídos no endereço de redirecionamento quando a plataforma é aberta; a equipe INFINICOM só recebe a mensagem após a confirmação do envio.
 - Meta: fornece a plataforma WhatsApp e pode tratar dados conforme seus próprios termos e políticas.
 
 ### Precisa de confirmação operacional
@@ -98,20 +99,21 @@ O provedor de hospedagem, CDN, DNS e segurança ainda precisa ser confirmado. Es
 
 Referência contratual consultada: https://www.hostgator.com.br/termos-de-servico
 
-## Analytics e publicidade confirmados para o lançamento
+## Analytics e publicidade ativos
 
 - Google Tag Manager.
 - Google Analytics.
 - Google Ads.
-- Meta Pixel.
+
+Meta Pixel permanece planejado, mas não está instalado. Sua futura ativação exigirá atualização da Política de Cookies, do inventário e do banner de consentimento.
 
 ### Arquitetura de consentimento definida
 
 - Contêiner confirmado: Google Tag Manager `GTM-5Z2SX62K`.
 - Propriedade confirmada: Google Analytics 4 `G-7PC3DVRBPP`.
 - Destino confirmado: Google Ads `AW-18397424069`.
-- Google Analytics será carregado diretamente pela Google tag compartilhada entre todas as páginas.
-- Google Tag Manager permanecerá como gerenciador das tags de Google Ads, Meta Pixel e eventos.
+- Google Analytics e Google Ads são destinos da mesma Google tag compartilhada entre todas as páginas.
+- Google Tag Manager permanecerá disponível para Meta Pixel e integrações futuras.
 - Google Analytics será classificado na categoria Análise.
 - Google Ads e Meta Pixel serão classificados na categoria Publicidade.
 - Categorias não essenciais permanecerão desativadas por padrão.
@@ -119,7 +121,7 @@ Referência contratual consultada: https://www.hostgator.com.br/termos-de-servic
 - O visitante poderá alterar ou revogar suas escolhas por um link permanente no footer.
 - O site implementará Google Consent Mode V2 com `analytics_storage`, `ad_storage`, `ad_user_data` e `ad_personalization` negados por padrão.
 - O Meta Pixel não poderá disparar sem consentimento para Publicidade.
-- A propriedade `G-7PC3DVRBPP` não deverá ser configurada também no Google Tag Manager, evitando duplicidade de pageviews e eventos.
+- Não devem ser criadas configurações manuais adicionais de `G-7PC3DVRBPP` ou `AW-18397424069` no GTM, evitando duplicidade de pageviews e eventos.
 
 As escolhas serão mantidas no cookie estritamente necessário `infinicom_consent_v1` por 180 dias.
 
@@ -141,15 +143,22 @@ O prazo de 12 meses foi aprovado pela INFINICOM em 18/08/2026. A expiração dev
 
 André Souza foi informado como responsável por responder às solicitações. O projeto não o apresenta como encarregado pelo tratamento de dados enquanto essa designação formal não for confirmada.
 
+## Políticas públicas
+
+- Política de Privacidade: minuta técnica completa, versão 1.0, atualizada em 21/08/2026.
+- Política de Cookies: minuta técnica completa, versão 1.0, atualizada em 21/08/2026.
+- As duas páginas refletem o fluxo atual do site, os fornecedores confirmados, a retenção aprovada e as preferências do Consent Mode V2.
+- A publicação como documento definitivo depende de validação jurídica profissional e aprovação formal da INFINICOM.
+
 ## Decisões necessárias
 
-1. Validar a Google tag direta `G-7PC3DVRBPP` no domínio publicado e confirmar que ela não foi duplicada no contêiner `GTM-5Z2SX62K`.
-2. Obter o rótulo da conversão de WhatsApp no Google Ads, ou importar `whatsapp_click` do GA4, e obter o ID do Meta Pixel.
-3. Definir o papel da AK7 DigitalHub no tratamento de dados.
-4. Confirmar se haverá designação formal de encarregado ou aplicação de eventual dispensa.
-5. Confirmar plano, localização do servidor e política de logs após a contratação da HostGator.
-6. Identificar os fornecedores da planilha e do CRM antes da adoção efetiva.
-7. Validar as bases legais e o texto final com assessoria jurídica.
+1. Validar e aprovar formalmente as minutas de Privacidade e Cookies com assessoria jurídica.
+2. Obter o rótulo da conversão de WhatsApp no Google Ads, ou importar `whatsapp_click` do GA4.
+3. Obter o ID do Meta Pixel e atualizar políticas e consentimento antes de sua instalação.
+4. Definir o papel da AK7 DigitalHub no tratamento de dados.
+5. Confirmar o enquadramento como agente de tratamento de pequeno porte e eventual dispensa de encarregado.
+6. Confirmar plano, localização do servidor e política de logs da HostGator.
+7. Identificar os fornecedores da planilha e do CRM antes da adoção efetiva.
 
 ## Referências oficiais
 

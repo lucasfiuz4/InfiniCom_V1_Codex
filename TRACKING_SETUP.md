@@ -9,6 +9,13 @@
 
 Google Analytics e Google Ads são destinos da mesma Google tag, carregada uma única vez nos layouts institucional e de landing pages. O GTM permanece disponível para Meta Pixel e integrações futuras. Antes dessas integrações, o site define os estados do Google Consent Mode V2 como negados para Análise e Publicidade, salvo quando existe uma preferência válida já registrada.
 
+## Restrição por domínio
+
+- O carregamento de GA4, Google Ads e GTM é autorizado somente em `infinicom.com.br` e `www.infinicom.com.br`.
+- Em `localhost`, ambientes de preview e cópias hospedadas em outros domínios, nenhuma biblioteca de tracking é carregada e nenhum evento de WhatsApp é enviado.
+- O iframe `noscript` do GTM não é utilizado, pois uma página estática sem JavaScript não consegue validar o hostname antes de carregar esse recurso.
+- Essa barreira reduz cópias acidentais e o reaproveitamento integral do código. Os identificadores executados no navegador continuam sendo públicos por natureza; proteção contra envio deliberadamente forjado exige coleta server-side com validação.
+
 ## Categorias
 
 ### Necessários
@@ -26,7 +33,7 @@ Google Analytics e Google Ads são destinos da mesma Google tag, carregada uma �
 ### Publicidade
 
 - Google Ads.
-- Meta Pixel.
+- Meta Pixel permanece planejado e não está instalado.
 - Só pode disparar quando o consentimento de Publicidade estiver concedido.
 
 ## Configuração do Google Analytics
