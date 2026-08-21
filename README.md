@@ -50,12 +50,14 @@ npm run build
 
 ## Configuração do WhatsApp
 
-Copie `.env.example` para `.env` e substitua `PUBLIC_WHATSAPP_NUMBER` pelo número comercial em formato internacional, sem espaços ou símbolos.
+Copie `.env.example` para `.env`. O celular, telefone e WhatsApp globais usam o mesmo número, registrado em formato internacional sem espaços ou símbolos.
 
 Exemplo para um número brasileiro:
 
 ```env
-PUBLIC_WHATSAPP_NUMBER=5531999999999
+PUBLIC_WHATSAPP_NUMBER=5531995308690
+PUBLIC_PHONE_NUMBER=5531995308690
+PUBLIC_PHONE_DISPLAY=(31) 99530-8690
 ```
 
 Os formulários não enviam dados para backend. Eles validam os campos, montam a mensagem e abrem `wa.me`.
@@ -75,6 +77,6 @@ Os estados previstos para formulários, busca, conteúdo, menu e páginas utilit
 ## Pendências de lançamento
 
 - Adicionar o logo Vivo somente após receber o arquivo autorizado e confirmar as regras de cobranding.
-- Confirmar telefone, e-mail, endereço, horário e número do WhatsApp.
+- Confirmar o horário de atendimento e os canais sociais antes da publicação final.
 - Validar textos jurídicos de privacidade e cookies.
 - Inserir preços, velocidades e condições somente a partir de dados comerciais oficiais.
