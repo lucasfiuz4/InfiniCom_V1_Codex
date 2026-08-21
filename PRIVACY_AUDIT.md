@@ -62,11 +62,11 @@ Na versão atual, foram implementados:
 
 - Cookie necessário `infinicom_consent_v1`, com duração de 180 dias, para registrar as preferências do visitante.
 - Google Consent Mode V2 com categorias não essenciais negadas por padrão.
-- Google Analytics 4 pela Google tag `G-7PC3DVRBPP`.
-- Google Tag Manager pelo contêiner `GTM-5Z2SX62K`.
+- Google Analytics 4 pela Google tag configurada fora do repositório.
+- Google Tag Manager pelo contêiner configurado fora do repositório.
 - Eventos de interação sem envio dos dados pessoais preenchidos nos formulários.
 
-Não foram implementados `localStorage`, `sessionStorage`, Microsoft Clarity, PostHog ou Meta Pixel. Google Ads está ativo como destino `AW-18397424069` da Google tag e respeita os estados de Publicidade do Consent Mode V2.
+Não foram implementados `localStorage`, `sessionStorage`, Microsoft Clarity, PostHog ou Meta Pixel. Google Ads está ativo como destino da Google tag e respeita os estados de Publicidade do Consent Mode V2.
 
 O site está hospedado na HostGator. CDN, DNS, localização do servidor e política detalhada de logs ainda devem ser confirmados, pois esses serviços podem manter registros técnicos como endereço IP, data, horário, user-agent e logs de acesso.
 
@@ -109,9 +109,9 @@ Meta Pixel permanece planejado, mas não está instalado. Sua futura ativação 
 
 ### Arquitetura de consentimento definida
 
-- Contêiner confirmado: Google Tag Manager `GTM-5Z2SX62K`.
-- Propriedade confirmada: Google Analytics 4 `G-7PC3DVRBPP`.
-- Destino confirmado: Google Ads `AW-18397424069`.
+- Contêiner do Google Tag Manager confirmado e mantido fora do repositório.
+- Propriedade do Google Analytics 4 confirmada e mantida fora do repositório.
+- Destino do Google Ads confirmado e mantido fora do repositório.
 - Google Analytics e Google Ads são destinos da mesma Google tag compartilhada entre todas as páginas.
 - Google Tag Manager permanecerá disponível para Meta Pixel e integrações futuras.
 - Google Analytics será classificado na categoria Análise.
@@ -121,7 +121,7 @@ Meta Pixel permanece planejado, mas não está instalado. Sua futura ativação 
 - O visitante poderá alterar ou revogar suas escolhas por um link permanente no footer.
 - O site implementará Google Consent Mode V2 com `analytics_storage`, `ad_storage`, `ad_user_data` e `ad_personalization` negados por padrão.
 - O Meta Pixel não poderá disparar sem consentimento para Publicidade.
-- Não devem ser criadas configurações manuais adicionais de `G-7PC3DVRBPP` ou `AW-18397424069` no GTM, evitando duplicidade de pageviews e eventos.
+- Não devem ser criadas configurações manuais adicionais dos mesmos identificadores no GTM, evitando duplicidade de pageviews e eventos.
 
 As escolhas serão mantidas no cookie estritamente necessário `infinicom_consent_v1` por 180 dias.
 

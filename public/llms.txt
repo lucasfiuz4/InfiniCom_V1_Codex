@@ -1,0 +1,41 @@
+# INFINICOM
+
+> A INFINICOM é uma consultoria comercial independente que orienta pessoas, empresas e empreendimentos na avaliação de soluções Vivo em Minas Gerais, com atendimento em português do Brasil.
+
+A INFINICOM não é a Vivo nem representa o site oficial da operadora. Atua como canal comercial para organizar necessidades, consultar cobertura e orientar os próximos passos da contratação. Disponibilidade, condições comerciais e características das ofertas dependem da análise aplicável ao endereço e ao perfil informado. As páginas abaixo são as fontes públicas canônicas; não presuma preços, cobertura, prazos ou garantias que não estejam expressamente publicados.
+
+## Institucional
+
+- [Página inicial](https://infinicom.com.br/): Visão geral da INFINICOM, perfis atendidos, soluções apresentadas e acesso à consulta de cobertura.
+- [Sobre a INFINICOM](https://infinicom.com.br/sobre/): Explica quem é a empresa, sua relação comercial com as soluções Vivo e como funciona o atendimento consultivo.
+- [Contato](https://infinicom.com.br/contato/): Direciona solicitações de contratação, atendimento e dúvidas para o canal adequado.
+
+## Soluções para sua casa
+
+- [Soluções residenciais](https://infinicom.com.br/para-sua-casa/): Catálogo orientado por necessidades de internet, mobilidade, serviços combinados e portabilidade.
+- [Vivo Fibra](https://infinicom.com.br/para-sua-casa/vivo-fibra/): Informações sobre internet residencial, benefícios, funcionamento, perfis indicados, dúvidas e consulta de cobertura.
+
+## Soluções para empresas
+
+- [Soluções empresariais](https://infinicom.com.br/para-sua-empresa/): Catálogo para identificar necessidades de conectividade, mobilidade e continuidade operacional.
+- [Internet empresarial](https://infinicom.com.br/para-sua-empresa/internet-empresarial/): Informações sobre conectividade empresarial, benefícios, funcionamento, indicação, perguntas frequentes e atendimento.
+
+## Conteúdos educativos
+
+- [Central de conteúdos](https://infinicom.com.br/conteudos/): Artigos sobre conectividade e gestão de necessidades de telecomunicações.
+- [O que considerar antes de contratar internet empresarial](https://infinicom.com.br/conteudos/o-que-considerar-antes-de-contratar-internet-empresarial/): Roteiro para mapear pessoas, dispositivos, sistemas, criticidade e cobertura.
+- [Internet empresarial ou link dedicado: como avaliar](https://infinicom.com.br/conteudos/internet-empresarial-ou-link-dedicado/): Critérios para iniciar a comparação conforme a operação da empresa.
+- [Como mapear as necessidades de telecomunicações da empresa](https://infinicom.com.br/conteudos/como-mapear-necessidades-de-telecomunicacoes/): Orientação para organizar unidades, equipes, riscos e prioridades.
+- [Como organizar uma consulta de cobertura para sua empresa](https://infinicom.com.br/conteudos/como-organizar-uma-consulta-de-cobertura/): Dados necessários para uma verificação de disponibilidade mais objetiva.
+
+## Políticas
+
+- [Política de Privacidade](https://infinicom.com.br/privacidade/): Informações sobre dados tratados, finalidades, bases legais, retenção, compartilhamentos e direitos dos titulares.
+- [Política de Cookies](https://infinicom.com.br/cookies/): Categorias de cookies, serviços de medição, consentimento e gerenciamento de preferências.
+
+## Optional
+
+- [Sitemap XML](https://infinicom.com.br/sitemap.xml): Relação das páginas públicas indexáveis.
+- [Feed RSS](https://infinicom.com.br/rss.xml): Atualizações dos conteúdos publicados.
+- [Categoria Conectividade](https://infinicom.com.br/conteudos/categoria/conectividade/): Artigos sobre internet e conectividade.
+- [Categoria Gestão](https://infinicom.com.br/conteudos/categoria/gestao/): Artigos sobre organização de necessidades e contratação.

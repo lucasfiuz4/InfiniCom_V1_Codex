@@ -2,9 +2,9 @@
 
 ## Contêiner instalado
 
-- Google Tag Manager: `GTM-5Z2SX62K`
-- Google Analytics 4: `G-7PC3DVRBPP`
-- Google Ads: `AW-18397424069`
+- Google Tag Manager: configurado fora do repositório.
+- Google Analytics 4: configurado fora do repositório.
+- Google Ads: configurado fora do repositório.
 - Variáveis de ambiente: `PUBLIC_GTM_ID`, `PUBLIC_GOOGLE_TAG_ID` e `PUBLIC_GOOGLE_ADS_ID`
 
 Google Analytics e Google Ads são destinos da mesma Google tag, carregada uma única vez nos layouts institucional e de landing pages. O GTM permanece disponível para Meta Pixel e integrações futuras. Antes dessas integrações, o site define os estados do Google Consent Mode V2 como negados para Análise e Publicidade, salvo quando existe uma preferência válida já registrada.
@@ -38,8 +38,8 @@ Google Analytics e Google Ads são destinos da mesma Google tag, carregada uma �
 
 ## Configuração do Google Analytics
 
-- A Google tag `G-7PC3DVRBPP` já está instalada diretamente no código compartilhado por todas as páginas.
-- O destino Google Ads `AW-18397424069` é configurado na mesma tag, sem carregar um segundo `gtag.js`.
+- A Google tag definida em `PUBLIC_GOOGLE_TAG_ID` é instalada diretamente no código compartilhado por todas as páginas.
+- O destino definido em `PUBLIC_GOOGLE_ADS_ID` é configurado na mesma tag, sem carregar um segundo `gtag.js`.
 - Não criar outra tag com esse ID dentro do GTM, pois isso duplicaria pageviews e eventos.
 - A tag usa o `dataLayer` existente e recebe os estados do Consent Mode V2 antes da configuração do GA4.
 
@@ -48,7 +48,7 @@ Google Analytics e Google Ads são destinos da mesma Google tag, carregada uma �
 1. Criar variáveis da camada de dados:
    - `consent_analytics`
    - `consent_marketing`
-2. Não cadastrar novamente `AW-18397424069` ou `G-7PC3DVRBPP` no GTM.
+2. Não cadastrar novamente no GTM os identificadores já fornecidos pelas variáveis de ambiente.
 3. Configurar o Meta Pixel quando o identificador oficial estiver disponível.
 4. Para integrações de Google Ads no GTM, exigir `ad_storage`, `ad_user_data` e `ad_personalization`.
 5. Para Meta Pixel, adicionar condição para `consent_marketing` igual a `true`.
@@ -56,7 +56,7 @@ Google Analytics e Google Ads são destinos da mesma Google tag, carregada uma �
 
 ## Conversão de WhatsApp no Google Ads
 
-O ID `AW-18397424069` ativa o destino Google Ads, mas não identifica sozinho uma ação de conversão. Para medir `whatsapp_click` como conversão direta, ainda é necessário obter no Google Ads o rótulo da ação, no formato `AW-18397424069/ROTULO`. Como alternativa, vincular GA4 e Google Ads e importar o evento principal `whatsapp_click` como conversão.
+O identificador configurado em `PUBLIC_GOOGLE_ADS_ID` ativa o destino Google Ads, mas não identifica sozinho uma ação de conversão. Para medir `whatsapp_click` como conversão direta, ainda é necessário obter no Google Ads o rótulo da ação e mantê-lo fora do repositório. Como alternativa, vincular GA4 e Google Ads e importar o evento principal `whatsapp_click` como conversão.
 
 ## Eventos existentes
 
@@ -80,7 +80,7 @@ Os eventos comerciais existentes enviam somente contexto da interação, produto
 - Testar revogação pelo link Gerenciar cookies.
 - Confirmar que o Meta Pixel não dispara sem Publicidade.
 - Confirmar que as tags Google respeitam o Consent Mode V2.
-- Confirmar no Tag Assistant que existe apenas uma Google tag `G-7PC3DVRBPP`.
+- Confirmar no Tag Assistant que existe apenas uma Google tag configurada.
 - Validar com o modo Preview do GTM e o Tag Assistant.
 - Conferir cookies no navegador antes e depois de cada escolha.
 
